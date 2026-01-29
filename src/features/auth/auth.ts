@@ -1,5 +1,5 @@
 import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
-import {api} from "../api/kyClient.ts";
+import {api} from "../../shared/api/kyClient.ts";
 import {message} from "antd";
 import {HTTPError} from "ky";
 
@@ -16,7 +16,7 @@ export const useMe = () => {
     });
 }
 
-type LoginRequest = {
+export type LoginRequest = {
     login: string;
     password: string;
 }

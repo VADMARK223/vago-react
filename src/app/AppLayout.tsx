@@ -2,7 +2,7 @@ import {Layout, Menu} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content} from "antd/es/layout/layout";
 import {Link, Outlet, useLocation} from "react-router-dom";
-import {BookOutlined, HomeOutlined, LogoutOutlined, ScheduleOutlined,} from "@ant-design/icons";
+import {HomeOutlined, LogoutOutlined, ReadOutlined, RobotOutlined, ScheduleOutlined,} from "@ant-design/icons";
 import {useMemo, useState} from "react";
 import {AppHeader} from "./AppHeader.tsx";
 
@@ -26,8 +26,9 @@ export function AppLayout() {
                     items={[
                         {key: "/", icon: <HomeOutlined/>, label: <Link to="/">Главная</Link>},
                         {key: "/test", icon: <ScheduleOutlined/>, label: <Link to="/test">Тест</Link>},
-                        {key: "/book", icon: <BookOutlined/>, label: <Link to="/book">Книга</Link>},
+                        {key: "/book", icon: <ReadOutlined/>, label: <Link to="/book">Книга</Link>},
                         {type: "divider" as const},
+                        {key: "/admin", icon: <RobotOutlined/>, label: <Link to="/admin">Админка</Link>},
                         {key: "/logout", icon: <LogoutOutlined/>, label: <Link to="/logout">Выйти</Link>},
                     ]}
                 />

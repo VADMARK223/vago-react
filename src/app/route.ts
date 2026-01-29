@@ -1,11 +1,11 @@
 import type {RouteObject} from "react-router-dom";
 
-export type RouteHandler = {
+export type RouteHandle = {
     title: string;
 }
 
 type AppRoute = RouteObject & {
-    handler?: RouteHandler
+    handle?: RouteHandle
     children?: AppRoute[]
 }
 

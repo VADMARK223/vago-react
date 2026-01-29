@@ -1,12 +1,25 @@
-import { Button, Form, Input, Typography } from "antd";
-import {useLoginMutation, useMe} from "../hooks/auth.ts";
+import {Button, Form, Input, Typography} from "antd";
+import {type LoginRequest, useLoginMutation, useMe} from "./auth.ts";
+import {Navigate, useLocation, useNavigate} from "react-router-dom";
 
 export function LoginPage() {
+    const location = useLocation()
+    const navigate = useNavigate()
     const loginMutation = useLoginMutation()
     const me = useMe()
 
+    const from = (location.state as any)?.from?.pathname || "/"
+
     if (me.isSuccess) {
-        return <div style={{maxWidth: 360, margin:"0 auto"}}>Ты уже залогинен как #{me.data.username}</div>
+        return <Navigate to={"/"} replace/>
+    }
+
+    const onFinish = async (values: LoginRequest) => {
+        loginMutation.mutate(values, {
+            onSuccess: () => {
+                navigate(from, {replace: true})
+            }
+        })
     }
 
     return (
@@ -17,7 +30,7 @@ export function LoginPage() {
 
             <Form
                 layout="vertical"
-                onFinish={(values) => loginMutation.mutate(values)}
+                onFinish={onFinish}
             >
                 <Form.Item label="Логин" name="login" rules={[{ required: true, message: "Введи логин" }]}>
                     <Input placeholder="Введите логин" />

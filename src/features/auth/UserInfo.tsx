@@ -1,4 +1,4 @@
-import {useMe} from "../hooks/auth.ts";
+import {useMe} from "./auth.ts";
 import {Button, Space} from "antd";
 import {LoginOutlined} from "@ant-design/icons";
 import {useNavigate} from "react-router-dom";

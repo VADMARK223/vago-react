@@ -3,8 +3,8 @@ import {MenuFoldOutlined, MenuUnfoldOutlined} from "@ant-design/icons";
 import {Header} from "antd/es/layout/layout";
 import {useMatches} from "react-router-dom";
 import {useMemo} from "react";
-import type {RouteHandler} from "./route.ts";
-import {UserInfo} from "./UserInfo.tsx";
+import type {RouteHandle} from "./route.ts";
+import {UserInfo} from "../features/auth/UserInfo.tsx";
 
 type AppHeaderProps = {
     collapsed: boolean;
@@ -16,7 +16,7 @@ export function AppHeader({collapsed, onToggleCollapse}: AppHeaderProps) {
 
     const headerTitle = useMemo(() => {
         for (let i = matches.length - 1; i >= 0; i--) {
-            const handle = matches[i].handle as RouteHandler | undefined
+            const handle = matches[i].handle as RouteHandle | undefined
             if (handle?.title) {
                 return handle.title
             }

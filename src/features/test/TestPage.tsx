@@ -1,5 +1,5 @@
 import {useQuery} from "@tanstack/react-query";
-import {api} from "../api/kyClient.ts";
+import {api} from "../../shared/api/kyClient.ts";
 
 type TestResponse = {
     id: number;
