@@ -2,7 +2,15 @@ import {Button, Layout, Menu, Space, Typography} from "antd";
 import Sider from "antd/es/layout/Sider";
 import {Content, Header} from "antd/es/layout/layout";
 import {Link, Outlet, useLocation, useMatches} from "react-router-dom";
-import {BookOutlined, HomeOutlined, LoginOutlined, LogoutOutlined, MenuFoldOutlined, MenuUnfoldOutlined,} from "@ant-design/icons";
+import {
+    BookOutlined,
+    HomeOutlined,
+    LoginOutlined,
+    LogoutOutlined,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    ScheduleOutlined,
+} from "@ant-design/icons";
 import {useMemo, useState} from "react";
 import type {RouteHandler} from "./route.ts";
 
@@ -37,6 +45,7 @@ export function AppLayout() {
                     selectedKeys={[selectedKey]}
                     items={[
                         {key: "/", icon: <HomeOutlined/>, label: <Link to="/">Главная</Link>},
+                        {key: "/test", icon: <ScheduleOutlined/>, label: <Link to="/test">Тест</Link>},
                         {key: "/book", icon: <BookOutlined/>, label: <Link to="/book">Книга</Link>},
                         {key: "/login", icon: <LoginOutlined/>, label: <Link to="/login">Войти</Link>},
                         {type: "divider" as const},
@@ -66,7 +75,13 @@ export function AppLayout() {
 
                     <Space>
                         <Button>Помощь</Button>
-                        <Button type="primary">Создать</Button>
+                        <Button type="primary"
+                                onClick={() =>{
+                                    window.location.href = "/";
+                                }}
+                        >
+                            Портал Golang
+                        </Button>
                     </Space>
                 </Header>
 
