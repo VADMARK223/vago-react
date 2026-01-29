@@ -1,0 +1,60 @@
+import {Button, Space, Typography} from "antd";
+import {MenuFoldOutlined, MenuUnfoldOutlined} from "@ant-design/icons";
+import {Header} from "antd/es/layout/layout";
+import {useMatches} from "react-router-dom";
+import {useMemo} from "react";
+import type {RouteHandler} from "./route.ts";
+import {UserInfo} from "./UserInfo.tsx";
+
+type AppHeaderProps = {
+    collapsed: boolean;
+    onToggleCollapse: () => void;
+}
+
+export function AppHeader({collapsed, onToggleCollapse}: AppHeaderProps) {
+    const matches = useMatches();
+
+    const headerTitle = useMemo(() => {
+        for (let i = matches.length - 1; i >= 0; i--) {
+            const handle = matches[i].handle as RouteHandler | undefined
+            if (handle?.title) {
+                return handle.title
+            }
+        }
+
+        return "Vago"
+    }, [matches])
+
+    return (
+        <Header
+            style={{
+                padding: "0 16px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                borderBottom: "1px solid rgba(0,0,0,0.06)",
+            }}
+        >
+            <Space>
+                <Button
+                    type="text"
+                    onClick={() => onToggleCollapse()}
+                    icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
+                />
+                <Typography.Text strong>{headerTitle}</Typography.Text>
+            </Space>
+
+            <Space>
+                <UserInfo/>
+
+                <Button type="primary"
+                        onClick={() => {
+                            window.location.href = "/";
+                        }}
+                >
+                    Портал Golang
+                </Button>
+            </Space>
+        </Header>
+    )
+}
