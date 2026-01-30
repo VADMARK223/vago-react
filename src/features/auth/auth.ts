@@ -1,4 +1,4 @@
-import {useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {api} from "../../shared/api/kyClient.ts";
 import {message} from "antd";
 import {HTTPError} from "ky";
@@ -36,8 +36,8 @@ export const useLoginMutation = () => {
 
     return useMutation({
         mutationFn: loginRequest,
-        onSuccess: async (data:LoginResponse) => {
-            await qc.invalidateQueries({ queryKey: ["me"] })
+        onSuccess: async (data: LoginResponse) => {
+            await qc.invalidateQueries({queryKey: ["me"]})
             message.success(`${data.message}`)
         },
         onError: async (error) => {
