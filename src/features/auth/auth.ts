@@ -4,6 +4,10 @@ import {QUERY_KEY} from '../../constants/queryKeys.ts';
 import {URL} from '../../constants/urls.ts';
 import {CODE} from '../../constants/codes.ts';
 
+export type AuthRedirectState = {
+    from?: { pathname: string }
+}
+
 export type UserData = {
     id: number;
     username: string;

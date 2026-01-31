@@ -1,5 +1,5 @@
 import {Navigate, useLocation} from 'react-router-dom';
-import {useMe} from './auth.ts';
+import {type AuthRedirectState, useMe} from './auth.ts';
 import type {JSX} from 'react';
 import {ROUTE} from '../../constants/routes.ts';
 
@@ -12,7 +12,11 @@ export function ProtectedRoute({children}: { children: JSX.Element }) {
     }
 
     if (me.isError) {
-        return <Navigate to={ROUTE.SIGN_IN} replace state={{from: location}}/>
+        const state: AuthRedirectState = {
+            from: { pathname: location.pathname },
+        }
+
+        return <Navigate to={ROUTE.SIGN_IN} replace state={state}/>
     }
 
     return children

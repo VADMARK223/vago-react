@@ -1,14 +1,10 @@
 import {Button, Form, Input, message, Space, Typography} from 'antd';
-import {type SignInRequest, useSignInMutation} from './auth.ts';
+import {type AuthRedirectState, type SignInRequest, useSignInMutation} from './auth.ts';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import styles from './Auth.module.css';
 import {ROUTE} from '../../constants/routes.ts';
 import {CODE} from '../../constants/codes.ts';
 import {getKyErrorMessage} from '../../shared/api/kyClient.ts';
-
-type LocationState = {
-    from?: { pathname: string }
-}
 
 export function SignInPage() {
     const [form] = Form.useForm();
@@ -19,7 +15,7 @@ export function SignInPage() {
     const navigate = useNavigate()
     const signInMutation = useSignInMutation()
 
-    const from = (location.state as LocationState | null)?.from?.pathname ?? ROUTE.HOME
+    const from = (location.state as AuthRedirectState | null)?.from?.pathname ?? ROUTE.HOME
 
     const onFinish = async (values: SignInRequest) => {
         signInMutation.mutate(values, {
