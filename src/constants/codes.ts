@@ -1,4 +1,4 @@
-export const CODES = {
+export const CODE = {
     LOGIN: 'login',
     PASSWORD: 'password',
     USERNAME: 'username',
