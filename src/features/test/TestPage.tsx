@@ -6,11 +6,6 @@ type TestResponse = {
     message: string;
 };
 
-// const mutation = useMutation({
-//   mutationFn: (body: LoginDto) =>
-//     api.post("auth/login", { json: body }).json<User>(),
-// });
-
 export function TestPage() {
     const {data, isLoading, error} = useQuery({
         queryKey: ["vadmark", 9],

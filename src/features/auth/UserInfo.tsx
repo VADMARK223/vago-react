@@ -2,7 +2,8 @@ import {useMe} from "./auth.ts";
 import {Button, Space} from "antd";
 import {useNavigate} from "react-router-dom";
 import {LoginOutlined} from "@ant-design/icons";
-import {LogoutButton} from "./LogoutButton.tsx";
+import {SignOutButton} from "./SignOutButton.tsx";
+import {ROUTES} from "../../constants/routes.ts";
 
 export function UserInfo() {
     const {data: user, isLoading, error} = useMe()
@@ -11,11 +12,11 @@ export function UserInfo() {
     if (isLoading) return <div>Загрузка...</div>;
     if (error) return <Space orientation={"horizontal"}>
         <p>Привет, Гость!</p>
-        <Button icon={<LoginOutlined/>} onClick={() => navigate("/login")}>Войти</Button>
+        <Button icon={<LoginOutlined/>} onClick={() => navigate(ROUTES.SIGN_IN)}>Войти</Button>
     </Space>;
 
     return <Space orientation={"horizontal"}>
         <p>Привет, {user?.username}!</p>
-        <LogoutButton/>
+        <SignOutButton/>
     </Space>
 }

@@ -1,3 +1,5 @@
+@import "variables.css";
+
 html, body, #root {
   height: 100%;
 }
@@ -8,6 +10,14 @@ body {
 
 h1 {
   margin-top: 0;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+a:hover {
+  color: var(--color-warning);
 }
 
 code {
