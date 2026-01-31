@@ -1,9 +1,14 @@
-import {Button, Form, Input, Space, Typography} from 'antd';
-import {type SignInRequest, useMe, useSignInMutation} from './auth.ts';
-import {Link, Navigate, useLocation, useNavigate} from 'react-router-dom';
+import {Button, Form, Input, message, Space, Typography} from 'antd';
+import {type SignInRequest, useSignInMutation} from './auth.ts';
+import {Link, useLocation, useNavigate} from 'react-router-dom';
 import styles from './Auth.module.css';
 import {ROUTE} from '../../constants/routes.ts';
 import {CODE} from '../../constants/codes.ts';
+import {getKyErrorMessage} from '../../shared/api/kyClient.ts';
+
+type LocationState = {
+    from?: { pathname: string }
+}
 
 export function SignInPage() {
     const [form] = Form.useForm();
@@ -13,19 +18,19 @@ export function SignInPage() {
     const location = useLocation()
     const navigate = useNavigate()
     const signInMutation = useSignInMutation()
-    const me = useMe()
 
-    const from = (location.state as any)?.from?.pathname || ROUTE.HOME
-
-    if (me.isSuccess) {
-        return <Navigate to={ROUTE.HOME} replace/>
-    }
+    const from = (location.state as LocationState | null)?.from?.pathname ?? ROUTE.HOME
 
     const onFinish = async (values: SignInRequest) => {
         signInMutation.mutate(values, {
-            onSuccess: () => {
+            onSuccess: (data) => {
+                message.success(data.message);
                 navigate(from, {replace: true})
-            }
+            },
+            onError: async (error) => {
+                const serverMsg = await getKyErrorMessage(error);
+                message.error(serverMsg ?? 'Ошибка входа');
+            },
         })
     }
 

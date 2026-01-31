@@ -1,7 +1,5 @@
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
-import {api} from '../../shared/api/kyClient.ts';
-import {message} from 'antd';
-import {HTTPError} from 'ky';
+import {api, type KyResponse} from '../../shared/api/kyClient.ts';
 import {QUERY_KEY} from '../../constants/queryKeys.ts';
 import {URL} from '../../constants/urls.ts';
 import {CODE} from '../../constants/codes.ts';
@@ -11,47 +9,15 @@ export type UserData = {
     username: string;
 }
 
-export const useMe = () => {
-    return useQuery({
-        queryKey: [QUERY_KEY.ME],
-        queryFn: () => api.get(URL.ME).json<UserData>(),
-        retry: false,
-    });
-}
-
 export type SignInRequest = {
     login: string;
     password: string;
 }
 
-type SignInResponse = {
-    message: string;
-}
-
-async function signInRequest(data: SignInRequest): Promise<SignInResponse> {
-    return api.post(URL.LOGIN, {
-        json: data,
-    }).json<SignInResponse>()
-}
-
-export const useSignInMutation = () => {
-    const qc = useQueryClient()
-
-    return useMutation({
-        mutationFn: signInRequest,
-        onSuccess: async (data: SignInResponse) => {
-            await qc.invalidateQueries({queryKey: [QUERY_KEY.ME]})
-            message.success(`${data.message}`)
-        },
-        onError: async (error) => {
-            if (error instanceof HTTPError) {
-                const body = await error.response.json<SignInResponse>();
-                message.error(`${body.message}`);
-            } else {
-                message.error('Ошибка входа');
-            }
-        },
-    })
+export type SignUpRequest = {
+    login: string
+    password: string
+    username: string
 }
 
 
@@ -61,31 +27,48 @@ export interface SignUpFormValues {
     [CODE.USERNAME]?: string
 }
 
-/*export type SignUpRequest = {
-    login: string;
-    password: string;
-    username: string;
-}*/
+type SignInResponse = KyResponse
+export type SignUpResponse = KyResponse
 
-
-export type SignUpResponse = {
-    message: string;
+export const useMe = () => {
+    return useQuery({
+        queryKey: [QUERY_KEY.ME],
+        queryFn: () => api.get(URL.ME).json<UserData>(),
+        retry: false,
+    });
 }
 
-/*async function signUpRequest(data: SignUpFormValues): Promise<SignUpResponse> {
-    return api.post(URL.SIGN_UP, {
-        json: data,
-    }).json<SignUpResponse>()
-}*/
+export const useSignInMutation = () => {
+    const qc = useQueryClient()
 
-const signUpRequest = async (data: SignUpFormValues) => {
-    return api.post(URL.SIGN_UP, {
-        json: data,
-    }).json<SignUpResponse>()
+    return useMutation({
+        mutationFn: signInRequest,
+        onSuccess: () => {
+            qc.invalidateQueries({queryKey: [QUERY_KEY.ME]})
+        },
+    })
 }
 
 export const useSignUpMutation = () => {
-    return useMutation({
-        mutationFn: signUpRequest
-    })
+    return useMutation({mutationFn: signUpRequest})
+}
+
+const signInRequest = async (data: SignInRequest) => {
+    return api.post(URL.LOGIN, {json: data,}).json<SignInResponse>()
+}
+
+const signUpRequest = async (data: SignUpRequest) => {
+    return api.post(URL.SIGN_UP, {json: data,}).json<SignUpResponse>()
+}
+
+export const toSignUpRequest = (values: SignUpFormValues): SignUpRequest => {
+    const login = values[CODE.LOGIN]
+    const password = values[CODE.PASSWORD]
+    const username = values[CODE.USERNAME]
+
+    if (!login || !password || !username) {
+        throw new Error('Form values are incomplete')
+    }
+
+    return { login, password, username }
 }

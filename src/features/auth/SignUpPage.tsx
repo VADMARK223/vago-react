@@ -1,13 +1,13 @@
-import styles from "./Auth.module.css"
+import styles from './Auth.module.css'
 import {Button, Form, Input, message, Space, Typography} from 'antd';
 import {Link, useNavigate} from 'react-router-dom';
-import {ROUTE} from "../../constants/routes.ts";
-import {CODE} from "../../constants/codes.ts";
-import {useState} from "react";
-import capitalize from "antd/es/_util/capitalize";
-import {MAX_VALUE} from "./constants.ts";
-import {type SignUpFormValues, type SignUpResponse, useSignUpMutation} from './auth.ts';
-import {HTTPError} from 'ky';
+import {ROUTE} from '../../constants/routes.ts';
+import {CODE} from '../../constants/codes.ts';
+import {useState} from 'react';
+import capitalize from 'antd/es/_util/capitalize';
+import {MAX_VALUE} from './constants.ts';
+import {type SignUpFormValues, toSignUpRequest, useSignUpMutation} from './auth.ts';
+import {getKyErrorMessage} from '../../shared/api/kyClient.ts';
 
 export function SignUpPage() {
     const signUpMutation = useSignUpMutation()
@@ -24,24 +24,21 @@ export function SignUpPage() {
             const login = changed[CODE.LOGIN]
 
             form.setFieldsValue({
-                [CODE.USERNAME]: login ? `User${capitalize(login)}`.slice(0, MAX_VALUE.USERNAME) : "",
+                [CODE.USERNAME]: login ? `User${capitalize(login)}`.slice(0, MAX_VALUE.USERNAME) : '',
             })
         }
     }
 
     const onFinish = (values: SignUpFormValues) => {
-        signUpMutation.mutate(values, {
+        const req = toSignUpRequest(values)
+        signUpMutation.mutate(req, {
             onSuccess: (data) => {
                 message.success(`${data.message}`)
                 navigate(ROUTE.SIGN_IN, {replace: true})
             },
             onError: async (err) => {
-                if (err instanceof HTTPError) {
-                    const body = await err.response.json<SignUpResponse>();
-                    message.error(`${body.message}`);
-                } else {
-                    message.error('Ошибка входа');
-                }
+                const serverMsg = await getKyErrorMessage(err);
+                message.error(serverMsg ?? 'Ошибка входа');
             }
         })
     }
@@ -57,17 +54,17 @@ export function SignUpPage() {
                                     onValuesChange={handleValueChange}
                                     onFinish={onFinish}
             >
-                <Form.Item label="Логин" name={CODE.LOGIN} rules={[{required: true, message: "Введите логин"}]}>
+                <Form.Item label="Логин" name={CODE.LOGIN} rules={[{required: true, message: 'Введите логин'}]}>
                     <Input placeholder="Введите логин" maxLength={MAX_VALUE.LOGIN} allowClear/>
                 </Form.Item>
 
-                <Form.Item label="Пароль" name={CODE.PASSWORD} rules={[{required: true, message: "Введите пароль"}]}>
+                <Form.Item label="Пароль" name={CODE.PASSWORD} rules={[{required: true, message: 'Введите пароль'}]}>
                     <Input.Password placeholder="Введите пароль" maxLength={MAX_VALUE.PASSWORD} allowClear/>
                 </Form.Item>
 
                 <Form.Item label="Никнейм" name={CODE.USERNAME}
-                           rules={[{required: true, message: "Введите никнейм"}]}
-                           extra={"Можно оставить автоматически сгенерированный"}>
+                           rules={[{required: true, message: 'Введите никнейм'}]}
+                           extra={'Можно оставить автоматически сгенерированный'}>
                     <Input placeholder="Введите никнейм"
                            maxLength={MAX_VALUE.USERNAME}
                            onChange={() => setUsernameTouched(true)} allowClear/>
