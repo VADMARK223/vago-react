@@ -23,8 +23,8 @@ export function LoginPage() {
     }
 
     return (
-        <div style={{ maxWidth: 360, margin: "0 auto" }}>
-            <Typography.Title level={3} style={{ marginTop: 0 }}>
+        <div style={{maxWidth: 360, margin: "0 auto"}}>
+            <Typography.Title level={3} style={{marginTop: 0}}>
                 Вход
             </Typography.Title>
 
@@ -32,12 +32,12 @@ export function LoginPage() {
                 layout="vertical"
                 onFinish={onFinish}
             >
-                <Form.Item label="Логин" name="login" rules={[{ required: true, message: "Введи логин" }]}>
-                    <Input placeholder="Введите логин" />
+                <Form.Item label="Логин" name="login" rules={[{required: true, message: "Введи логин"}]}>
+                    <Input placeholder="Введите логин"/>
                 </Form.Item>
 
-                <Form.Item label="Пароль" name="password" rules={[{ required: true, message: "Введи пароль" }]}>
-                    <Input.Password placeholder="Введите пароль" />
+                <Form.Item label="Пароль" name="password" rules={[{required: true, message: "Введи пароль"}]}>
+                    <Input.Password placeholder="Введите пароль"/>
                 </Form.Item>
 
                 <Button

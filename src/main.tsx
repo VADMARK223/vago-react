@@ -1,4 +1,3 @@
-import {StrictMode} from 'react'
 import {createRoot} from 'react-dom/client'
 import './index.css'
 import {ConfigProvider, theme} from "antd";
@@ -10,7 +9,7 @@ const {darkAlgorithm} = theme;
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
-    <StrictMode>
+    // <StrictMode>
         <ConfigProvider
             theme={{
                 algorithm: darkAlgorithm,
@@ -42,5 +41,5 @@ createRoot(document.getElementById('root')!).render(
                 <RouterProvider router={router}/>
             </QueryClientProvider>
         </ConfigProvider>
-    </StrictMode>,
+    //</StrictMode>
 )

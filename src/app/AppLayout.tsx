@@ -41,9 +41,9 @@ export function AppLayout() {
                     <div
                         style={{
                             border: "1px solid rgba(0,0,0,0.06)",
-                            borderRadius: 12,
-                            padding: 16,
-                            minHeight: "calc(100vh - 64px - 32px)",
+                            padding: 8,
+                            height: "calc(100vh - 64px - 32px)",
+                            overflowY: "auto",
                         }}
                     >
                         <Outlet/>
