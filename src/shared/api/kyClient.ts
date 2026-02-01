@@ -1,14 +1,15 @@
 import ky, {HTTPError} from 'ky';
 
-export type KyResponse = {
-    message: string;
-}
+export type KyResponse<T = undefined> = { message: string } & (T extends undefined ? object : { data: T })
 
 export const api = ky.create({
-    prefixUrl: "/api",
-    credentials: "include",
+    prefixUrl: '/api',
+    credentials: 'include',
+    retry: {
+        limit: 0
+    },
     headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
     },
 });
 

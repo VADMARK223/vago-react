@@ -24,7 +24,7 @@ export function UserInfo() {
     </Space>;
 
     return <Space orientation={'horizontal'}>
-        <p>Привет, {user?.username}!</p>
+        <span>Привет, {user?.username}!</span>
         <SignOutButton/>
     </Space>
 }

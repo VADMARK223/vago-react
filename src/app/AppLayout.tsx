@@ -1,11 +1,11 @@
-import {Layout, Menu} from "antd";
-import Sider from "antd/es/layout/Sider";
-import {Content} from "antd/es/layout/layout";
-import {Link, Outlet, useLocation} from "react-router-dom";
-import {HomeOutlined, ReadOutlined, RobotOutlined, ScheduleOutlined, UnorderedListOutlined,} from "@ant-design/icons";
-import {useMemo, useState} from "react";
-import {AppHeader} from "./AppHeader.tsx";
-import {ROUTE} from "../constants/routes.ts";
+import {Layout, Menu} from 'antd';
+import Sider from 'antd/es/layout/Sider';
+import {Content} from 'antd/es/layout/layout';
+import {Link, Outlet, useLocation} from 'react-router-dom';
+import {HomeOutlined, ReadOutlined, RobotOutlined, ScheduleOutlined, UnorderedListOutlined,} from '@ant-design/icons';
+import {useMemo, useState} from 'react';
+import {AppHeader} from './AppHeader.tsx';
+import {ROUTE} from '../constants/routes.ts';
 
 export function AppLayout() {
     const [collapsed, setCollapsed] = useState(false)
@@ -25,11 +25,11 @@ export function AppLayout() {
                     mode="inline"
                     selectedKeys={[selectedKey]}
                     items={[
-                        {key: "/", icon: <HomeOutlined/>, label: <Link to="/">Главная</Link>},
-                        {key: "/test", icon: <ScheduleOutlined/>, label: <Link to="/test">Тест</Link>},
-                        {key: "/book", icon: <ReadOutlined/>, label: <Link to="/book">Книга</Link>},
-                        {type: "divider" as const},
-                        {key: "/admin", icon: <RobotOutlined/>, label: <Link to="/admin">Админка</Link>},
+                        {key: '/', icon: <HomeOutlined/>, label: <Link to="/">Главная</Link>},
+                        {key: '/test', icon: <ScheduleOutlined/>, label: <Link to="/test">Тест</Link>},
+                        {key: '/book', icon: <ReadOutlined/>, label: <Link to="/book">Книга</Link>},
+                        {type: 'divider' as const},
+                        {key: '/admin', icon: <RobotOutlined/>, label: <Link to="/admin">Админка</Link>},
                         {key: ROUTE.TASKS, icon: <UnorderedListOutlined/>, label: <Link to={ROUTE.TASKS}>Задачи</Link>},
                     ]}
                 />
@@ -40,14 +40,7 @@ export function AppLayout() {
                     setCollapsed((v) => !v)
                 }}/>
                 <Content>
-                    <div
-                        style={{
-                            border: "1px solid rgba(0,0,0,0.06)",
-                            padding: 8,
-                            height: "calc(100vh - 64px - 32px)",
-                            overflowY: "auto",
-                        }}
-                    >
+                    <div className={'content'}>
                         <Outlet/>
                     </div>
                 </Content>
