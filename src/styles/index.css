@@ -1,3 +1,4 @@
+@import "scrolls.css";
 @import "variables.css";
 @import "panels.css";
 
@@ -28,19 +29,3 @@ code {
 }
 
 /*Scroll*/
-*::-webkit-scrollbar {
-    width: 10px;
-}
-
-*::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.25);
-    border-radius: 6px;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(255, 255, 255, 0.4);
-}

@@ -12,10 +12,9 @@ export function AppLayout() {
     const location = useLocation();
 
     const selectedKey = useMemo(() => {
+        const path = location.pathname;
+        if (path.startsWith(ROUTE.BOOK)) return ROUTE.BOOK;
         return location.pathname;
-        /*const path = location.pathname;
-        if (path.startsWith("/login")) return "/login";
-        return "/";*/
     }, [location.pathname])
 
     return (
@@ -27,7 +26,7 @@ export function AppLayout() {
                     items={[
                         {key: '/', icon: <HomeOutlined/>, label: <Link to="/">Главная</Link>},
                         {key: '/test', icon: <ScheduleOutlined/>, label: <Link to="/test">Тест</Link>},
-                        {key: '/book', icon: <ReadOutlined/>, label: <Link to="/book">Книга</Link>},
+                        {key: ROUTE.BOOK, icon: <ReadOutlined/>, label: <Link to={ROUTE.BOOK}>Книга</Link>},
                         {type: 'divider' as const},
                         {key: '/admin', icon: <RobotOutlined/>, label: <Link to="/admin">Админка</Link>},
                         {key: ROUTE.TASKS, icon: <UnorderedListOutlined/>, label: <Link to={ROUTE.TASKS}>Задачи</Link>},
