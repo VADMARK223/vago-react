@@ -1,9 +1,9 @@
-import {Tabs, type TabsProps} from 'antd';
-import {UsersTab} from './UsersTab.tsx';
+import {Tabs, type TabsProps} from 'antd'
+import {UsersTab} from './UsersTab.tsx'
 
-export function AdminPage() {
+export default function AdminPage() {
     const handleTabChange = (activeKey: string) => {
-        console.log('handleTabChange', activeKey);
+        console.log('handleTabChange', activeKey)
     }
 
     const items: TabsProps['items'] = [
@@ -18,7 +18,7 @@ export function AdminPage() {
             children: 'Комментарии',
             disabled: true,
         },
-    ];
+    ]
 
     return <>
         <Tabs

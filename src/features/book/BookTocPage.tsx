@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {ROUTE} from '../../constants/routes.ts'
 import {chapters} from './chapters.tsx'
 
-export function BookTocPage() {
+export default function BookTocPage() {
 
     const reactChapters = chapters.filter(value => value.type === 'react')
     const tsChapters = chapters.filter(value => value.type === 'ts')

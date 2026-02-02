@@ -2,7 +2,7 @@ import {Navigate, useParams} from 'react-router-dom'
 import {chapters} from './chapters.tsx'
 import {ROUTE} from '../../constants/routes.ts'
 
-export function BookChapterPage() {
+export default function BookChapterPage() {
     const {chapterId} = useParams()
 
     const id = Number(chapterId)

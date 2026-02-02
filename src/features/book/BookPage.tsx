@@ -4,7 +4,7 @@ import {Button, Space} from 'antd'
 import {Outlet, useMatch, useNavigate} from 'react-router-dom'
 import {ROUTE} from '../../constants/routes.ts'
 
-export function BookPage() {
+export default function BookPage() {
     const navigate = useNavigate()
     const isToc = useMatch(ROUTE.BOOK)
 
