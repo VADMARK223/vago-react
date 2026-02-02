@@ -30,7 +30,7 @@ export const router = createBrowserRouter(
                     element: <BookPage/>,
                     handle: {title: 'Книга'},
                     children: [
-                        route({index: true, element: <BookTocPage/>, handle: {title: 'Оглавление'}}),
+                        route({index: true, element: <BookTocPage/>, handle: {title: 'Книга (TS / React)'}}),
                         route({path: ':chapterId', element: <BookChapterPage/>, handle: {title: 'Chapter'}}),
                     ]
                 }),

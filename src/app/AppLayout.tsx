@@ -1,20 +1,20 @@
-import {Layout, Menu} from 'antd';
-import Sider from 'antd/es/layout/Sider';
-import {Content} from 'antd/es/layout/layout';
-import {Link, Outlet, useLocation} from 'react-router-dom';
-import {HomeOutlined, ReadOutlined, RobotOutlined, ScheduleOutlined, UnorderedListOutlined,} from '@ant-design/icons';
-import {useMemo, useState} from 'react';
-import {AppHeader} from './AppHeader.tsx';
-import {ROUTE} from '../constants/routes.ts';
+import {Layout, Menu} from 'antd'
+import Sider from 'antd/es/layout/Sider'
+import {Content} from 'antd/es/layout/layout'
+import {Link, Outlet, useLocation} from 'react-router-dom'
+import {HomeOutlined, ReadOutlined, RobotOutlined, ScheduleOutlined, UnorderedListOutlined,} from '@ant-design/icons'
+import {useMemo, useState} from 'react'
+import {AppHeader} from './AppHeader.tsx'
+import {ROUTE} from '../constants/routes.ts'
 
 export function AppLayout() {
     const [collapsed, setCollapsed] = useState(false)
-    const location = useLocation();
+    const location = useLocation()
 
     const selectedKey = useMemo(() => {
-        const path = location.pathname;
-        if (path.startsWith(ROUTE.BOOK)) return ROUTE.BOOK;
-        return location.pathname;
+        const path = location.pathname
+        if (path.startsWith(ROUTE.BOOK)) return ROUTE.BOOK
+        return location.pathname
     }, [location.pathname])
 
     return (
@@ -26,7 +26,7 @@ export function AppLayout() {
                     items={[
                         {key: '/', icon: <HomeOutlined/>, label: <Link to="/">Главная</Link>},
                         {key: '/test', icon: <ScheduleOutlined/>, label: <Link to="/test">Тест</Link>},
-                        {key: ROUTE.BOOK, icon: <ReadOutlined/>, label: <Link to={ROUTE.BOOK}>Книга</Link>},
+                        {key: ROUTE.BOOK, icon: <ReadOutlined/>, label: <Link to={ROUTE.BOOK}>Книга (TS / React)</Link>},
                         {type: 'divider' as const},
                         {key: '/admin', icon: <RobotOutlined/>, label: <Link to="/admin">Админка</Link>},
                         {key: ROUTE.TASKS, icon: <UnorderedListOutlined/>, label: <Link to={ROUTE.TASKS}>Задачи</Link>},

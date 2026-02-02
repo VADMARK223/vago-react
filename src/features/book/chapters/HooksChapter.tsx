@@ -1,9 +1,10 @@
 export function HooksChapter() {
     return (
         <>
+            <a href="#useState">useState</a><br/>
             <a href="#useImperativeHandle">useImperativeHandle</a>
 
-            <h2>useState</h2>
+            <h2 id={'useState'}>useState</h2>
             <p>Хук для хранения и обновления <b>локального состояния компонента.</b></p>
 
             <h2>useEffect</h2>
@@ -40,7 +41,6 @@ export function HooksChapter() {
 
             <h2 id="useImperativeHandle">useImperativeHandle</h2>
             <p>Позволяет явно управлять API ref’а, передаваемого родителю.</p>
-            <span>END</span>
         </>
     )
 }
