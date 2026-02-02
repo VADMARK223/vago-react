@@ -1,6 +1,6 @@
 import {CodeBlock} from '../CodeBlock.tsx'
 
-export function UtilityTypesChapter() {
+export default function UtilityTypesChapter() {
     return (
         <>
             <p>Это <b>встроенные типы-утилиты</b>, которые помогают преобразовывать типы.</p>

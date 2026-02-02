@@ -1,4 +1,4 @@
-export function HooksChapter() {
+export default function HooksChapter() {
     return (
         <>
             <a href="#useState">useState</a><br/>

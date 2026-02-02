@@ -1,6 +1,6 @@
 import {CodeBlock} from '../CodeBlock.tsx'
 
-export function InterfacesAndTypes() {
+export default function InterfacesAndTypes() {
     return (
         <>
             <a href="#rules">Привила</a><br/>
