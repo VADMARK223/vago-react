@@ -1,5 +1,10 @@
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter'
-import {oneDark} from 'react-syntax-highlighter/dist/esm/styles/prism'
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter'
+import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx'
+import ts from 'react-syntax-highlighter/dist/esm/languages/prism/typescript'
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+
+SyntaxHighlighter.registerLanguage('tsx', tsx)
+SyntaxHighlighter.registerLanguage('ts', ts)
 
 type CodeLang = 'tsx' | 'ts'
 

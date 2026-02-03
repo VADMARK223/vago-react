@@ -1,17 +1,18 @@
 import styles from './Auth.module.css'
-import {Button, Form, Input, message, Space, Typography} from 'antd';
-import {Link, useNavigate} from 'react-router-dom';
-import {ROUTE} from '../../constants/routes.ts';
-import {CODE} from '../../constants/codes.ts';
-import {useState} from 'react';
-import capitalize from 'antd/es/_util/capitalize';
-import {MAX_VALUE} from './constants.ts';
-import {type SignUpFormValues, toSignUpRequest, useSignUpMutation} from './auth.ts';
-import {getKyErrorMessage} from '../../shared/api/kyClient.ts';
+import {App, Button, Form, Input, Space, Typography} from 'antd'
+import {Link, useNavigate} from 'react-router-dom'
+import {ROUTE} from '../../constants/routes.ts'
+import {CODE} from '../../constants/codes.ts'
+import {useState} from 'react'
+import capitalize from 'antd/es/_util/capitalize'
+import {MAX_VALUE} from './constants.ts'
+import {type SignUpFormValues, toSignUpRequest, useSignUpMutation} from './auth.ts'
+import {getKyErrorMessage} from '../../shared/api/kyClient.ts'
 
 export function SignUpPage() {
+    const {message} = App.useApp()
     const signUpMutation = useSignUpMutation()
-    const [form] = Form.useForm();
+    const [form] = Form.useForm()
     const login = Form.useWatch(CODE.LOGIN, form)
     const password = Form.useWatch(CODE.PASSWORD, form)
     const username = Form.useWatch(CODE.USERNAME, form)
@@ -37,8 +38,8 @@ export function SignUpPage() {
                 navigate(ROUTE.SIGN_IN, {replace: true})
             },
             onError: async (err) => {
-                const serverMsg = await getKyErrorMessage(err);
-                message.error(serverMsg ?? 'Ошибка входа');
+                const serverMsg = await getKyErrorMessage(err)
+                message.error(serverMsg ?? 'Ошибка входа')
             }
         })
     }

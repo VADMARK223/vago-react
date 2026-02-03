@@ -1,5 +1,5 @@
 import {Tabs, type TabsProps} from 'antd'
-import {UsersTab} from './UsersTab.tsx'
+import {UsersTab} from './users/UsersTab.tsx'
 
 export default function AdminPage() {
     const handleTabChange = (activeKey: string) => {

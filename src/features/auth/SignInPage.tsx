@@ -1,13 +1,14 @@
-import {Button, Form, Input, message, Space, Typography} from 'antd';
-import {type AuthRedirectState, type SignInRequest, useSignInMutation} from './auth.ts';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
-import styles from './Auth.module.css';
-import {ROUTE} from '../../constants/routes.ts';
-import {CODE} from '../../constants/codes.ts';
-import {getKyErrorMessage} from '../../shared/api/kyClient.ts';
+import {App, Button, Form, Input, Space, Typography} from 'antd'
+import {type AuthRedirectState, type SignInRequest, useSignInMutation} from './auth.ts'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
+import styles from './Auth.module.css'
+import {ROUTE} from '../../constants/routes.ts'
+import {CODE} from '../../constants/codes.ts'
+import {getKyErrorMessage} from '../../shared/api/kyClient.ts'
 
 export function SignInPage() {
-    const [form] = Form.useForm();
+    const {message} = App.useApp()
+    const [form] = Form.useForm()
     const login = Form.useWatch(CODE.LOGIN, form)
     const password = Form.useWatch(CODE.PASSWORD, form)
     const isDisabled = !login || !password
@@ -20,12 +21,12 @@ export function SignInPage() {
     const onFinish = async (values: SignInRequest) => {
         signInMutation.mutate(values, {
             onSuccess: (data) => {
-                message.success(data.message);
+                message.success(data.message)
                 navigate(from, {replace: true})
             },
             onError: async (error) => {
-                const serverMsg = await getKyErrorMessage(error);
-                message.error(serverMsg ?? 'Ошибка входа');
+                const serverMsg = await getKyErrorMessage(error)
+                message.error(serverMsg ?? 'Ошибка входа')
             },
         })
     }

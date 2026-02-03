@@ -1,12 +1,11 @@
-import {useUsers} from './admin.ts';
-import {Button} from 'antd';
-import {DeleteOutlined} from '@ant-design/icons';
+import {useUsers} from '../admin.ts'
+import {DeleteUserButton} from './DeleteUserButton.tsx'
 
 export function UsersTab() {
     const {data, isLoading, isError} = useUsers()
 
-    if (isLoading) return <div>Loading...</div>;
-    if (isError) return <div>Error</div>;
+    if (isLoading) return <div>Loading...</div>
+    if (isError) return <div>Error</div>
 
     return (
         <div className="stack">
@@ -19,7 +18,7 @@ export function UsersTab() {
                         <span>Role: {user.role}</span>
                     </div>
 
-                    <Button type={'primary'} danger size={'large'} icon={<DeleteOutlined/>}/>
+                    <DeleteUserButton id={user.id}/>
                 </div>
             ))}
         </div>
