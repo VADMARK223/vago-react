@@ -20,11 +20,14 @@ export default function AdminPage() {
         },
     ]
 
-    return <>
-        <Tabs
-            defaultActiveKey="users"
-            items={items}
-            onChange={handleTabChange}
-        />
-    </>
+    return (
+        <div className="tabs-page">
+            <Tabs
+                defaultActiveKey="users"
+                items={items}
+                onChange={handleTabChange}
+            />
+        </div>
+    )
+
 }

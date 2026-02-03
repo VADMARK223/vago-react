@@ -2,6 +2,7 @@
 @import "scrolls.css";
 @import "variables.css";
 @import "panels.css";
+@import "./components/tabs.css";
 
 html {
     font-size: 16px;
