@@ -5,6 +5,16 @@ export type KyResponse<T = undefined> = { message: string } & (T extends undefin
 export const api = ky.create({
     prefixUrl: '/api',
     credentials: 'include',
+    hooks: {
+        afterResponse: [
+            async (_req, _opt, res) => {
+                if (res.status === 401) {
+                    console.log('превращаемся в "гостя"')
+                    // queryClient.setQueryData([QUERY_KEY.ME], null)
+                }
+            }
+        ]
+    },
     retry: {
         limit: 0
     },

@@ -43,11 +43,11 @@ export function SignInPage() {
                 onFinish={onFinish}
             >
                 <Form.Item label="Логин" name={CODE.LOGIN} rules={[{required: true, message: 'Введите логин'}]}>
-                    <Input placeholder="Введите логин" allowClear/>
+                    <Input placeholder="Введите логин" allowClear autoComplete={'username'}/>
                 </Form.Item>
 
                 <Form.Item label="Пароль" name={CODE.PASSWORD} rules={[{required: true, message: 'Введите пароль'}]}>
-                    <Input.Password placeholder="Введите пароль" allowClear/>
+                    <Input.Password placeholder="Введите пароль" allowClear autoComplete={'current-password'}/>
                 </Form.Item>
 
                 <Space orientation="vertical">

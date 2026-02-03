@@ -1,6 +1,5 @@
 import type {RouteObject} from 'react-router-dom'
-// import {AdminPage} from './AdminPage.tsx'
-import {ProtectedRoute} from '../auth/ProtectedRoute.tsx'
+import {AdminRoute} from '../auth/AdminRoute.tsx'
 
 export async function adminLazy(): Promise<Pick<RouteObject, 'element' | 'handle'>> {
     const mod = await import('./AdminPage.tsx')
@@ -8,9 +7,9 @@ export async function adminLazy(): Promise<Pick<RouteObject, 'element' | 'handle
 
     return {
         element: (
-            <ProtectedRoute>
+            <AdminRoute>
                 <AdminPage/>
-            </ProtectedRoute>
+            </AdminRoute>
         ),
         handle: {title: 'Админка'}
     }

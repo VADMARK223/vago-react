@@ -6,4 +6,5 @@ export const ROUTE = {
     BOOK: '/book',
     ADMIN: '/admin',
     TASKS: '/tasks',
-} as const;
+    CHAT: '/chat',
+} as const

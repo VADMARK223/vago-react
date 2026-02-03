@@ -8,6 +8,7 @@ import {QUERY_KEY} from '../../constants/queryKeys.ts'
 export function SignOutButton() {
     const {message} = App.useApp()
     const qc = useQueryClient()
+
     const {refetch} = useQuery({
         queryKey: [QUERY_KEY.SIGN_OUT],
         queryFn: () => api.get(CODE.SIGN_OUT),
@@ -17,7 +18,8 @@ export function SignOutButton() {
     return <Button icon={<LogoutOutlined/>} onClick={() => {
         refetch().then(() => {
             message.info('Успешный выход.').then()
-            qc.invalidateQueries({queryKey: [QUERY_KEY.ME]}).then()
+            // qc.invalidateQueries({queryKey: [QUERY_KEY.ME]}).then()
+            qc.setQueryData([QUERY_KEY.ME], null)
         })
     }}>Выйти</Button>
 }

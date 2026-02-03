@@ -10,6 +10,8 @@ import {ROUTE} from '../constants/routes.ts'
 import {TasksPage} from '../features/tasks/TasksPage.tsx'
 import {lazy, Suspense} from 'react'
 import {adminLazy} from '../features/admin/admin.lazy.tsx'
+import {ChatPage} from '../features/chat/ChatPage.tsx'
+import {AuthRoute} from '../features/auth/AuthRoute.tsx'
 
 const BookPage = lazy(() => import(
     /* webpackChunkName: "book" */
@@ -62,16 +64,27 @@ export const router = createBrowserRouter(
                         }),
                     ]
                 }),
-                route({path: ROUTE.TASKS, element: <TasksPage/>, handle: {title: 'Задачи'}}),
+                route({
+                    path: ROUTE.TASKS,
+                    element: (
+                        <AuthRoute>
+                            <TasksPage/>
+                        </AuthRoute>),
+                    handle: {title: 'Задачи'}
+                }),
+                route({
+                    path: ROUTE.CHAT,
+                    element: (
+                        <AuthRoute>
+                            <ChatPage/>
+                        </AuthRoute>
+                    ),
+                    handle: {title: 'Чат'}
+                }),
 
                 route({
                     path: ROUTE.ADMIN,
                     lazy: adminLazy
-                    /*element: (
-                        <ProtectedRoute>
-                            <AdminPage/>
-                        </ProtectedRoute>),
-                    handle: {title: 'Админка'}*/
                 }),
                 route({path: '*', element: <NotFoundPage/>, handle: {title: 'Страница не найдена'}}),
             ]

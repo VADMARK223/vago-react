@@ -20,6 +20,7 @@ export function DeleteUserButton({id}: DeleteUserButtonProps): JSX.Element {
                     message.success(response.message)
                 },
                 onError: async (err)=>{
+
                     const errorMsg = await getKyErrorMessage(err)
                     message.error(errorMsg)
                 }
