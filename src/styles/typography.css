@@ -45,3 +45,9 @@ pre > code {
     padding: 0;
     background: transparent;
 }
+
+blockquote {
+    margin: var(--space-2) 0;
+    padding: 8px var(--space-2);
+    border-left: 4px solid var(--bg-border); /* цвет и толщина палочки */
+}

@@ -17,6 +17,7 @@ export function AuthRoute({children}: { children: JSX.Element }) {
             from: {pathname: location.pathname},
         }
 
+        console.log("REDIRECT")
         return <Navigate to={ROUTE.SIGN_IN} replace state={state}/>
     }
 

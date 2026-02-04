@@ -5,6 +5,7 @@ import {URL} from '../../constants/urls.ts'
 import {CODE} from '../../constants/codes.ts'
 import {useNavigate} from 'react-router-dom'
 import {ROUTE} from '../../constants/routes.ts'
+import {MUTATION_KEY} from '../../constants/mutationKeys.ts'
 
 export type AuthRedirectState = {
     from?: { pathname: string }
@@ -77,6 +78,7 @@ export const useSignInMutation = () => {
     const qc = useQueryClient()
 
     return useMutation({
+        mutationKey: MUTATION_KEY.SIGN_IN,
         mutationFn: signInRequest,
         onSuccess: () => {
             qc.invalidateQueries({queryKey: [QUERY_KEY.ME]}).then()
@@ -89,7 +91,7 @@ export const useSignUpMutation = () => {
 }
 
 const signInRequest = async (data: SignInRequest) => {
-    return api.post(URL.LOGIN, {json: data,}).json<SignInResponse>()
+    return api.post(URL.SIGN_IN, {json: data,}).json<SignInResponse>()
 }
 
 const signUpRequest = async (data: SignUpRequest) => {

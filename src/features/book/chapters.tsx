@@ -4,7 +4,7 @@ export const chapters: Chapter[] = [{
     id: 1,
     title: 'Hooks',
     type: 'react',
-    load: () => import('./chapters/HooksChapter.tsx')
+    load: () => import('./chapters/hooks/HooksChapter.tsx')
 }, {
     id: 2,
     title: 'Utility Types',
@@ -15,4 +15,9 @@ export const chapters: Chapter[] = [{
     title: 'Interfaces and Types',
     type: 'ts',
     load: () => import('./chapters/InterfacesAndTypes.tsx')
+}, {
+    id: 4,
+    title: 'Keys',
+    type: 'react',
+    load: () => import('./chapters/KeysChapter.tsx')
 }]

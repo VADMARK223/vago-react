@@ -1,7 +1,10 @@
+import {UseMemoBlock} from './UseMemoBlock.tsx'
+
 export default function HooksChapter() {
     return (
         <>
             <a href="#useState">useState</a><br/>
+            <a href="#useMemo">useMemo</a><br/>
             <a href="#useImperativeHandle">useImperativeHandle</a>
 
             <h2 id={'useState'}>useState</h2>
@@ -12,13 +15,13 @@ export default function HooksChapter() {
 
             <h2>useContext</h2>
             <p>доступ к контексту</p>
+            <hr/>
 
             <h2>useRef</h2>
             <p>Позволяет <b>хранить мутируемое значение между рендерами, не вызывая повторный рендер</b>.</p>
+            <hr/>
 
-            <h2>useMemo</h2>
-            <p>Хук для <b>мемоизации вычислений, чтобы React не пересчитывал дорогие значения на каждом рендере.</b>
-            </p>
+            <UseMemoBlock/>
 
             <h2>useCallback</h2>
             <p>Это про <b>мемоизацию функций</b>, чтобы React не создавал их заново на каждом рендере. Часто идёт в
