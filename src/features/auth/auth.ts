@@ -6,6 +6,7 @@ import {CODE} from '../../constants/codes.ts'
 import {useNavigate} from 'react-router-dom'
 import {ROUTE} from '../../constants/routes.ts'
 import {MUTATION_KEY} from '../../constants/mutationKeys.ts'
+import {ROLE, type Role} from '../../constants/roles.ts'
 
 export type AuthRedirectState = {
     from?: { pathname: string }
@@ -16,16 +17,18 @@ export function useSignInRedirect() {
 
     return (targetPathname: string) => {
         const state: AuthRedirectState = {
-            from: { pathname: targetPathname },
+            from: {pathname: targetPathname},
         }
-        navigate(ROUTE.SIGN_IN, { state })
+        navigate(ROUTE.SIGN_IN, {state})
     }
 }
 
 export type User = {
     username: string;
-    role: string
+    role: Role
 }
+
+export type SignUpRole = Exclude<Role, 'admin'>
 
 type MeResponse = KyResponse<User>
 
@@ -38,12 +41,14 @@ export type SignUpRequest = {
     login: string
     password: string
     username: string
+    role: SignUpRole
 }
 
 export interface SignUpFormValues {
     [CODE.LOGIN]?: string
     [CODE.PASSWORD]?: string
     [CODE.USERNAME]?: string
+    [CODE.ROLE]: SignUpRole
 }
 
 type SignInResponse = KyResponse
@@ -68,9 +73,10 @@ export const useAuth = () => {
     const {data: me, isLoading, isError} = useMe()
 
     const isAuthed = !!me && !isError
-    const isAdmin = !!me?.role?.includes("admin")
+    const isAdmin = !!me?.role?.includes(ROLE.admin)
+    const isModerator = !!me?.role?.includes(ROLE.moderator)
 
-    return {me, isLoading, isAuthed, isAdmin}
+    return {me, isLoading, isAuthed, isAdminModerator: isAdmin || isModerator}
 }
 
 
@@ -102,10 +108,11 @@ export const toSignUpRequest = (values: SignUpFormValues): SignUpRequest => {
     const login = values[CODE.LOGIN]
     const password = values[CODE.PASSWORD]
     const username = values[CODE.USERNAME]
+    const role = values[CODE.ROLE]
 
     if (!login || !password || !username) {
         throw new Error('Form values are incomplete')
     }
 
-    return {login, password, username}
+    return {login, password, username, role}
 }

@@ -4,7 +4,7 @@ import type {JSX} from 'react'
 import {ROUTE} from '../../constants/routes.ts'
 
 export function AdminRoute({children}: { children: JSX.Element }) {
-    const {isAuthed, isAdmin, isLoading} = useAuth()
+    const {isAuthed, isAdminModerator, isLoading} = useAuth()
 
     const location = useLocation()
 
@@ -18,7 +18,7 @@ export function AdminRoute({children}: { children: JSX.Element }) {
         }
 
         return <Navigate to={ROUTE.SIGN_IN} replace state={state}/>
-    } else if (!isAdmin) {
+    } else if (!isAdminModerator) {
         return <Navigate to={ROUTE.HOME}/>
     }
 
