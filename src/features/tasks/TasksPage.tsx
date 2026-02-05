@@ -1,5 +1,6 @@
 import {Card, Space, Typography} from 'antd'
 import {useTasks} from './tasks.ts'
+import {ScrollableContainer} from '../../shared/ui/ScrollableContainer.tsx'
 
 export function TasksPage() {
     const {data: tasks, isLoading, isError} = useTasks()
@@ -11,16 +12,16 @@ export function TasksPage() {
         <Typography.Title level={3} style={{marginTop: 0}}>
             Список задач пользователя
         </Typography.Title>
-        <div className={'scroll-box'}>
+        <ScrollableContainer>
             <Space orientation={'vertical'} style={{width: '100%'}}>
                 {tasks?.map((task) => (
                     <Card key={task.id}
-                        title={`${task.id}. ${task.name}`}
+                          title={`${task.id}. ${task.name}`}
                     >
                         {task.description}
                     </Card>
                 ))}
             </Space>
-        </div>
+        </ScrollableContainer>
     </div>
 }

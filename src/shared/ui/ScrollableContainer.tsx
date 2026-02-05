@@ -10,9 +10,9 @@ export function ScrollableContainer({children}: Props) {
     const containerRef = useRef<HTMLDivElement>(null)
 
     return (
-        <>
-            <div ref={containerRef} className={'scroll-box'} style={{position: 'relative'}}>{children}</div>
+        <div className={'scrollable-wrapper'}>
+            <div ref={containerRef} className={'scrollable-content'}>{children}</div>
             <ScrollToTopButton containerRef={containerRef}/>
-        </>
+        </div>
     )
 }
