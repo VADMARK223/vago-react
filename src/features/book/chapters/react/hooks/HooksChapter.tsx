@@ -1,17 +1,20 @@
 import {UseMemoBlock} from './UseMemoBlock.tsx'
+import {UseEffectBlock} from './UseEffectBlock.tsx'
 
 export default function HooksChapter() {
     return (
         <>
             <a href="#useState">useState</a><br/>
+            <a href="#useEffect">useEffect</a><br/>
             <a href="#useMemo">useMemo</a><br/>
             <a href="#useImperativeHandle">useImperativeHandle</a>
+            <hr/>
 
             <h2 id={'useState'}>useState</h2>
             <p>Хук для хранения и обновления <b>локального состояния компонента.</b></p>
 
-            <h2>useEffect</h2>
-            <p>Это хук для побочных эффектов (side effects).</p>
+            <UseEffectBlock/>
+                <hr/>
 
             <h2>useContext</h2>
             <p>доступ к контексту</p>

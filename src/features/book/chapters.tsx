@@ -12,7 +12,7 @@ export const chapters: Chapter[] = [{
     load: () => import('./chapters/ts/UtilityTypesChapter.tsx')
 }, {
     id: 3,
-    title: 'Interfaces and Types',
+    title: 'Интерфейсы и типы',
     type: 'ts',
     load: () => import('./chapters/ts/InterfacesAndTypes.tsx')
 }, {
@@ -25,4 +25,9 @@ export const chapters: Chapter[] = [{
     title: 'Const object as enum pattern',
     type: 'ts',
     load: () => import('./chapters/ts/ConstObjectAsEnumPattern.tsx')
+}, {
+    id: 6,
+    title: 'Правила использования хуков',
+    type: 'react',
+    load: () => import('./chapters/react/HooksRulesChapter.tsx')
 }]
