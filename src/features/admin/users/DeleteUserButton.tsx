@@ -16,7 +16,7 @@ export function DeleteUserButton({id}: DeleteUserButtonProps): JSX.Element {
         type={'primary'}
         onClick={() => {
             deleteUser(id, {
-                onSuccess: (response)=>{
+                onSuccess: async (response)=>{
                     message.success(response.message)
                 },
                 onError: async (err)=>{

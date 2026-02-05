@@ -1,5 +1,6 @@
 import {useUsers} from '../admin.ts'
 import {DeleteUserButton} from './DeleteUserButton.tsx'
+import {ScrollableContainer} from '../../../shared/ui/ScrollableContainer.tsx'
 
 export function UsersTab() {
     const {data, isLoading, isError} = useUsers()
@@ -8,21 +9,24 @@ export function UsersTab() {
     if (isError) return <div>Error</div>
 
     return (
-        <div className={'scroll-box'}>
-            <div className="stack">
-                {data?.data.users.map((user) => (
-                    <div className={'panel'} key={user.id}>
-                        <div>
-                            <h2>ID: {user.id}</h2>
-                            <span>Username: {user.username}</span><br/>
-                            <span>Login: {user.login}</span><br/>
-                            <span>Role: {user.role}</span>
-                        </div>
+        <>
+            <ScrollableContainer>
+                <div className={'stack'}>
+                    {data?.data.users.map((user) => (
+                        <div className={'panel'} key={user.id}>
+                            <div>
+                                <h2>ID: {user.id}</h2>
+                                <span>Username: {user.username}</span><br/>
+                                <span>Login: {user.login}</span><br/>
+                                <span>Role: {user.role}</span>
+                            </div>
 
-                        <DeleteUserButton id={user.id}/>
-                    </div>
-                ))}
-            </div>
-        </div>
+                            <DeleteUserButton id={user.id}/>
+                        </div>
+                    ))}
+                </div>
+            </ScrollableContainer>
+        </>
+
     )
 }
