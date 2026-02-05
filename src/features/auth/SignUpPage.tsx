@@ -83,7 +83,6 @@ export function SignUpPage() {
                     label={'Роль'}
                     name={CODE.ROLE}
                     extra={ROLE_HINT[role]}
-                    rules={[{required: true, message: 'Выберите роль'}]}
                 >
                     <Select
                         options={[

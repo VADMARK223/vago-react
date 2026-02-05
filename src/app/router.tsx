@@ -4,7 +4,7 @@ import {HomePage} from '../features/home/HomePage.tsx'
 import {SignInPage} from '../features/auth/SignInPage.tsx'
 import {NotFoundPage} from './NotFoundPage.tsx'
 import {route} from './route'
-import {TestPage} from '../features/test/TestPage.tsx'
+import {QuestionPage} from '../features/test/QuestionPage.tsx'
 import {SignUpPage} from '../features/auth/SignUpPage.tsx'
 import {ROUTE} from '../constants/routes.ts'
 import {TasksPage} from '../features/tasks/TasksPage.tsx'
@@ -36,7 +36,6 @@ export const router = createBrowserRouter(
             handle: {title: 'Vago'},
             children: [
                 route({index: true, element: <HomePage/>, handle: {title: 'Главная'}}),
-                route({path: 'test', element: <TestPage/>, handle: {title: 'Test'}}),
                 route({path: ROUTE.SIGN_IN, element: <SignInPage/>, handle: {title: 'Вход'}}),
                 route({path: ROUTE.SIGN_UP, element: <SignUpPage/>, handle: {title: 'Регистрация'}}),
                 route({
@@ -64,6 +63,7 @@ export const router = createBrowserRouter(
                         }),
                     ]
                 }),
+                route({path: ROUTE.QUESTIONS, element: <QuestionPage/>, handle: {title: 'Вопросы'}}),
                 route({
                     path: ROUTE.TASKS,
                     element: (

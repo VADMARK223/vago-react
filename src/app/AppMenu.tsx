@@ -26,8 +26,8 @@ export function AppMenu() {
 
     const items: MenuProps['items'] = [
         {key: '/', icon: <HomeOutlined/>, label: <Link to="/">Главная</Link>},
-        {key: '/test', icon: <ScheduleOutlined/>, label: <Link to="/test">Тест</Link>},
         {key: ROUTE.BOOK, icon: <ReadOutlined/>, label: <Link to={ROUTE.BOOK}>Книга (TS / React)</Link>},
+        {key: ROUTE.QUESTIONS, icon: <ScheduleOutlined/>, label: <Link to={ROUTE.QUESTIONS}>Вопросы</Link>},
         {type: 'divider' as const},
         {
             key: ROUTE.TASKS,
