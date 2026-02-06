@@ -1,9 +1,18 @@
-import {Card, Space, Typography} from 'antd'
-import {useTasks} from './tasks.ts'
-import {ScrollableContainer} from '../../shared/ui/ScrollableContainer.tsx'
+import {Button} from 'antd'
 
 export function TasksPage() {
-    const {data: tasks, isLoading, isError} = useTasks()
+    return (
+        <>
+            <div>React версия в разработке...</div>
+            <Button type={'primary'} onClick={() => {
+                window.location.href = '/tasks'
+            }}>Версия на Go template</Button>
+        </>
+
+    )
+
+
+    /*const {data: tasks, isLoading, isError} = useTasks()
 
     if (isLoading) return <div>Loading...</div>
     if (isError) return <div>Error</div>
@@ -23,5 +32,5 @@ export function TasksPage() {
                 ))}
             </Space>
         </ScrollableContainer>
-    </div>
+    </div>*/
 }

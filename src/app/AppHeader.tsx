@@ -1,10 +1,10 @@
-import {Button, Space, Typography} from 'antd';
-import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons';
-import {Header} from 'antd/es/layout/layout';
-import {useMatches} from 'react-router-dom';
-import {useMemo} from 'react';
-import type {RouteHandle} from './route.ts';
-import {UserInfo} from '../features/auth/UserInfo.tsx';
+import {Button, Space, Typography} from 'antd'
+import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons'
+import {Header} from 'antd/es/layout/layout'
+import {useMatches} from 'react-router-dom'
+import {useMemo} from 'react'
+import type {RouteHandle} from './route.ts'
+import {UserInfo} from '../features/auth/UserInfo.tsx'
 
 type AppHeaderProps = {
     collapsed: boolean;
@@ -12,7 +12,7 @@ type AppHeaderProps = {
 }
 
 export function AppHeader({collapsed, onToggleCollapse}: AppHeaderProps) {
-    const matches = useMatches();
+    const matches = useMatches()
 
     const headerTitle = useMemo(() => {
         for (let i = matches.length - 1; i >= 0; i--) {
@@ -41,10 +41,10 @@ export function AppHeader({collapsed, onToggleCollapse}: AppHeaderProps) {
 
                 <Button type="primary"
                         onClick={() => {
-                            window.location.href = '/';
+                            window.location.href = '/'
                         }}
                 >
-                    Портал Golang
+                    Портал на Golang
                 </Button>
             </Space>
         </Header>

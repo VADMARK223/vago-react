@@ -4,7 +4,8 @@ import {HomePage} from '../features/home/HomePage.tsx'
 import {SignInPage} from '../features/auth/SignInPage.tsx'
 import {NotFoundPage} from './NotFoundPage.tsx'
 import {route} from './route'
-import {QuestionPage} from '../features/test/QuestionPage.tsx'
+import {TestPage} from '../features/test/TestPage.tsx'
+import {QuestionPage} from '../features/questions/QuestionPage.tsx'
 import {SignUpPage} from '../features/auth/SignUpPage.tsx'
 import {ROUTE} from '../constants/routes.ts'
 import {TasksPage} from '../features/tasks/TasksPage.tsx'
@@ -63,7 +64,8 @@ export const router = createBrowserRouter(
                         }),
                     ]
                 }),
-                route({path: ROUTE.QUESTIONS, element: <QuestionPage/>, handle: {title: 'Вопросы'}}),
+                route({path: ROUTE.TEST, element: <TestPage/>, handle: {title: 'Тест (Go)'}}),
+                route({path: ROUTE.QUESTIONS, element: <QuestionPage/>, handle: {title: 'Вопросы (Go)'}}),
                 route({
                     path: ROUTE.TASKS,
                     element: (

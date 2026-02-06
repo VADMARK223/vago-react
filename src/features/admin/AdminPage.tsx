@@ -18,6 +18,12 @@ export default function AdminPage() {
             children: 'Комментарии',
             disabled: true,
         },
+        {
+            key: 'messages',
+            label: 'Сообщения',
+            children: 'Сообщения',
+            disabled: true,
+        },
     ]
 
     return (
