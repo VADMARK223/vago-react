@@ -1,3 +1,4 @@
+import style from './ScrollableContainer.module.css'
 import * as React from 'react'
 import {useRef} from 'react'
 import {ScrollToTopButton} from './ScrollToTopButton.tsx'
@@ -10,8 +11,8 @@ export function ScrollableContainer({children}: Props) {
     const containerRef = useRef<HTMLDivElement>(null)
 
     return (
-        <div className={'scrollable-wrapper'}>
-            <div ref={containerRef} className={'scrollable-content'}>{children}</div>
+        <div className={style.scrollableWrapper}>
+            <div ref={containerRef} className={style.scrollableContent}>{children}</div>
             <ScrollToTopButton containerRef={containerRef}/>
         </div>
     )

@@ -1,5 +1,7 @@
 import {UseMemoBlock} from './UseMemoBlock.tsx'
 import {UseEffectBlock} from './UseEffectBlock.tsx'
+import {UseStateBlock} from './UseStateBlock.tsx'
+import {UseReducerBlock} from './UseReducerBlock.tsx'
 
 export default function HooksChapter() {
     return (
@@ -7,14 +9,13 @@ export default function HooksChapter() {
             <a href="#useState">useState</a><br/>
             <a href="#useEffect">useEffect</a><br/>
             <a href="#useMemo">useMemo</a><br/>
+            <a href="#useReducer">useReducer</a><br/>
             <a href="#useImperativeHandle">useImperativeHandle</a>
             <hr/>
-
-            <h2 id={'useState'}>useState</h2>
-            <p>Хук для хранения и обновления <b>локального состояния компонента.</b></p>
-
+            <UseStateBlock/>
+            <hr/>
             <UseEffectBlock/>
-                <hr/>
+            <hr/>
 
             <h2>useContext</h2>
             <p>доступ к контексту</p>
@@ -30,8 +31,9 @@ export default function HooksChapter() {
             <p>Это про <b>мемоизацию функций</b>, чтобы React не создавал их заново на каждом рендере. Часто идёт в
                 паре с <code>useMemo</code> и <code>React.memo</code>.</p>
 
-            <h2>useReducer</h2>
-            <p>сложное состояние</p>
+            <hr/>
+            <UseReducerBlock/>
+            <hr/>
 
             <h2>useLayoutEffect</h2>
             <p>sync-эффекты</p>

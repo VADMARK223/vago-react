@@ -4,13 +4,13 @@ import {App as AntApp, ConfigProvider, theme} from 'antd'
 import {RouterProvider} from 'react-router-dom'
 import {router} from './app/router.tsx'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
-import {StrictMode} from 'react'
+// import {StrictMode} from 'react'
 
 const {darkAlgorithm} = theme
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
-    <StrictMode>
+    // <StrictMode>
         <ConfigProvider
             theme={{
                 algorithm: darkAlgorithm,
@@ -46,5 +46,5 @@ createRoot(document.getElementById('root')!).render(
                 </AntApp>
             </QueryClientProvider>
         </ConfigProvider>
-    </StrictMode>
+    // </StrictMode>
 )

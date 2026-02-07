@@ -25,8 +25,8 @@ export const useDeleteUser = () => {
 
     return useMutation({
             mutationFn: (id: number) => api.delete(`${URL.USERS}/${id}`).json<UserDeleteResponse>(),
-            onSuccess: () => {
-                qc.invalidateQueries({queryKey: [QUERY_KEY.USERS]})
+            onSuccess: async () => {
+                await qc.invalidateQueries({queryKey: [QUERY_KEY.USERS]})
             }
         }
     )

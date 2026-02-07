@@ -1,0 +1,13 @@
+.scrollableWrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 0;
+    width: 100%;
+}
+
+.scrollableContent {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
