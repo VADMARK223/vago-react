@@ -37,6 +37,10 @@ createRoot(document.getElementById('root')!).render(
                         darkItemSelectedBg: '#44475A',
                         darkItemSelectedColor: '#F8F8F2',
                     },
+                    Card: {
+                        bodyPadding: 12,
+                        headerPadding: 12,
+                    },
                 },
             }}
         >

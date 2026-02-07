@@ -4,11 +4,11 @@ import {useDeleteUser} from '../admin.ts'
 import type {JSX} from 'react'
 import {getKyErrorMessage} from '../../../shared/api/kyClient.ts'
 
-interface DeleteUserButtonProps {
+interface Props {
     id: number
 }
 
-export function DeleteUserButton({id}: DeleteUserButtonProps): JSX.Element {
+export function DeleteUserButton({id}: Props): JSX.Element {
     const {message} = App.useApp()
     const {mutate: deleteUser, isPending} = useDeleteUser()
 
@@ -20,7 +20,6 @@ export function DeleteUserButton({id}: DeleteUserButtonProps): JSX.Element {
                     message.success(response.message)
                 },
                 onError: async (err)=>{
-
                     const errorMsg = await getKyErrorMessage(err)
                     message.error(errorMsg)
                 }

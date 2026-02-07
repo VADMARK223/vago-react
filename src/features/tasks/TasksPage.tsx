@@ -1,36 +1,103 @@
-import {Button} from 'antd'
+import styles from './TaskPage.module.css'
+import {App, Button, Card, Checkbox, Empty, Form, Input, Space} from 'antd'
+import {type TaskRequest, useCreateTask, useTasks, useUpdateTaskMutation} from './tasks.ts'
+import {ScrollableContainer} from '../../shared/ui/ScrollableContainer.tsx'
+import {CODE} from '../../constants/codes.ts'
+import TextArea from 'antd/es/input/TextArea'
+import {getKyErrorMessage} from '../../shared/api/kyClient.ts'
+import {DeleteTaskButton} from './DeleteTaskButton.tsx'
+import dayjs from 'dayjs'
 
 export function TasksPage() {
-    return (
-        <>
-            <div>React версия в разработке...</div>
-            <Button type={'primary'} onClick={() => {
-                window.location.href = '/tasks'
-            }}>Версия на Go template</Button>
-        </>
-
-    )
-
-
-    /*const {data: tasks, isLoading, isError} = useTasks()
+    const {message} = App.useApp()
+    const {data: tasks, isLoading, isError} = useTasks()
+    const createTask = useCreateTask()
+    const updateTaskMutation = useUpdateTaskMutation()
+    const [form] = Form.useForm()
+    const name: string = Form.useWatch(CODE.NAME, form)
+    const isDisabled: boolean = !name
 
     if (isLoading) return <div>Loading...</div>
     if (isError) return <div>Error</div>
 
-    return <div className={'page'}>
-        <Typography.Title level={3} style={{marginTop: 0}}>
-            Список задач пользователя
-        </Typography.Title>
-        <ScrollableContainer>
+    const onFinish = (req: TaskRequest) => {
+        createTask.mutate(req, {
+            onError: async (err) => {
+                const serverMsg = await getKyErrorMessage(err)
+                message.error(serverMsg ?? 'Ошибка входа')
+            }
+        })
+    }
+
+    return <>
+        <Form<TaskRequest> form={form} style={{marginBottom: '8px'}} onFinish={onFinish}>
+            <Form.Item
+                name={CODE.NAME}
+                rules={[{required: true, message: 'Введите наименование задачи'}]}
+            >
+                <Input placeholder={'Наименование задачи'} maxLength={255} allowClear/>
+            </Form.Item>
+
+            <Form.Item name={CODE.DESCRIPTION} help={null}>
+                <TextArea placeholder={'Описание задачи'} allowClear/>
+            </Form.Item>
+
+            <Form.Item
+                name={CODE.COMPLETED}
+                valuePropName={'checked'}
+                initialValue={false}
+            >
+                <Checkbox>Выполнена</Checkbox>
+            </Form.Item>
+
+            <Button
+                type="primary"
+                htmlType="submit"
+                disabled={isDisabled}
+                block
+            >
+                Создать задачу
+            </Button>
+        </Form>
+        <ScrollableContainer>{tasks && tasks.length === 0 ? (
+            <Empty description={'Нет задач'} />
+        ) : (
             <Space orientation={'vertical'} style={{width: '100%'}}>
                 {tasks?.map((task) => (
                     <Card key={task.id}
-                          title={`${task.id}. ${task.name}`}
+                          title={<span
+                              className={task.completed ? styles.taskTitleCompleted : undefined}>
+                              {task.name}
+                    </span>}
+                          extra={(
+                              <Space orientation={'horizontal'}>
+                                  <Checkbox
+                                      checked={task.completed}
+                                      style={{color: task.completed ? 'green' : undefined}}
+                                      onChange={(e) => {
+                                          updateTaskMutation.mutate({
+                                              id: task.id,
+                                              completed: e.target.checked
+                                          })
+                                      }}
+                                  >
+                                      Выполнена
+                                  </Checkbox>
+                                  <DeleteTaskButton id={task.id}/>
+                              </Space>
+                          )}
                     >
-                        {task.description}
+                        <div className={styles.taskBody}>
+                            {task.description}
+                        </div>
+
+                        <div className={styles.taskFooter}>
+                            Создана: {dayjs(task.createdAt).format('DD.MM.YYYY HH:mm')}
+                        </div>
                     </Card>
                 ))}
             </Space>
+        )}
         </ScrollableContainer>
-    </div>*/
+    </>
 }

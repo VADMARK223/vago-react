@@ -56,24 +56,24 @@ export function SignUpPage() {
             <Typography.Title level={3} style={{marginTop: 0}}> Регистрация </Typography.Title>
 
             <Form<SignUpFormValues>
-                form={form} layout="vertical"
+                form={form} layout={'vertical'}
                 onValuesChange={handleValueChange}
                 onFinish={onFinish}
                 initialValues={{role: DEFAULT_ROLE}}
             >
-                <Form.Item label="Логин" name={CODE.LOGIN} rules={[{required: true, message: 'Введите логин'}]}>
-                    <Input placeholder="Введите логин" maxLength={MAX_VALUE.LOGIN} allowClear/>
+                <Form.Item label={'Логин'} name={CODE.LOGIN} rules={[{required: true, message: 'Введите логин'}]}>
+                    <Input placeholder={'Введите логин'} maxLength={MAX_VALUE.LOGIN} allowClear/>
                 </Form.Item>
 
-                <Form.Item label="Пароль" name={CODE.PASSWORD} rules={[{required: true, message: 'Введите пароль'}]}>
-                    <Input.Password placeholder="Введите пароль" maxLength={MAX_VALUE.PASSWORD} allowClear/>
+                <Form.Item label={'Пароль'} name={CODE.PASSWORD} rules={[{required: true, message: 'Введите пароль'}]}>
+                    <Input.Password placeholder={'Введите пароль'} maxLength={MAX_VALUE.PASSWORD} allowClear/>
                 </Form.Item>
 
                 <Form.Item label={'Никнейм'} name={CODE.USERNAME} rules={[{required: true, message: 'Введите никнейм'}]}
                            extra={'Можно оставить автоматически сгенерированный'}
                 >
                     <Input
-                        placeholder="Введите никнейм"
+                        placeholder={'Введите никнейм'}
                         maxLength={MAX_VALUE.USERNAME}
                         onChange={() => setUsernameTouched(true)} allowClear
                     />
@@ -92,10 +92,10 @@ export function SignUpPage() {
                     />
                 </Form.Item>
 
-                <Space orientation="vertical">
+                <Space orientation={'vertical'}>
                     <Button
-                        type="primary"
-                        htmlType="submit"
+                        type={'primary'}
+                        htmlType={'submit'}
                         disabled={isDisabled}
                         block
                     >

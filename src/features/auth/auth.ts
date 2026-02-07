@@ -101,7 +101,7 @@ const signInRequest = async (data: SignInRequest) => {
 }
 
 const signUpRequest = async (data: SignUpRequest) => {
-    return api.post(URL.SIGN_UP, {json: data,}).json<SignUpResponse>()
+    return api.post(URL.SIGN_UP, {json: data}).json<SignUpResponse>()
 }
 
 export const toSignUpRequest = (values: SignUpFormValues): SignUpRequest => {
