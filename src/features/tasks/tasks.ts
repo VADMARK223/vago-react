@@ -33,7 +33,6 @@ export const useCreateTask = () => {
     const qc = useQueryClient()
     return useMutation({
         mutationFn: async (data: TaskRequest) => {
-            console.log('data', data)
             return await api.post(URL.TASKS, {json: data}).json<TaskResponse>()
         },
         onSuccess: async () => {

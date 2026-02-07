@@ -38,7 +38,7 @@ export function TasksPage() {
                 <Input placeholder={'Наименование задачи'} maxLength={255} allowClear/>
             </Form.Item>
 
-            <Form.Item name={CODE.DESCRIPTION} help={null}>
+            <Form.Item name={CODE.DESCRIPTION} help={null} style={{ marginBottom: 8 }}>
                 <TextArea placeholder={'Описание задачи'} allowClear/>
             </Form.Item>
 
@@ -46,6 +46,7 @@ export function TasksPage() {
                 name={CODE.COMPLETED}
                 valuePropName={'checked'}
                 initialValue={false}
+                style={{ marginBottom: 8 }}
             >
                 <Checkbox>Выполнена</Checkbox>
             </Form.Item>
@@ -60,7 +61,7 @@ export function TasksPage() {
             </Button>
         </Form>
         <ScrollableContainer>{tasks && tasks.length === 0 ? (
-            <Empty description={'Нет задач'} />
+            <Empty description={'Список задач пуст'} />
         ) : (
             <Space orientation={'vertical'} style={{width: '100%'}}>
                 {tasks?.map((task) => (

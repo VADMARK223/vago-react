@@ -39,21 +39,21 @@ export function SignInPage() {
 
             <Form
                 form={form}
-                layout="vertical"
+                layout={'vertical'}
                 onFinish={onFinish}
             >
-                <Form.Item label="Логин" name={CODE.LOGIN} rules={[{required: true, message: 'Введите логин'}]}>
-                    <Input placeholder="Введите логин" allowClear autoComplete={'username'}/>
+                <Form.Item label={'Логин'} name={CODE.LOGIN} rules={[{required: true, message: 'Введите логин'}]}>
+                    <Input placeholder={'Введите логин'} allowClear autoComplete={'username'}/>
                 </Form.Item>
 
-                <Form.Item label="Пароль" name={CODE.PASSWORD} rules={[{required: true, message: 'Введите пароль'}]}>
-                    <Input.Password placeholder="Введите пароль" allowClear autoComplete={'current-password'}/>
+                <Form.Item label={'Пароль'} name={CODE.PASSWORD} rules={[{required: true, message: 'Введите пароль'}]}>
+                    <Input.Password placeholder={'Введите пароль'} allowClear autoComplete={'current-password'}/>
                 </Form.Item>
 
-                <Space orientation="vertical">
+                <Space orientation={'vertical'}>
                     <Button
-                        type="primary"
-                        htmlType="submit"
+                        type={'primary'}
+                        htmlType={'submit'}
                         disabled={isDisabled}
                         block
                         loading={signInMutation.isPending}
