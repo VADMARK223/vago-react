@@ -1,5 +1,6 @@
 import styles from './Book.module.css'
 import {Button, Select} from 'antd'
+import {StepBackwardOutlined} from '@ant-design/icons'
 
 import {Outlet, useMatch, useNavigate, useParams} from 'react-router-dom'
 import {ROUTE} from '../../constants/routes.ts'
@@ -28,7 +29,10 @@ export default function BookPage() {
     return (
         <>
             <div className={styles.header}>
-                <Button type={'primary'} onClick={handleBack} disabled={!!isToc}>Назад</Button>
+                <Button type={'primary'}
+                        onClick={handleBack}
+                        disabled={!!isToc}
+                        icon={<StepBackwardOutlined/>}>Назад</Button>
                 <Button type={'primary'} onClick={() => {
                     navigate(ROUTE.BOOK, {replace: true})
                 }}>Оглавление</Button>

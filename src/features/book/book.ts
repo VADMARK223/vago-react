@@ -1,6 +1,6 @@
 import type {ComponentType} from 'react'
 
-type ChapterType = 'react' | 'ts'
+export type ChapterType = 'react' | 'ts' | 'js'
 
 export type Chapter = {
     id: number;

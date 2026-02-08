@@ -1,13 +1,6 @@
 import {CodeBlock} from '../../CodeBlock.tsx'
-import {ROLE_ENUM} from '../../../../constants/roles.ts'
-import {useEffect} from 'react'
 
 export default function ConstObjectAsEnumPattern() {
-
-    useEffect(() => {
-        ROLE_ENUM.admin = 'asd'
-    }, [])
-
     return (
         <>
             <a href="#1">Почему не enum?</a><br/>

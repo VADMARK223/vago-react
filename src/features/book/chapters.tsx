@@ -30,4 +30,14 @@ export const chapters: Chapter[] = [{
     title: 'Правила использования хуков',
     type: 'react',
     load: () => import('./chapters/react/HooksRulesChapter.tsx')
+}, {
+    id: 7,
+    title: 'Event loop',
+    type: 'js',
+    load: () => import('./chapters/js/EventLoopChapter.tsx')
+}, {
+    id: 8,
+    title: 'Expression reduce',
+    type: 'js',
+    load: () => import('./chapters/js/ReduceChapter.tsx')
 }]

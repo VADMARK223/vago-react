@@ -39,7 +39,7 @@ export function AppHeader({collapsed, onToggleCollapse}: AppHeaderProps) {
             <Space>
                 <UserInfo/>
 
-                <Button type="primary"
+                <Button type={'primary'} color={'volcano'} variant={'solid'}
                         onClick={() => {
                             window.location.href = '/'
                         }}

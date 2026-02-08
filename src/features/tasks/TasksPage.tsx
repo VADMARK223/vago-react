@@ -1,5 +1,6 @@
 import styles from './TaskPage.module.css'
 import {App, Button, Card, Checkbox, Empty, Form, Input, Space} from 'antd'
+import {PlusCircleOutlined} from '@ant-design/icons'
 import {type TaskRequest, useCreateTask, useTasks, useUpdateTaskMutation} from './tasks.ts'
 import {ScrollableContainer} from '../../shared/ui/ScrollableContainer.tsx'
 import {CODE} from '../../constants/codes.ts'
@@ -55,6 +56,7 @@ export function TasksPage() {
                 type="primary"
                 htmlType="submit"
                 disabled={isDisabled}
+                icon={<PlusCircleOutlined/>}
                 block
             >
                 Создать задачу
