@@ -8,11 +8,16 @@ import {
     RobotOutlined,
     ScheduleOutlined,
     UnorderedListOutlined,
-    WechatOutlined
+    WechatOutlined,
+    SettingOutlined
 } from '@ant-design/icons'
 import {useAuth, useSignInRedirect} from '../features/auth/auth.ts'
 
-export function AppMenu() {
+interface Props {
+    onItemClick?: () => void
+}
+
+export function AppMenu({onItemClick}:Props) {
     const navigate = useNavigate()
     const location = useLocation()
     const goSignIn = useSignInRedirect()
@@ -26,9 +31,9 @@ export function AppMenu() {
 
     const items: MenuProps['items'] = [
         {key: '/', icon: <HomeOutlined/>, label: <Link to="/">Главная</Link>},
-        {key: ROUTE.BOOK, icon: <ReadOutlined/>, label: <Link to={ROUTE.BOOK}>Книга (TS / React)</Link>},
-        {key: ROUTE.TEST, icon: <ScheduleOutlined/>, label: <Link to={ROUTE.TEST}>Тест (Go)</Link>},
-        {key: ROUTE.QUESTIONS, icon: <ScheduleOutlined/>, label: <Link to={ROUTE.QUESTIONS}>Вопросы (Go)</Link>},
+        {key: ROUTE.BOOK, icon: <ReadOutlined/>, label: <Link to={ROUTE.BOOK}>Книга</Link>},
+        {key: ROUTE.TEST, icon: <ScheduleOutlined/>, label: <Link to={ROUTE.TEST}>Тест</Link>},
+        {key: ROUTE.QUESTIONS, icon: <ScheduleOutlined/>, label: <Link to={ROUTE.QUESTIONS}>Вопросы</Link>},
         {type: 'divider' as const},
         {
             key: ROUTE.TASKS,
@@ -41,10 +46,15 @@ export function AppMenu() {
             label: <Link to={ROUTE.CHAT}>Чат</Link>
         },
         {
-            key: '/admin',
+            key: ROUTE.ADMIN,
             icon: <RobotOutlined/>,
-            label: <Link to="/admin">Админка</Link>,
+            label: <Link to={ROUTE.ADMIN}>Админка</Link>,
             disabled: isLoading || !isAuthed || !isAdminModerator,
+        },
+        {
+            key: ROUTE.SETTINGS,
+            icon: <SettingOutlined/>,
+            label: <Link to={ROUTE.SETTINGS}>Настройки</Link>
         },
     ]
 
@@ -59,6 +69,7 @@ export function AppMenu() {
         }
 
         navigate(key)
+        onItemClick?.()
     }
 
     return (

@@ -13,6 +13,7 @@ import {lazy, Suspense} from 'react'
 import {adminLazy} from '../features/admin/admin.lazy.tsx'
 import {ChatPage} from '../features/chat/ChatPage.tsx'
 import {AuthRoute} from '../features/auth/AuthRoute.tsx'
+import {SettingsPage} from '../features/settings/SettingsPage.tsx'
 
 const BookPage = lazy(() => import(
     /* webpackChunkName: "book" */
@@ -53,7 +54,7 @@ export const router = createBrowserRouter(
                                 <Suspense fallback={<div>Загрузка оглавления...</div>}>
                                     <BookTocPage/>
                                 </Suspense>
-                            ), handle: {title: 'Книга (TS / React)'}
+                            ), handle: {title: 'Книга (React / TS / JS)'}
                         }),
                         route({
                             path: ':chapterId', element: (
@@ -82,6 +83,13 @@ export const router = createBrowserRouter(
                         </AuthRoute>
                     ),
                     handle: {title: 'Чат'}
+                }),
+                route({
+                    path: ROUTE.SETTINGS,
+                    element: (
+                        <SettingsPage/>
+                    ),
+                    handle: {title: 'Настройки'}
                 }),
 
                 route({

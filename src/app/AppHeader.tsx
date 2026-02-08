@@ -1,10 +1,12 @@
 import {Button, Space, Typography} from 'antd'
-import {MenuFoldOutlined, MenuUnfoldOutlined, GoogleOutlined} from '@ant-design/icons'
+import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons'
 import {Header} from 'antd/es/layout/layout'
 import {useMatches} from 'react-router-dom'
 import {useMemo} from 'react'
 import type {RouteHandle} from './route.ts'
 import {UserInfo} from '../features/auth/UserInfo.tsx'
+import {GoButton} from './GoButton.tsx'
+import {useAppUi} from '../shared/ui/useAppUi.ts'
 
 type AppHeaderProps = {
     collapsed: boolean;
@@ -12,6 +14,7 @@ type AppHeaderProps = {
 }
 
 export function AppHeader({collapsed, onToggleCollapse}: AppHeaderProps) {
+    const {isPhone} = useAppUi()
     const matches = useMatches()
 
     const headerTitle = useMemo(() => {
@@ -29,7 +32,7 @@ export function AppHeader({collapsed, onToggleCollapse}: AppHeaderProps) {
         <Header className={'header'}>
             <Space>
                 <Button
-                    type="text"
+                    type={'text'}
                     onClick={() => onToggleCollapse()}
                     icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
                 />
@@ -37,16 +40,8 @@ export function AppHeader({collapsed, onToggleCollapse}: AppHeaderProps) {
             </Space>
 
             <Space>
-                <UserInfo/>
-
-                <Button type={'primary'} color={'volcano'} variant={'solid'}
-                        onClick={() => {
-                            window.location.href = '/'
-                        }}
-                        icon={<GoogleOutlined />}
-                >
-                    Портал на Golang
-                </Button>
+                <UserInfo isPhone={isPhone}/>
+                <GoButton isPhone={isPhone}/>
             </Space>
         </Header>
     )

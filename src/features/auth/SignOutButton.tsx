@@ -5,7 +5,11 @@ import {api} from '../../shared/api/kyClient.ts'
 import {CODE} from '../../constants/codes.ts'
 import {QUERY_KEY} from '../../constants/queryKeys.ts'
 
-export function SignOutButton() {
+interface Props {
+    iconOnly?: boolean
+}
+
+export function SignOutButton({iconOnly}: Props) {
     const {message} = App.useApp()
     const qc = useQueryClient()
 
@@ -15,11 +19,18 @@ export function SignOutButton() {
         enabled: false,
     })
 
-    return <Button icon={<LogoutOutlined/>} onClick={() => {
-        refetch().then(() => {
-            message.info('Успешный выход.').then()
-            // qc.invalidateQueries({queryKey: [QUERY_KEY.ME]}).then()
-            qc.setQueryData([QUERY_KEY.ME], null)
-        })
-    }}>Выйти</Button>
+    return (
+        <Button
+            icon={<LogoutOutlined/>}
+            onClick={() => {
+                refetch().then(() => {
+                    message.info('Успешный выход.').then()
+                    // qc.invalidateQueries({queryKey: [QUERY_KEY.ME]}).then()
+                    qc.setQueryData([QUERY_KEY.ME], null)
+                })
+            }}
+        >
+            {!iconOnly && 'Выйти'}
+        </Button>
+    )
 }

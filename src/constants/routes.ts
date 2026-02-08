@@ -7,6 +7,7 @@ export const ROUTE = {
     ADMIN: '/admin',
     TASKS: '/tasks',
     CHAT: '/chat',
+    SETTINGS: '/settings',
     QUESTIONS: '/questions',
     TEST: '/test'
 } as const
