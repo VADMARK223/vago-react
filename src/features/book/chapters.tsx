@@ -40,4 +40,9 @@ export const chapters: Chapter[] = [{
     title: 'Expression reduce',
     type: 'js',
     load: () => import('./chapters/js/ReduceChapter.tsx')
+}, {
+    id: 9,
+    title: 'Expression flatMap',
+    type: 'js',
+    load: () => import('./chapters/js/FlatMapChapter.tsx')
 }]

@@ -10,7 +10,7 @@ export function AppLayout() {
     const [collapsed, setCollapsed] = useState(false)
 
     return (
-        <Layout style={{minHeight: '100vh'}}>
+        <Layout>
             <Sider collapsible collapsed={collapsed} trigger={null}>
                 <AppMenu/>
             </Sider>

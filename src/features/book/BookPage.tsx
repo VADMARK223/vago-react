@@ -1,6 +1,6 @@
 import styles from './Book.module.css'
 import {Button, Select} from 'antd'
-import {StepBackwardOutlined} from '@ant-design/icons'
+import {MenuOutlined, StepBackwardOutlined} from '@ant-design/icons'
 
 import {Outlet, useMatch, useNavigate, useParams} from 'react-router-dom'
 import {ROUTE} from '../../constants/routes.ts'
@@ -21,10 +21,35 @@ export default function BookPage() {
     const chapterNumber = Number(chapterId)
     const selectedId = Number.isFinite(chapterNumber) ? chapterNumber : undefined
 
-    const options = chapters.map(ch => ({
-        value: ch.id,
-        label: ch.title
-    }))
+    const groupedOptions = [
+        {
+            label: 'React',
+            options: chapters
+                .filter(ch => ch.type === 'react')
+                .map(ch => ({
+                    value: ch.id,
+                    label: ch.title,
+                })),
+        },
+        {
+            label: 'TypeScript',
+            options: chapters
+                .filter(ch => ch.type === 'ts')
+                .map(ch => ({
+                    value: ch.id,
+                    label: ch.title,
+                })),
+        },
+        {
+            label: 'JavaScript',
+            options: chapters
+                .filter(ch => ch.type === 'js')
+                .map(ch => ({
+                    value: ch.id,
+                    label: ch.title,
+                })),
+        },
+    ]
 
     return (
         <>
@@ -32,12 +57,20 @@ export default function BookPage() {
                 <Button type={'primary'}
                         onClick={handleBack}
                         disabled={!!isToc}
-                        icon={<StepBackwardOutlined/>}>Назад</Button>
-                <Button type={'primary'} onClick={() => {
-                    navigate(ROUTE.BOOK, {replace: true})
-                }}>Оглавление</Button>
+                        icon={<StepBackwardOutlined/>}
+                >
+                    Назад
+                </Button>
+                <Button type={'primary'}
+                        onClick={() => {
+                            navigate(ROUTE.BOOK, {replace: true})
+                        }}
+                        icon={<MenuOutlined/>}
+                >
+                    Оглавление
+                </Button>
                 <Select style={{width: '100%', visibility: isToc ? 'hidden' : 'visible'}}
-                        options={options}
+                        options={groupedOptions}
                         value={selectedId}
                         onChange={(val) => {
                             navigate(`${ROUTE.BOOK}/${val}`)

@@ -1,5 +1,5 @@
 import {Button, Space, Typography} from 'antd'
-import {MenuFoldOutlined, MenuUnfoldOutlined} from '@ant-design/icons'
+import {MenuFoldOutlined, MenuUnfoldOutlined, GoogleOutlined} from '@ant-design/icons'
 import {Header} from 'antd/es/layout/layout'
 import {useMatches} from 'react-router-dom'
 import {useMemo} from 'react'
@@ -43,6 +43,7 @@ export function AppHeader({collapsed, onToggleCollapse}: AppHeaderProps) {
                         onClick={() => {
                             window.location.href = '/'
                         }}
+                        icon={<GoogleOutlined />}
                 >
                     Портал на Golang
                 </Button>

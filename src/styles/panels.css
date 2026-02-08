@@ -1,6 +1,7 @@
 .header {
     background: var(--bg-panel);
-    min-width: var(--layout-max-width);
+    /*min-width: var(--layout-min-width);*/
+    min-width: 0;
     padding: 0 var(--space-4);
     display: flex;
     align-items: center;
@@ -12,7 +13,7 @@
 
 .content {
     background: var(--bg-panel);
-    min-width: var(--layout-max-width);
+    /*min-width: var(--layout-max-width);*/
     max-width: var(--layout-max-width);
     border-radius: var(--radius-md);
     border: 1px solid rgba(0, 0, 0, 0.06);
