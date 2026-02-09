@@ -1,20 +1,19 @@
 .taskTitleCompleted {
-    text-decoration: line-through;
-    opacity: 0.6;
+  text-decoration: line-through;
+  opacity: 0.6;
 }
 
-
 .taskBody {
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-    padding-bottom: 16px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  padding-bottom: 16px;
 }
 
 .taskFooter {
-    border-top: 1px solid #474e78;
-    font-size: 12px;
-    opacity: 0.6;
-    padding-top: var(--space-4);
-    text-align: center;
+  border-top: 1px solid #474e78;
+  font-size: 12px;
+  opacity: 0.6;
+  padding-top: var(--space-4);
+  text-align: center;
 }

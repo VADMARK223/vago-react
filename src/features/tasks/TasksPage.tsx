@@ -1,106 +1,109 @@
-import styles from './TaskPage.module.css'
-import {App, Button, Card, Checkbox, Empty, Form, Input, Space} from 'antd'
-import {PlusCircleOutlined} from '@ant-design/icons'
-import {type TaskRequest, useCreateTask, useTasks, useUpdateTaskMutation} from './tasks.ts'
-import {ScrollableContainer} from '../../shared/ui/ScrollableContainer.tsx'
-import {CODE} from '../../constants/codes.ts'
-import TextArea from 'antd/es/input/TextArea'
-import {getKyErrorMessage} from '../../shared/api/kyClient.ts'
-import {DeleteTaskButton} from './DeleteTaskButton.tsx'
-import dayjs from 'dayjs'
+import styles from './TaskPage.module.css';
+import { App, Button, Card, Checkbox, Empty, Form, Input, Space } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
+import { type TaskRequest, useCreateTask, useTasks, useUpdateTaskMutation } from './tasks.ts';
+import { ScrollableContainer } from '../../shared/ui/ScrollableContainer.tsx';
+import { CODE } from '../../constants/codes.ts';
+import TextArea from 'antd/es/input/TextArea';
+import { getKyErrorMessage } from '../../shared/api/kyClient.ts';
+import { DeleteTaskButton } from './DeleteTaskButton.tsx';
+import dayjs from 'dayjs';
 
 export function TasksPage() {
-    const {message} = App.useApp()
-    const {data: tasks, isLoading, isError} = useTasks()
-    const createTask = useCreateTask()
-    const updateTaskMutation = useUpdateTaskMutation()
-    const [form] = Form.useForm()
-    const name: string = Form.useWatch(CODE.NAME, form)
-    const isDisabled: boolean = !name
+  const { message } = App.useApp();
+  const { data: tasks, isLoading, isError } = useTasks();
+  const createTask = useCreateTask();
+  const updateTaskMutation = useUpdateTaskMutation();
+  const [form] = Form.useForm();
+  const name: string = Form.useWatch(CODE.NAME, form);
+  const isDisabled: boolean = !name;
 
-    if (isLoading) return <div>Loading...</div>
-    if (isError) return <div>Error</div>
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error</div>;
 
-    const onFinish = (req: TaskRequest) => {
-        createTask.mutate(req, {
-            onError: async (err) => {
-                const serverMsg = await getKyErrorMessage(err)
-                message.error(serverMsg ?? 'Ошибка входа')
-            }
-        })
-    }
+  const onFinish = (req: TaskRequest) => {
+    createTask.mutate(req, {
+      onError: async (err) => {
+        const serverMsg = await getKyErrorMessage(err);
+        message.error(serverMsg ?? 'Ошибка входа');
+      },
+    });
+  };
 
-    return <>
-        <Form<TaskRequest> form={form} style={{marginBottom: '8px'}} onFinish={onFinish}>
-            <Form.Item
-                name={CODE.NAME}
-                rules={[{required: true, message: 'Введите наименование задачи'}]}
-            >
-                <Input placeholder={'Наименование задачи'} maxLength={255} allowClear/>
-            </Form.Item>
+  return (
+    <>
+      <Form<TaskRequest> form={form} style={{ marginBottom: '8px' }} onFinish={onFinish}>
+        <Form.Item
+          name={CODE.NAME}
+          rules={[{ required: true, message: 'Введите наименование задачи' }]}
+        >
+          <Input placeholder="Наименование задачи" maxLength={255} allowClear />
+        </Form.Item>
 
-            <Form.Item name={CODE.DESCRIPTION} help={null} style={{ marginBottom: 8 }}>
-                <TextArea placeholder={'Описание задачи'} allowClear/>
-            </Form.Item>
+        <Form.Item name={CODE.DESCRIPTION} help={null} style={{ marginBottom: 8 }}>
+          <TextArea placeholder="Описание задачи" allowClear />
+        </Form.Item>
 
-            <Form.Item
-                name={CODE.COMPLETED}
-                valuePropName={'checked'}
-                initialValue={false}
-                style={{ marginBottom: 8 }}
-            >
-                <Checkbox>Выполнена</Checkbox>
-            </Form.Item>
+        <Form.Item
+          name={CODE.COMPLETED}
+          valuePropName="checked"
+          initialValue={false}
+          style={{ marginBottom: 8 }}
+        >
+          <Checkbox>Выполнена</Checkbox>
+        </Form.Item>
 
-            <Button
-                type="primary"
-                htmlType="submit"
-                disabled={isDisabled}
-                icon={<PlusCircleOutlined/>}
-                block
-            >
-                Создать задачу
-            </Button>
-        </Form>
-        <ScrollableContainer>{tasks && tasks.length === 0 ? (
-            <Empty description={'Список задач пуст'} />
+        <Button
+          type="primary"
+          htmlType="submit"
+          disabled={isDisabled}
+          icon={<PlusCircleOutlined />}
+          block
+        >
+          Создать задачу
+        </Button>
+      </Form>
+      <ScrollableContainer>
+        {tasks && tasks.length === 0 ? (
+          <Empty description="Список задач пуст" />
         ) : (
-            <Space orientation={'vertical'} style={{width: '100%'}}>
-                {tasks?.map((task) => (
-                    <Card key={task.id}
-                          title={<span
-                              className={task.completed ? styles.taskTitleCompleted : undefined}>
-                              {task.name}
-                    </span>}
-                          extra={(
-                              <Space orientation={'horizontal'}>
-                                  <Checkbox
-                                      checked={task.completed}
-                                      style={{color: task.completed ? 'green' : undefined}}
-                                      onChange={(e) => {
-                                          updateTaskMutation.mutate({
-                                              id: task.id,
-                                              completed: e.target.checked
-                                          })
-                                      }}
-                                  >
-                                      Выполнена
-                                  </Checkbox>
-                                  <DeleteTaskButton id={task.id}/>
-                              </Space>
-                          )}
+          <Space orientation="vertical" style={{ width: '100%' }}>
+            {tasks?.map((task) => (
+              <Card
+                key={task.id}
+                title={
+                  <span className={task.completed ? styles.taskTitleCompleted : undefined}>
+                    {task.name}
+                  </span>
+                }
+                extra={
+                  <Space orientation="horizontal">
+                    <Checkbox
+                      checked={task.completed}
+                      style={{ color: task.completed ? 'green' : undefined }}
+                      onChange={(e) => {
+                        updateTaskMutation.mutate({
+                          id: task.id,
+                          completed: e.target.checked,
+                        });
+                      }}
                     >
-                        <div className={styles.taskBody}>
-                            {task.description}
-                        </div>
+                      Выполнена
+                    </Checkbox>
+                    <DeleteTaskButton id={task.id} />
+                  </Space>
+                }
+              >
+                <div className={styles.taskBody}>{task.description}</div>
 
-                        <div className={styles.taskFooter}>
-                            Создана: {dayjs(task.createdAt).format('DD.MM.YYYY HH:mm')}
-                        </div>
-                    </Card>
-                ))}
-            </Space>
+                <div className={styles.taskFooter}>
+                  Создана: {dayjs(task.createdAt).format('DD.MM.YYYY HH:mm')}
+                </div>
+              </Card>
+            ))}
+          </Space>
         )}
-        </ScrollableContainer>
+      </ScrollableContainer>
     </>
+  );
 }

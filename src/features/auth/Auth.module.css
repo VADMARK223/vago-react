@@ -1,9 +1,9 @@
 .panel {
-    min-width: 450px;
-    max-width: 450px;
-    margin: var(--space-10) auto;
-    padding: var(--space-4);
-    background: var(--bg-panel);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
+  min-width: 450px;
+  max-width: 450px;
+  margin: var(--space-10) auto;
+  padding: var(--space-4);
+  background: var(--bg-panel);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
 }

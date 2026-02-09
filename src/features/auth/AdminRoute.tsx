@@ -1,27 +1,26 @@
-import {Navigate, useLocation} from 'react-router-dom'
-import {type AuthRedirectState, useAuth} from './auth.ts'
-import type {JSX} from 'react'
-import {ROUTE} from '../../constants/routes.ts'
+import { Navigate, useLocation } from 'react-router-dom';
+import { type AuthRedirectState, useAuth } from './auth.ts';
+import type { JSX } from 'react';
+import { ROUTE } from '../../constants/routes.ts';
 
-export function AdminRoute({children}: { children: JSX.Element }) {
-    const {isAuthed, isAdminModerator, isLoading} = useAuth()
+export function AdminRoute({ children }: { children: JSX.Element }) {
+  const { isAuthed, isAdminModerator, isLoading } = useAuth();
 
-    const location = useLocation()
+  const location = useLocation();
 
-    if (isLoading) {
-        return null
-    }
+  if (isLoading) {
+    return null;
+  }
 
-    if (!isAuthed) {
-        const state: AuthRedirectState = {
-            from: {pathname: location.pathname},
-        }
+  if (!isAuthed) {
+    const state: AuthRedirectState = {
+      from: { pathname: location.pathname },
+    };
 
-        return <Navigate to={ROUTE.SIGN_IN} replace state={state}/>
-    } else if (!isAdminModerator) {
-        return <Navigate to={ROUTE.HOME}/>
-    }
+    return <Navigate to={ROUTE.SIGN_IN} replace state={state} />;
+  } else if (!isAdminModerator) {
+    return <Navigate to={ROUTE.HOME} />;
+  }
 
-
-    return children
+  return children;
 }

@@ -1,47 +1,47 @@
 .header {
-    background: var(--bg-panel);
-    /*min-width: var(--layout-min-width);*/
-    min-width: 0;
-    padding: 0 var(--space-4);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    white-space: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
+  background: var(--bg-panel);
+  /*min-width: var(--layout-min-width);*/
+  min-width: 0;
+  padding: 0 var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .content {
-    background: var(--bg-panel);
-    /*min-width: var(--layout-max-width);*/
-    max-width: var(--layout-max-width);
-    border-radius: var(--radius-md);
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    padding: var(--space-2);
-    margin: var(--space-2) auto;
+  background: var(--bg-panel);
+  /*min-width: var(--layout-max-width);*/
+  max-width: var(--layout-max-width);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  padding: var(--space-2);
+  margin: var(--space-2) auto;
 
-    height: calc(100vh - 64px - 2 * var(--space-2));
+  height: calc(100vh - 64px - 2 * var(--space-2));
 
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .stack {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: stretch;
 }
 
 .panel {
-    display: flex;
-    align-items: center; /* центр по вертикали */
-    justify-content: space-between; /* контент слева, кнопка справа */
+  display: flex;
+  align-items: center; /* центр по вертикали */
+  justify-content: space-between; /* контент слева, кнопка справа */
 
-    background: var(--bg-item);
-    border: var(--border-1);
-    padding: var(--space-4);
-    border-radius: var(--radius-md);
+  background: var(--bg-item);
+  border: var(--border-1);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
 }
