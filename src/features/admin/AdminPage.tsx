@@ -1,7 +1,7 @@
 import { Tabs, type TabsProps } from 'antd';
 import { UsersTab } from './users/UsersTab.tsx';
 
-export default function AdminPage() {
+export const AdminPage = () => {
   const handleTabChange = (activeKey: string) => {
     console.log('handleTabChange', activeKey);
   };
@@ -31,4 +31,4 @@ export default function AdminPage() {
       <Tabs defaultActiveKey="users" items={items} onChange={handleTabChange} />
     </div>
   );
-}
+};

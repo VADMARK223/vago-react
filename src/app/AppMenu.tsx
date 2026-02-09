@@ -10,6 +10,7 @@ import {
   UnorderedListOutlined,
   WechatOutlined,
   SettingOutlined,
+  QuestionCircleOutlined,
 } from '@ant-design/icons';
 import { useAuth, useSignInRedirect } from '../features/auth/auth.ts';
 
@@ -35,7 +36,7 @@ export function AppMenu({ onItemClick }: Props) {
     { key: ROUTE.TEST, icon: <ScheduleOutlined />, label: <Link to={ROUTE.TEST}>Тест</Link> },
     {
       key: ROUTE.QUESTIONS,
-      icon: <ScheduleOutlined />,
+      icon: <QuestionCircleOutlined />,
       label: <Link to={ROUTE.QUESTIONS}>Вопросы</Link>,
     },
     { type: 'divider' as const },

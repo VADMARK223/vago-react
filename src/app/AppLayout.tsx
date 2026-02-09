@@ -2,30 +2,25 @@ import { Drawer, Layout } from 'antd';
 import Sider from 'antd/es/layout/Sider';
 import { Content } from 'antd/es/layout/layout';
 import { Outlet } from 'react-router-dom';
-import { useState } from 'react';
 import { AppHeader } from './AppHeader.tsx';
 import { AppMenu } from './AppMenu.tsx';
 import { useAppUi } from '../shared/ui/useAppUi.ts';
+import { useUiStore } from '../shared/state/ui-store.ts';
 
 export function AppLayout() {
   const { isPhone } = useAppUi();
-  const [collapsed, setCollapsed] = useState(false);
+  const { sidebarOpen, hideSidebar, toggleSidebar } = useUiStore();
 
   return (
     <Layout>
       {!isPhone && (
-        <Sider width={230} collapsed={collapsed} trigger={null}>
+        <Sider width={230} collapsed={!sidebarOpen} trigger={null}>
           <AppMenu />
         </Sider>
       )}
 
       <Layout>
-        <AppHeader
-          collapsed={collapsed}
-          onToggleCollapse={() => {
-            setCollapsed((v) => !v);
-          }}
-        />
+        <AppHeader collapsed={!sidebarOpen} onToggleCollapse={toggleSidebar} />
         <Content>
           <div className="content">
             <Outlet />
@@ -37,18 +32,14 @@ export function AppLayout() {
         <Drawer
           placement="left"
           size={170}
-          open={collapsed}
-          onClose={() => setCollapsed(false)}
+          open={sidebarOpen}
+          onClose={hideSidebar}
           styles={{
             body: { padding: 0 },
             header: { display: 'none' },
           }}
         >
-          <AppMenu
-            onItemClick={() => {
-              setCollapsed(false);
-            }}
-          />
+          <AppMenu onItemClick={hideSidebar} />
         </Drawer>
       )}
     </Layout>

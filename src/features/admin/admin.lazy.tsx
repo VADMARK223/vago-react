@@ -2,8 +2,7 @@ import type { RouteObject } from 'react-router-dom';
 import { AdminRoute } from '../auth/AdminRoute.tsx';
 
 export async function adminLazy(): Promise<Pick<RouteObject, 'element' | 'handle'>> {
-  const mod = await import('./AdminPage.tsx');
-  const AdminPage = mod.default;
+  const { AdminPage } = await import('./AdminPage.tsx');
 
   return {
     element: (
