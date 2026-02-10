@@ -55,4 +55,10 @@ export const chapters: Chapter[] = [
     type: 'js',
     load: () => import('./chapters/js/FlatMapChapter.tsx'),
   },
+  {
+    id: 10,
+    title: 'Специальные типы',
+    type: 'ts',
+    load: () => import('./chapters/ts/SpecialTypesChapter.tsx'),
+  },
 ];

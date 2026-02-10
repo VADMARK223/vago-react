@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 type UiState = {
   sidebarOpen: boolean;
@@ -7,10 +8,17 @@ type UiState = {
   toggleSidebar: () => void;
 };
 
-export const useUiStore = create<UiState>((set) => ({
-  sidebarOpen: false,
+export const useUiStore = create<UiState>()(
+  persist(
+    (set) => ({
+      sidebarOpen: false,
 
-  showSidebar: () => set({ sidebarOpen: true }),
-  hideSidebar: () => set({ sidebarOpen: false }),
-  toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
-}));
+      showSidebar: () => set({ sidebarOpen: true }),
+      hideSidebar: () => set({ sidebarOpen: false }),
+      toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
+    }),
+    {
+      name: 'vago-ui-store',
+    },
+  ),
+);
