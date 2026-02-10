@@ -4,4 +4,5 @@ export const URL = {
   ME: 'me',
   USERS: 'users',
   TASKS: 'tasks',
+  QUESTION: 'questions',
 } as const;

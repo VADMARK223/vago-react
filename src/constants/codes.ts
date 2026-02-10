@@ -9,4 +9,5 @@ export const CODE = {
   ROLE: 'role',
   MODERATOR: 'moderator',
   USER: 'user',
+  TOPIC_ID: 'topic_id',
 } as const;

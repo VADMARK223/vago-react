@@ -3,4 +3,5 @@ export const QUERY_KEY = {
   SIGN_OUT: 'sign_out',
   USERS: 'users',
   TASKS: 'tasks',
+  QUESTIONS: 'questions',
 } as const;

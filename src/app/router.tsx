@@ -104,7 +104,11 @@ export const router = createBrowserRouter(
         }),
         route({
           path: ROUTE.SETTINGS,
-          element: <SettingsPage />,
+          element: (
+            <AuthRoute>
+              <SettingsPage />
+            </AuthRoute>
+          ),
           handle: { title: 'Настройки' },
         }),
 
