@@ -7,7 +7,7 @@ import { route } from './route';
 import { TestPage } from '../features/test/TestPage.tsx';
 import { QuestionPage } from '../features/questions/QuestionPage.tsx';
 import { SignUpPage } from '../features/auth/SignUpPage.tsx';
-import { ROUTE } from '../constants/routes.ts';
+import { ROUTE } from '../shared/constants/routes.ts';
 import { TasksPage } from '../features/tasks/TasksPage.tsx';
 import { lazy, Suspense } from 'react';
 import { adminLazy } from '../features/admin/admin.lazy.tsx';

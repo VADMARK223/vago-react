@@ -1,7 +1,7 @@
 import { Menu, type MenuProps } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
-import { ROUTE } from '../constants/routes.ts';
+import { ROUTE } from '../shared/constants/routes.ts';
 import {
   HomeOutlined,
   ReadOutlined,

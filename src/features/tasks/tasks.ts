@@ -1,10 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEY } from '../../constants/queryKeys.ts';
+import { QUERY_KEY } from '../../shared/constants/queryKeys.ts';
 import { api, type KyResponse } from '../../shared/api/ky-client.ts';
-import { URL } from '../../constants/urls.ts';
+import { URL } from '../../shared/constants/urls.ts';
+import type { Id } from '../../shared/types.ts';
 
 type Task = {
-  id: number;
+  id: Id;
   name: string;
   description: string;
   createdAt: Date;
@@ -55,7 +56,7 @@ export const useDeleteTask = () => {
 export const useUpdateTaskMutation = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, completed }: { id: number; completed: boolean }) => {
+    mutationFn: async ({ id, completed }: { id: Id; completed: boolean }) => {
       return api
         .put(`${URL.TASKS}/${id}`, {
           json: { completed },

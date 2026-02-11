@@ -1,10 +1,11 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { chapters } from './chapters';
-import { ROUTE } from '../../constants/routes';
+import { ROUTE } from '../../shared/constants/routes';
 import type { ComponentType } from 'react';
 import { useEffect, useState } from 'react';
+import type { Id } from '../../shared/types.ts';
 
-type Loaded = { id: number; Component: ComponentType } | null;
+type Loaded = { id: Id; Component: ComponentType } | null;
 
 export default function BookChapterPage() {
   const { chapterId } = useParams();
@@ -35,7 +36,7 @@ export default function BookChapterPage() {
     return <Navigate to={ROUTE.BOOK} replace />;
   }
 
-  const ChapterComponent = loaded?.id === chapter.id ? loaded.Component : undefined;
+  const ChapterComponent = loaded?.id === chapter.id ? loaded?.Component : undefined;
 
   return (
     <>

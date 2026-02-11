@@ -1,10 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEY } from '../../constants/queryKeys.ts';
+import { QUERY_KEY } from '../../shared/constants/queryKeys.ts';
 import { api, type KyResponse } from '../../shared/api/ky-client.ts';
-import { URL } from '../../constants/urls.ts';
+import { URL } from '../../shared/constants/urls.ts';
+import type { Id } from '../../shared/types.ts';
 
 type User = {
-  id: number;
+  id: Id;
   login: string;
   username: string;
   role: string;

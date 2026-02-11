@@ -3,9 +3,10 @@ import { App, Button } from 'antd';
 import { useDeleteUser } from '../admin.ts';
 import type { JSX } from 'react';
 import { getKyErrorMessage } from '../../../shared/api/ky-client.ts';
+import type { Id } from '../../../shared/types.ts';
 
 interface Props {
-  id: number;
+  id: Id;
 }
 
 export function DeleteUserButton({ id }: Props): JSX.Element {

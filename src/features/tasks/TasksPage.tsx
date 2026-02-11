@@ -3,7 +3,7 @@ import { App, Button, Card, Checkbox, Empty, Form, Input, Space } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { type TaskRequest, useCreateTask, useTasks, useUpdateTaskMutation } from './tasks.ts';
 import { ScrollableContainer } from '../../shared/ui/ScrollableContainer.tsx';
-import { CODE } from '../../constants/codes.ts';
+import { CODE } from '../../shared/constants/codes.ts';
 import TextArea from 'antd/es/input/TextArea';
 import { getKyErrorMessage } from '../../shared/api/ky-client.ts';
 import { DeleteTaskButton } from './DeleteTaskButton.tsx';

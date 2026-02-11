@@ -1,6 +1,6 @@
 import { Button, Card, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { ROUTE } from '../../constants/routes.ts';
+import { ROUTE } from '../../shared/constants/routes.ts';
 
 export function HomePage() {
   const navigate = useNavigate();

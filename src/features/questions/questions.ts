@@ -1,28 +1,36 @@
 import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEY } from '../../constants/queryKeys.ts';
+import { QUERY_KEY } from '../../shared/constants/queryKeys.ts';
 import { api, type KyResponse } from '../../shared/api/ky-client.ts';
-import { URL } from '../../constants/urls.ts';
+import { URL } from '../../shared/constants/urls.ts';
+import type { Id } from '../../shared/types.ts';
 
-type TopicsAndQuestions = {
+type QuestionsPageData = {
+  chapters: QuestionsChapter[];
   topics: TopicWithCount[];
   questions: Question[];
 };
 
+type QuestionsChapter = {
+  id: Id;
+  name: string;
+  order: number;
+};
+
 export type Question = {
-  id: number;
-  topicId: number;
+  id: Id;
+  topicId: Id;
   text: string;
   code: string;
   explanation: string;
 };
 
 type TopicWithCount = {
-  id: number;
+  id: Id;
   name: string;
   questionsCount: number;
 };
 
-type QuestionsResponse = KyResponse<TopicsAndQuestions>;
+type QuestionsResponse = KyResponse<QuestionsPageData>;
 
 export const useQuestions = (topicId?: number) => {
   return useQuery({
