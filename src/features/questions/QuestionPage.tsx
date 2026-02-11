@@ -6,7 +6,7 @@ import { CODE } from '../../constants/codes.ts';
 import { ScrollableContainer } from '../../shared/ui/ScrollableContainer.tsx';
 import { CodeBlock } from '../book/CodeBlock.tsx';
 
-export function QuestionPage() {
+export const QuestionPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedIdRaw = Number(searchParams.get(CODE.TOPIC_ID)) || 0;
   const topicId = selectedIdRaw ? Number(selectedIdRaw) : undefined;
@@ -49,16 +49,21 @@ export function QuestionPage() {
       />
 
       <ScrollableContainer>
-        {topicsAndQuestions?.data.questions.map((item) => (
-          <div key={item.id}>
-            <b>
-              {item.id}. {item.text}
-            </b>
-            <CodeBlock code={item.code} />
-            <p>{item.explanation}</p>
-          </div>
-        ))}
+        {topicsAndQuestions?.data.questions.map((item) => {
+          return (
+            <span key={item.id}>
+              <div>
+                <b>
+                  {item.id}. {item.text}
+                </b>
+                {item.code.trim() && <CodeBlock code={item.code} />}
+                <p>{item.explanation}</p>
+              </div>
+              <hr />
+            </span>
+          );
+        })}
       </ScrollableContainer>
     </>
   );
-}
+};

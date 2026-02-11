@@ -39,7 +39,7 @@ export function SettingsPage() {
       <p>Username: {me?.username}</p>
       <p>Role: {roleName}</p>
       <hr />
-      <h2>Режим плользовательского интервейса</h2>
+      <h2>Режим пользовательского интерфейса</h2>
       <p>Is phone: {isPhone ? yesRender() : noRender()}</p>
       <p>Is tablet: {isTablet ? yesRender() : noRender()}</p>
       <p>Is desktop: {isDesktop ? yesRender() : noRender()}</p>

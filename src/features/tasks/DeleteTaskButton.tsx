@@ -1,5 +1,5 @@
 import { App, Button } from 'antd';
-import { getKyErrorMessage } from '../../shared/api/kyClient.ts';
+import { getKyErrorMessage } from '../../shared/api/ky-client.ts';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useDeleteTask } from './tasks.ts';
 

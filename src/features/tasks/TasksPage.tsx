@@ -5,7 +5,7 @@ import { type TaskRequest, useCreateTask, useTasks, useUpdateTaskMutation } from
 import { ScrollableContainer } from '../../shared/ui/ScrollableContainer.tsx';
 import { CODE } from '../../constants/codes.ts';
 import TextArea from 'antd/es/input/TextArea';
-import { getKyErrorMessage } from '../../shared/api/kyClient.ts';
+import { getKyErrorMessage } from '../../shared/api/ky-client.ts';
 import { DeleteTaskButton } from './DeleteTaskButton.tsx';
 import dayjs from 'dayjs';
 
@@ -25,7 +25,7 @@ export function TasksPage() {
     createTask.mutate(req, {
       onError: async (err) => {
         const serverMsg = await getKyErrorMessage(err);
-        message.error(serverMsg ?? 'Ошибка входа');
+        message.error(serverMsg ?? 'Ошибка создания задачи');
       },
     });
   };

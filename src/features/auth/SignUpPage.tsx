@@ -12,12 +12,12 @@ import {
   toSignUpRequest,
   useSignUpMutation,
 } from './auth.ts';
-import { getKyErrorMessage } from '../../shared/api/kyClient.ts';
+import { getKyErrorMessage } from '../../shared/api/ky-client.ts';
 
 const DEFAULT_ROLE: SignUpRole = 'moderator';
 const ROLE_HINT: Record<SignUpRole, string> = {
   moderator: 'Доступны все разделы с ограниченными правами.',
-  user: 'Некоторые разделы не доступы.',
+  user: 'Некоторые разделы недоступны.',
 };
 
 export function SignUpPage() {

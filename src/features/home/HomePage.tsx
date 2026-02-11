@@ -23,7 +23,7 @@ export function HomePage() {
               navigate(ROUTE.TEST);
             }}
           >
-            Попробоваться силы
+            Попробовать силы
           </Button>
         </Card>
 

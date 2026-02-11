@@ -1,10 +1,13 @@
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
-import ts from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import * as React from 'react';
 
 SyntaxHighlighter.registerLanguage('tsx', tsx);
-SyntaxHighlighter.registerLanguage('ts', ts);
+// SyntaxHighlighter.registerLanguage('ts', ts);
+
+const CODE_STYLE = oneDark;
+const CUSTOM_STYLE = { padding: 4 } as const;
 
 type CodeLang = 'tsx' | 'ts';
 
@@ -14,18 +17,22 @@ type CodeBlockProps = {
   showLineNumbers?: boolean;
 };
 
-export function CodeBlock({ code, lang = 'tsx', showLineNumbers = false }: CodeBlockProps) {
+export const CodeBlock = React.memo(function CodeBlock({
+  code,
+  lang = 'tsx',
+  showLineNumbers = false,
+}: CodeBlockProps) {
+  if (!code.trim()) return <div style={{ color: 'red' }}>EMPTY</div>;
+
   return (
     <SyntaxHighlighter
       language={lang}
-      style={oneDark}
+      style={CODE_STYLE}
       showLineNumbers={showLineNumbers}
       wrapLongLines
-      customStyle={{
-        padding: 4,
-      }}
+      customStyle={CUSTOM_STYLE}
     >
       {code}
     </SyntaxHighlighter>
   );
-}
+});

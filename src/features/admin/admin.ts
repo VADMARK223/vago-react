@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY } from '../../constants/queryKeys.ts';
-import { api, type KyResponse } from '../../shared/api/kyClient.ts';
+import { api, type KyResponse } from '../../shared/api/ky-client.ts';
 import { URL } from '../../constants/urls.ts';
 
 type User = {

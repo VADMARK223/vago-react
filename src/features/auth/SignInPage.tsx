@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Auth.module.css';
 import { ROUTE } from '../../constants/routes.ts';
 import { CODE } from '../../constants/codes.ts';
-import { getKyErrorMessage } from '../../shared/api/kyClient.ts';
+import { getKyErrorMessage } from '../../shared/api/ky-client.ts';
 
 export function SignInPage() {
   const { message } = App.useApp();

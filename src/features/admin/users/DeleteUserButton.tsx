@@ -2,7 +2,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { App, Button } from 'antd';
 import { useDeleteUser } from '../admin.ts';
 import type { JSX } from 'react';
-import { getKyErrorMessage } from '../../../shared/api/kyClient.ts';
+import { getKyErrorMessage } from '../../../shared/api/ky-client.ts';
 
 interface Props {
   id: number;
