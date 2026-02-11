@@ -61,4 +61,10 @@ export const chapters: Chapter[] = [
     type: 'ts',
     load: () => import('./chapters/ts/SpecialTypesChapter.tsx'),
   },
+  {
+    id: 11,
+    title: 'React Developer Tools',
+    type: 'react',
+    load: () => import('./chapters/react/ReactDevToolsChapter.tsx'),
+  },
 ];

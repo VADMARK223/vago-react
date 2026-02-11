@@ -1,38 +1,28 @@
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
-import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import * as React from 'react';
+import { useEffect, useRef } from 'react';
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
+import 'highlight.js/styles/github-dark.css';
 
-SyntaxHighlighter.registerLanguage('tsx', tsx);
-// SyntaxHighlighter.registerLanguage('ts', ts);
+hljs.registerLanguage('javascript', javascript);
 
-const CODE_STYLE = oneDark;
-const CUSTOM_STYLE = { padding: 4 } as const;
-
-type CodeLang = 'tsx' | 'ts';
-
-type CodeBlockProps = {
+interface Props {
   code: string;
-  lang?: CodeLang;
-  showLineNumbers?: boolean;
-};
+}
 
-export const CodeBlock = React.memo(function CodeBlock({
-  code,
-  lang = 'tsx',
-  showLineNumbers = false,
-}: CodeBlockProps) {
-  if (!code.trim()) return <div style={{ color: 'red' }}>EMPTY</div>;
+export const CodeBlock = ({ code }: Props) => {
+  const ref = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      hljs.highlightElement(ref.current);
+    }
+  }, []);
 
   return (
-    <SyntaxHighlighter
-      language={lang}
-      style={CODE_STYLE}
-      showLineNumbers={showLineNumbers}
-      wrapLongLines
-      customStyle={CUSTOM_STYLE}
-    >
-      {code}
-    </SyntaxHighlighter>
+    <pre>
+      <code ref={ref} className="language-javascript">
+        {code}
+      </code>
+    </pre>
   );
-});
+};

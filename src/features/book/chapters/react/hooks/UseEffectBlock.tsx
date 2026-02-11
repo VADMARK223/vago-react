@@ -24,7 +24,7 @@ useEffect(() => {}, [a, b])    // при изменении a или b`}
         👉 <b>stale closure</b> — эффект видит старые значения
       </p>
       <hr />
-      <h3>Cleanup — must know</h3>
+      <h3>Cleanup - must know</h3>
       <CodeBlock
         code={`useEffect(() => {
   const id = setInterval(...)
