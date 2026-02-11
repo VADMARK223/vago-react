@@ -8,7 +8,7 @@ type TopicsAndQuestions = {
   questions: Question[];
 };
 
-type Question = {
+export type Question = {
   id: number;
   topicId: number;
   text: string;

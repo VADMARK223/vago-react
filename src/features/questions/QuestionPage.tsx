@@ -3,8 +3,9 @@ import { Select } from 'antd';
 import { useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CODE } from '../../constants/codes.ts';
-import { ScrollableContainer } from '../../shared/ui/ScrollableContainer.tsx';
-import { CodeBlock } from '../book/CodeBlock.tsx';
+// import { ScrollableContainer } from '../../shared/ui/ScrollableContainer.tsx';
+import { Virtuoso } from 'react-virtuoso';
+import { QuestionItem } from './QuestionItem.tsx';
 
 export const QuestionPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -20,7 +21,7 @@ export const QuestionPage = () => {
         label: item.name,
       })) ?? []
     );
-  }, [topicsAndQuestions?.data]);
+  }, [topicsAndQuestions?.data.topics]);
 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
@@ -48,7 +49,11 @@ export const QuestionPage = () => {
         allowClear
       />
 
-      <ScrollableContainer>
+      <Virtuoso
+        data={topicsAndQuestions?.data.questions}
+        itemContent={(_, question) => <QuestionItem question={question} />}
+      />
+      {/*<ScrollableContainer>
         {topicsAndQuestions?.data.questions.map((item) => {
           return (
             <span key={item.id}>
@@ -63,7 +68,7 @@ export const QuestionPage = () => {
             </span>
           );
         })}
-      </ScrollableContainer>
+      </ScrollableContainer>*/}
     </>
   );
 };
