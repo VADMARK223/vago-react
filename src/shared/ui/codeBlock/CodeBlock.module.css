@@ -1,0 +1,15 @@
+.wrapper {
+    margin: 12px 0;        /* внешний отступ */
+}
+
+.pre {
+    margin: 0;             /* убрать дефолтный margin */
+    padding: 0;            /* если нужно */
+    background: transparent; /* если хочешь фон контролировать сам */
+}
+
+.code {
+    padding: 12px;         /* внутренний отступ */
+    border-radius: 8px;
+    font-size: 14px;
+}

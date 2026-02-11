@@ -1,4 +1,4 @@
-import { CodeBlock } from '../../CodeBlock.tsx';
+import { CodeBlock } from '../../../../shared/ui/codeBlock/CodeBlock.tsx';
 
 export default function FlatMapChapter() {
   return (

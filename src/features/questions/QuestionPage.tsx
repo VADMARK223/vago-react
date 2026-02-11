@@ -1,16 +1,18 @@
 import { useQuestions } from './questions.ts';
 import { Select } from 'antd';
-import { useMemo } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CODE } from '../../constants/codes.ts';
-// import { ScrollableContainer } from '../../shared/ui/ScrollableContainer.tsx';
-import { Virtuoso } from 'react-virtuoso';
+import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 import { QuestionItem } from './QuestionItem.tsx';
+import { ToTopButton } from './ToTopButton.tsx';
 
 export const QuestionPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedIdRaw = Number(searchParams.get(CODE.TOPIC_ID)) || 0;
   const topicId = selectedIdRaw ? Number(selectedIdRaw) : undefined;
+  const virtuosoRef = useRef<VirtuosoHandle>(null);
+  const [showTop, setShowTop] = useState(false);
 
   const { data: topicsAndQuestions, isLoading, isError } = useQuestions(topicId);
 
@@ -50,25 +52,24 @@ export const QuestionPage = () => {
       />
 
       <Virtuoso
+        ref={virtuosoRef}
+        style={{ height: '100%' }}
         data={topicsAndQuestions?.data.questions}
         itemContent={(_, question) => <QuestionItem question={question} />}
+        rangeChanged={(range) => {
+          setShowTop(range.startIndex > 5);
+        }}
       />
-      {/*<ScrollableContainer>
-        {topicsAndQuestions?.data.questions.map((item) => {
-          return (
-            <span key={item.id}>
-              <div>
-                <b>
-                  {item.id}. {item.text}
-                </b>
-                {item.code.trim() && <CodeBlock code={item.code} />}
-                <p>{item.explanation}</p>
-              </div>
-              <hr />
-            </span>
-          );
-        })}
-      </ScrollableContainer>*/}
+
+      <ToTopButton
+        visible={showTop}
+        onClick={() =>
+          virtuosoRef.current?.scrollToIndex({
+            index: 0,
+            behavior: 'smooth',
+          })
+        }
+      />
     </>
   );
 };

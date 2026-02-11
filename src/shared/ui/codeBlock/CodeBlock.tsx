@@ -1,3 +1,4 @@
+import styles from './CodeBlock.module.css';
 import { useEffect, useRef } from 'react';
 import hljs from 'highlight.js/lib/core';
 import javascript from 'highlight.js/lib/languages/javascript';
@@ -18,11 +19,15 @@ export const CodeBlock = ({ code }: Props) => {
     }
   }, []);
 
+  if (!code.trim()) return null;
+
   return (
-    <pre>
-      <code ref={ref} className="language-javascript">
-        {code}
-      </code>
-    </pre>
+    <div className={styles.wrapper}>
+      <pre className={styles.pre}>
+        <code ref={ref} className={`language-javascript ${styles.code}`}>
+          {code}
+        </code>
+      </pre>
+    </div>
   );
 };

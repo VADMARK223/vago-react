@@ -1,5 +1,6 @@
 import type { Question } from './questions.ts';
-import { CodeBlock } from '../book/CodeBlock.tsx';
+import { CodeBlock } from '../../shared/ui/codeBlock/CodeBlock.tsx';
+import styles from './QuestionPage.module.css';
 
 interface Props {
   question: Question;
@@ -7,12 +8,12 @@ interface Props {
 
 export const QuestionItem = ({ question }: Props) => {
   return (
-    <div style={{ paddingBottom: 12 }}>
+    <div style={{ paddingBottom: 6 }}>
       <b>
         {question.id}. {question.text}
       </b>
       {question.code.trim() && <CodeBlock code={question.code} />}
-      <p>{question.explanation}</p>
+      {question.explanation.trim() && <p className={styles.explanation}>{question.explanation}</p>}
       <hr />
     </div>
   );
