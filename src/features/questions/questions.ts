@@ -16,12 +16,19 @@ type QuestionsChapter = {
   order: number;
 };
 
+type Answer = {
+  id: Id;
+  text: string;
+  isCorrect: boolean;
+};
+
 export type Question = {
   id: Id;
   topicId: Id;
   text: string;
   code: string;
   explanation: string;
+  answers: Answer[];
 };
 
 type TopicWithCount = {
