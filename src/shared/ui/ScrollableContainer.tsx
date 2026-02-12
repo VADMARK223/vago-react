@@ -7,7 +7,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export function ScrollableContainer({ children }: Props) {
+function ScrollableContainer({ children }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -19,3 +19,5 @@ export function ScrollableContainer({ children }: Props) {
     </div>
   );
 }
+
+export default ScrollableContainer;

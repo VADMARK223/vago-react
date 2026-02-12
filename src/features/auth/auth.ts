@@ -1,12 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { api, type KyResponse } from '@/shared/api/ky-client.ts';
-import { QUERY_KEY } from '@/shared/constants/queryKeys.ts';
-import { CODE } from '@/shared/constants/codes.ts';
-import { URL } from '@/shared/constants/urls.ts';
+import { QUERY_KEY, CODE, URL, ROUTE, MUTATION_KEY } from '@/shared/constants';
 import { useNavigate } from 'react-router-dom';
-import { ROUTE } from '@/shared/constants/routes.ts';
-import { MUTATION_KEY } from '@/shared/constants/mutationKeys.ts';
-import { ROLE, type Role } from '@/shared/constants/roles.ts';
+import { ROLE, type Role } from '@/shared/constants';
 
 export type AuthRedirectState = {
   from?: { pathname: string };

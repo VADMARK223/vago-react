@@ -3,9 +3,8 @@ import { Button, Space } from 'antd';
 import { useLocation } from 'react-router-dom';
 import { LoginOutlined } from '@ant-design/icons';
 import { SignOutButton } from './SignOutButton.tsx';
-import { ROUTE } from '@/shared/constants/routes.ts';
+import { ROUTE, MUTATION_KEY } from '@/shared/constants';
 import { useIsMutating } from '@tanstack/react-query';
-import { MUTATION_KEY } from '@/shared/constants/mutationKeys.ts';
 import { useCallback } from 'react';
 
 interface Props {

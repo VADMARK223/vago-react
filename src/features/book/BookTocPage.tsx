@@ -1,6 +1,6 @@
 import type { Chapter, ChapterType } from './book.ts';
 import { Link } from 'react-router-dom';
-import { ROUTE } from '@/shared/constants/routes.ts';
+import { ROUTE } from '@/shared/constants';
 import { chapters } from './chapters.tsx';
 
 export default function BookTocPage() {

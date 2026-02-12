@@ -1,5 +1,5 @@
 import { Typography } from 'antd';
-import { CodeBlock } from '@/shared/ui/codeBlock/CodeBlock.tsx';
+import { CodeBlock } from '@/shared/ui/codeBlock';
 
 const { Title, Paragraph, Text } = Typography;
 

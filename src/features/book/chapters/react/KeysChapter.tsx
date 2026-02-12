@@ -1,4 +1,4 @@
-import { CodeBlock } from '@/shared/ui/codeBlock/CodeBlock.tsx';
+import { CodeBlock } from '@/shared/ui/codeBlock';
 import { BookHashLink } from '../BookHashLink.tsx';
 import styles from '../../Book.module.css';
 

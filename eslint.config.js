@@ -6,6 +6,7 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import unusedImports from 'eslint-plugin-unused-imports';
 import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
+import importPlugin from 'eslint-plugin-import';
 
 export default defineConfig([
   globalIgnores(['dist']),
@@ -21,6 +22,13 @@ export default defineConfig([
     plugins: {
       react,
       'unused-imports': unusedImports,
+      import: importPlugin,
+    },
+
+    settings: {
+      'import/resolver': {
+        typescript: true,
+      },
     },
 
     languageOptions: {
@@ -33,6 +41,7 @@ export default defineConfig([
       curly: ['error', 'all'],
       'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
       'unused-imports/no-unused-imports': 'error',
+      'import/no-duplicates': 'error',
       'unused-imports/no-unused-vars': [
         'warn',
         {
@@ -40,6 +49,12 @@ export default defineConfig([
           varsIgnorePattern: '^_',
           args: 'after-used',
           argsIgnorePattern: '^_',
+        },
+      ],
+      'import/no-internal-modules': [
+        'error',
+        {
+          forbid: ['@/shared/constants/**'],
         },
       ],
     },

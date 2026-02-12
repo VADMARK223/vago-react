@@ -1,6 +1,6 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { chapters } from './chapters';
-import { ROUTE } from '@/shared/constants/routes.ts';
+import { ROUTE } from '@/shared/constants';
 import type { ComponentType } from 'react';
 import { useEffect, useState } from 'react';
 import type { Id } from '@/shared/types.ts';

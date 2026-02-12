@@ -3,10 +3,10 @@ import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetQuestionById } from './test.ts';
 import { Button, message, Space, Spin } from 'antd';
-import { CodeBlock } from '../../shared/ui/codeBlock/CodeBlock.tsx';
+import { CodeBlock } from '@/shared/ui/codeBlock';
 import { api, type KyResponse } from '@/shared/api/ky-client.ts';
 import { useMutation } from '@tanstack/react-query';
-import { URL } from '@/shared/constants/urls.ts';
+import { URL } from '@/shared/constants';
 import { StepForwardOutlined, UndoOutlined } from '@ant-design/icons';
 
 type CheckRequest = {

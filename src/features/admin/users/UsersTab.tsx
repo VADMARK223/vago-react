@@ -1,6 +1,6 @@
 import { useUsers } from '../admin.ts';
 import { DeleteUserButton } from './DeleteUserButton.tsx';
-import { ScrollableContainer } from '@/shared/ui/ScrollableContainer.tsx';
+import { ScrollableContainer } from '@/shared/ui';
 
 export function UsersTab() {
   const { data, isLoading, isError } = useUsers();

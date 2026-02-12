@@ -1,5 +1,5 @@
 import type { Question } from './questions.ts';
-import { CodeBlock } from '../../shared/ui/codeBlock/CodeBlock.tsx';
+import { CodeBlock } from '@/shared/ui/codeBlock';
 import styles from './QuestionPage.module.css';
 
 interface Props {

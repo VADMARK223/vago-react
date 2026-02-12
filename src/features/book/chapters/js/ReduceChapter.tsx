@@ -1,4 +1,4 @@
-import { CodeBlock } from '@/shared/ui/codeBlock/CodeBlock.tsx';
+import { CodeBlock } from '@/shared/ui/codeBlock';
 
 export default function ReduceChapter() {
   return (

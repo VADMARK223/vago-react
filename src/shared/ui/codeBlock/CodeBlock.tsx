@@ -10,7 +10,7 @@ interface Props {
   code: string;
 }
 
-export const CodeBlock = ({ code }: Props) => {
+const CodeBlock = ({ code }: Props) => {
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -33,3 +33,5 @@ export const CodeBlock = ({ code }: Props) => {
     </div>
   );
 };
+
+export default CodeBlock;

@@ -2,7 +2,7 @@ import { useQuestions } from './questions.ts';
 import { Select } from 'antd';
 import { useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { CODE } from '@/shared/constants/codes.ts';
+import { CODE } from '@/shared/constants';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 import { QuestionItem } from './QuestionItem.tsx';
 import { ToTopButton } from './ToTopButton.tsx';
