@@ -30,6 +30,7 @@ export default defineConfig([
     rules: {
       'react/react-in-jsx-scope': 'off',
 
+      curly: ['error', 'all'],
       'react/jsx-curly-brace-presence': ['error', { props: 'never', children: 'never' }],
       'unused-imports/no-unused-imports': 'error',
       'unused-imports/no-unused-vars': [

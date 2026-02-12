@@ -1,0 +1,47 @@
+.answer {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 6px;
+    background: #313335;
+    color: #eee;
+    border: 1px solid #444;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s ease, transform 0.1s;
+}
+
+.answer:active {
+    transform: scale(0.98);
+}
+
+.answer:disabled {
+    pointer-events: none;
+}
+
+.answer:hover {
+    background: #3a3d41;
+}
+
+.answer.correct {
+    background: #2e6230 !important;
+    border-color: #3fa34d;
+}
+
+.answer.wrong {
+    background: #622e2e !important;
+    border-color: #d9534f;
+}
+
+.explanation {
+    width: 100%;
+    padding: 10px;
+    /*margin: 6px 0;*/
+    border-radius: 6px;
+    background: #474e78;
+    color: #eee;
+    border: 1px solid #444;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s ease, transform 0.1s;
+}

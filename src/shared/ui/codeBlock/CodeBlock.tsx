@@ -19,7 +19,9 @@ export const CodeBlock = ({ code }: Props) => {
     }
   }, []);
 
-  if (!code.trim()) return null;
+  if (!code.trim()) {
+    return null;
+  }
 
   return (
     <div className={styles.wrapper}>

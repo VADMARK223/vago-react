@@ -4,4 +4,5 @@ export const QUERY_KEY = {
   USERS: 'users',
   TASKS: 'tasks',
   QUESTIONS: 'questions',
+  TEST: 'test',
 } as const;

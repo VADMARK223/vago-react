@@ -5,4 +5,5 @@ export const URL = {
   USERS: 'users',
   TASKS: 'tasks',
   QUESTION: 'questions',
+  TEST: 'test',
 } as const;

@@ -4,7 +4,6 @@ import { HomePage } from '../features/home/HomePage.tsx';
 import { SignInPage } from '../features/auth/SignInPage.tsx';
 import { NotFoundPage } from './NotFoundPage.tsx';
 import { route } from './route';
-import { TestPage } from '../features/test/TestPage.tsx';
 import { QuestionPage } from '../features/questions/QuestionPage.tsx';
 import { SignUpPage } from '../features/auth/SignUpPage.tsx';
 import { ROUTE } from '../shared/constants/routes.ts';
@@ -14,6 +13,8 @@ import { adminLazy } from '../features/admin/admin.lazy.tsx';
 import { ChatPage } from '../features/chat/ChatPage.tsx';
 import { AuthRoute } from '../features/auth/AuthRoute.tsx';
 import { SettingsPage } from '../features/settings/SettingsPage.tsx';
+import { TestRandomRedirectPage } from '../features/test/TestRandomRedirectPage.tsx';
+import { TestPage } from '../features/test/TestPage.tsx';
 
 const BookPage = lazy(
   () =>
@@ -78,7 +79,16 @@ export const router = createBrowserRouter(
             }),
           ],
         }),
-        route({ path: ROUTE.TEST, element: <TestPage />, handle: { title: 'Тест (Go)' } }),
+        route({
+          path: ROUTE.TEST,
+          element: <TestRandomRedirectPage />,
+          handle: { title: 'Получение вопросы' },
+        }),
+        route({
+          path: ROUTE.TEST + '/:id',
+          element: <TestPage />,
+          handle: { title: 'Тест (Go)' },
+        }),
         route({
           path: ROUTE.QUESTIONS,
           element: <QuestionPage />,
