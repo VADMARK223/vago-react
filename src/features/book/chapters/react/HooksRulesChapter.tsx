@@ -1,9 +1,13 @@
-import { CodeBlock } from '../../../../shared/ui/codeBlock/CodeBlock.tsx';
+import { CodeBlock } from '@/shared/ui/codeBlock/CodeBlock.tsx';
+import styles from '@/features/book/Book.module.css';
+import { BookHashLink } from '@/features/book/chapters/BookHashLink';
 
 export default function HooksRulesChapter() {
   return (
     <>
-      <a href="#summary">Короткое резюме</a>
+      <nav className={styles.toc}>
+        <BookHashLink id="summary">Короткое резюме</BookHashLink>
+      </nav>
       <h2>1. Вызываются только на верхнем уровне компонента</h2>
       <p>❌ Нельзя:</p>
       <ul>

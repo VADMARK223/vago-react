@@ -1,9 +1,9 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { chapters } from './chapters';
-import { ROUTE } from '../../shared/constants/routes';
+import { ROUTE } from '@/shared/constants/routes.ts';
 import type { ComponentType } from 'react';
 import { useEffect, useState } from 'react';
-import type { Id } from '../../shared/types.ts';
+import type { Id } from '@/shared/types.ts';
 
 type Loaded = { id: Id; Component: ComponentType } | null;
 
@@ -23,7 +23,9 @@ export default function BookChapterPage() {
     }
 
     chapter.load().then((mod) => {
-      if (cancelled) return;
+      if (cancelled) {
+        return;
+      }
       setLoaded({ id: chapter.id, Component: mod.default });
     });
 

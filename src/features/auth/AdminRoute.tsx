@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { type AuthRedirectState, useAuth } from './auth.ts';
 import type { JSX } from 'react';
-import { ROUTE } from '../../shared/constants/routes.ts';
+import { ROUTE } from '@/shared/constants/routes.ts';
 
 export function AdminRoute({ children }: { children: JSX.Element }) {
   const { isAuthed, isAdminModerator, isLoading } = useAuth();

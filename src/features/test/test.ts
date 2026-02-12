@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEY } from '../../shared/constants/queryKeys.ts';
-import { api, type KyResponse } from '../../shared/api/ky-client.ts';
-import { URL } from '../../shared/constants/urls.ts';
-import type { Id, Question } from '../../shared/types.ts';
+import { QUERY_KEY } from '@/shared/constants/queryKeys.ts';
+import { api, type KyResponse } from '@/shared/api/ky-client.ts';
+import { URL } from '@/shared/constants/urls.ts';
+import type { Id, Question } from '@/shared/types.ts';
 
 type AnswerPublic = {
   id: Id;

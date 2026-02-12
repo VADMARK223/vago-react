@@ -1,12 +1,15 @@
-import { CodeBlock } from '../../../../shared/ui/codeBlock/CodeBlock.tsx';
+import { CodeBlock } from '@/shared/ui/codeBlock/CodeBlock.tsx';
+import { BookHashLink } from '../BookHashLink.tsx';
+import styles from '../../Book.module.css';
 
 export default function KeysChapter() {
   return (
     <>
-      <a href="#1">Зачем вообще нужны keys</a>
-      <br />
-      <a href="#2">Смена ключа</a>
-      <br />
+      <nav className={styles.toc}>
+        <BookHashLink id="why-keys">Зачем вообще нужны keys</BookHashLink>
+        <BookHashLink id="change-keys">Смена ключа</BookHashLink>
+      </nav>
+
       <p>
         О, <b>ключи (keys) в React</b> — это маленькая штука, которая решает очень большую проблему
         😄 Без них React начинает путаться, что <i>именно изменилось</i> в списках.
@@ -14,7 +17,7 @@ export default function KeysChapter() {
 
       <hr />
 
-      <h2 id="1">Зачем вообще нужны keys</h2>
+      <h2 id="why-keys">Зачем вообще нужны keys</h2>
       <p>
         Когда ты рендеришь <b>список элементов</b>, React должен понять:
       </p>
@@ -59,7 +62,7 @@ function UserList() {
         ✅ <code>key=user.id</code> — идеальный вариант
       </p>
       <hr />
-      <h2 id="2">Смена ключа</h2>
+      <h2 id="change-keys">Смена ключа</h2>
       <p>
         🔑 Если <code>key</code> у компонента меняется — React считает его новым
       </p>

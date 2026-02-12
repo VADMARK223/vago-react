@@ -1,8 +1,8 @@
 import { App, Button } from 'antd';
-import { getKyErrorMessage } from '../../shared/api/ky-client.ts';
+import { getKyErrorMessage } from '@/shared/api/ky-client.ts';
 import { DeleteOutlined } from '@ant-design/icons';
 import { useDeleteTask } from './tasks.ts';
-import type { Id } from '../../shared/types.ts';
+import type { Id } from '@/shared/types.ts';
 
 interface Props {
   id: Id;

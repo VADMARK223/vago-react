@@ -2,7 +2,7 @@ import { useQuestions } from './questions.ts';
 import { Select } from 'antd';
 import { useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { CODE } from '../../shared/constants/codes.ts';
+import { CODE } from '@/shared/constants/codes.ts';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 import { QuestionItem } from './QuestionItem.tsx';
 import { ToTopButton } from './ToTopButton.tsx';
@@ -32,8 +32,12 @@ export const QuestionPage = () => {
     );
   }, [questionsPageData?.data.topics]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error</div>;
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (isError) {
+    return <div>Error</div>;
+  }
 
   const handleChange = (value: number) => {
     const params = new URLSearchParams(searchParams);

@@ -1,8 +1,8 @@
 import styles from './Auth.module.css';
 import { App, Button, Form, Input, Select, Space, Typography } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import { ROUTE } from '../../shared/constants/routes.ts';
-import { CODE } from '../../shared/constants/codes.ts';
+import { ROUTE } from '@/shared/constants/routes.ts';
+import { CODE } from '@/shared/constants/codes.ts';
 import { useState } from 'react';
 import capitalize from 'antd/es/_util/capitalize';
 import { MAX_VALUE } from './constants.ts';
@@ -12,7 +12,7 @@ import {
   toSignUpRequest,
   useSignUpMutation,
 } from './auth.ts';
-import { getKyErrorMessage } from '../../shared/api/ky-client.ts';
+import { getKyErrorMessage } from '@/shared/api/ky-client.ts';
 
 const DEFAULT_ROLE: SignUpRole = 'moderator';
 const ROLE_HINT: Record<SignUpRole, string> = {

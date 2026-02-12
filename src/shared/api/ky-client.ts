@@ -26,7 +26,9 @@ export const api = ky.create({
 });
 
 export async function getKyErrorMessage(error: unknown): Promise<string | null> {
-  if (!(error instanceof HTTPError)) return null;
+  if (!(error instanceof HTTPError)) {
+    return null;
+  }
 
   try {
     const body = await error.response.json<KyResponse>();

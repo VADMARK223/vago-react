@@ -2,7 +2,7 @@ import { useGetRandomQuestionId } from './test.ts';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Spin } from 'antd';
-import { ROUTE } from '../../shared/constants/routes.ts';
+import { ROUTE } from '@/shared/constants/routes.ts';
 
 export const TestRandomRedirectPage = () => {
   const navigate = useNavigate();

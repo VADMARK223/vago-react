@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-import type { Id } from '../../shared/types.ts';
+import type { Id } from '@/shared/types.ts';
 
 export type ChapterType = 'react' | 'ts' | 'js';
 

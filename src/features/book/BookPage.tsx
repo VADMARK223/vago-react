@@ -3,7 +3,7 @@ import { Button, Select } from 'antd';
 import { MenuOutlined, StepBackwardOutlined } from '@ant-design/icons';
 
 import { Outlet, useMatch, useNavigate, useParams } from 'react-router-dom';
-import { ROUTE } from '../../shared/constants/routes.ts';
+import { ROUTE } from '@/shared/constants/routes.ts';
 import { chapters } from './chapters.tsx';
 import { ScrollableContainer } from '../../shared/ui/ScrollableContainer.tsx';
 

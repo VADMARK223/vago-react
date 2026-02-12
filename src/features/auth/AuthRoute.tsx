@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 import { type AuthRedirectState, useAuth } from './auth.ts';
 import { Navigate, useLocation } from 'react-router-dom';
-import { ROUTE } from '../../shared/constants/routes.ts';
+import { ROUTE } from '@/shared/constants/routes.ts';
 
 export function AuthRoute({ children }: { children: JSX.Element }) {
   const { isAuthed, isLoading } = useAuth();

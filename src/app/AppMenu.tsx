@@ -26,7 +26,9 @@ export function AppMenu({ onItemClick }: Props) {
 
   const selectedKey = useMemo(() => {
     const path = location.pathname;
-    if (path.startsWith(ROUTE.BOOK)) return ROUTE.BOOK;
+    if (path.startsWith(ROUTE.BOOK)) {
+      return ROUTE.BOOK;
+    }
     return location.pathname;
   }, [location.pathname]);
 

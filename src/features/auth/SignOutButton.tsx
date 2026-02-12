@@ -1,9 +1,9 @@
 import { App, Button } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { api } from '../../shared/api/ky-client.ts';
-import { CODE } from '../../shared/constants/codes.ts';
-import { QUERY_KEY } from '../../shared/constants/queryKeys.ts';
+import { api } from '@/shared/api/ky-client.ts';
+import { CODE } from '@/shared/constants/codes.ts';
+import { QUERY_KEY } from '@/shared/constants/queryKeys.ts';
 
 interface Props {
   iconOnly?: boolean;

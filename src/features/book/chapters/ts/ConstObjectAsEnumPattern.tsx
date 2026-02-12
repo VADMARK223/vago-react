@@ -1,10 +1,13 @@
-import { CodeBlock } from '../../../../shared/ui/codeBlock/CodeBlock.tsx';
+import { CodeBlock } from '@/shared/ui/codeBlock/CodeBlock.tsx';
+import styles from '@/features/book/Book.module.css';
+import { BookHashLink } from '@/features/book/chapters/BookHashLink.tsx';
 
 export default function ConstObjectAsEnumPattern() {
   return (
     <>
-      <a href="#1">Почему не enum?</a>
-      <br />
+      <nav className={styles.toc}>
+        <BookHashLink id="why_not_enum">Почему не enum?</BookHashLink>
+      </nav>
       <CodeBlock
         code={`export const ROLE = {
     user: 'user',
@@ -90,7 +93,7 @@ export type Role = typeof ROLE[keyof typeof ROLE];`}
       </ul>
       <hr />
 
-      <h2 id="1">🔥 Почему не enum?</h2>
+      <h2 id="why_not_enum">🔥 Почему не enum?</h2>
       <p>Можно было бы так:</p>
       <CodeBlock
         code={`enum Role {

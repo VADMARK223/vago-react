@@ -1,6 +1,6 @@
 import { theme } from 'antd';
 import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
-import { useAppUi } from '../../shared/ui/useAppUi.ts';
+import { useAppUi } from '@/shared/ui/useAppUi.ts';
 import { useMe } from '../auth/auth.ts';
 
 export function SettingsPage() {
@@ -16,8 +16,12 @@ export function SettingsPage() {
     throw new Error(`Unhandled case: ${String(x)}`);
   }
 
-  if (!me) return null;
-  if (!me.role) return null;
+  if (!me) {
+    return null;
+  }
+  if (!me.role) {
+    return null;
+  }
 
   switch (me.role) {
     case 'admin':

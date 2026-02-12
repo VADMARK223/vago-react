@@ -12,7 +12,9 @@ export function ScrollToTopButton({ containerRef }: Props) {
 
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container) {
+      return;
+    }
 
     const handleScroll = () => {
       setVisible(container.scrollTop > 30);

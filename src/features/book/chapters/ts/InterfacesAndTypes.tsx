@@ -1,10 +1,13 @@
-import { CodeBlock } from '../../../../shared/ui/codeBlock/CodeBlock.tsx';
+import { CodeBlock } from '@/shared/ui/codeBlock/CodeBlock.tsx';
+import styles from '@/features/book/Book.module.css';
+import { BookHashLink } from '@/features/book/chapters/BookHashLink.tsx';
 
 export default function InterfacesAndTypes() {
   return (
     <>
-      <a href="#rules">Привила</a>
-      <br />
+      <nav className={styles.toc}>
+        <BookHashLink id="rules">Правила</BookHashLink>
+      </nav>
       <h2 id="rules">Правила</h2>
       <h3 id="rules">
         Правило №1 — Props = <code>interface</code>

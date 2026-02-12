@@ -1,25 +1,26 @@
-import { CodeBlock } from '../../../../shared/ui/codeBlock/CodeBlock.tsx';
+import { CodeBlock } from '@/shared/ui/codeBlock/CodeBlock.tsx';
+import { BookHashLink } from '@/features/book/chapters/BookHashLink.tsx';
 
 export default function SpecialTypesChapter() {
   return (
     <>
       <p>
         В TypeScript существуют специальные типы, которые используются в специфических ситуациях:{' '}
-        <a href="#any">
+        <BookHashLink id="any">
           <code>any</code>
-        </a>
+        </BookHashLink>
         ,{' '}
-        <a href="#unknown">
+        <BookHashLink id="unknown">
           <code>unknown</code>
-        </a>
+        </BookHashLink>
         ,{' '}
-        <a href="#void">
+        <BookHashLink id="void">
           <code>void</code>
-        </a>{' '}
+        </BookHashLink>
         и{' '}
-        <a href="#never">
+        <BookHashLink id="never">
           <code>never</code>
-        </a>
+        </BookHashLink>
         .
       </p>
 

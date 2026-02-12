@@ -1,4 +1,8 @@
-import { CodeBlock } from '../../../../shared/ui/codeBlock/CodeBlock.tsx';
+// import { CodeBlock } from '@/shared/ui/codeBlock/CodeBlock.tsx';
+
+// import { CodeBlock } from '@/shared/ui/codeBlock/CodeBlock.tsx';
+
+import { CodeBlock } from '@/shared/ui/codeBlock/CodeBlock.tsx';
 
 export default function UtilityTypesChapter() {
   return (
