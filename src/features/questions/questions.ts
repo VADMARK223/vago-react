@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY, URL } from '@/shared/constants';
-import { api, type KyResponse } from '@/shared/api/ky-client.ts';
+import { api, type ApiMessageResponse } from '@/shared/api/ky-client.ts';
 import type { Id } from '@/shared/types.ts';
 
 type QuestionsPageData = {
@@ -36,7 +36,7 @@ type TopicWithCount = {
   questionsCount: number;
 };
 
-type QuestionsResponse = KyResponse<QuestionsPageData>;
+type QuestionsResponse = ApiMessageResponse<QuestionsPageData>;
 
 export const useQuestions = (topicId?: number) => {
   return useQuery({

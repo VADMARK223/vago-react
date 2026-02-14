@@ -9,7 +9,7 @@ interface Props {
   id: Id;
 }
 
-export function DeleteUserButton({ id }: Props): JSX.Element {
+export function DeleteUserBtn({ id }: Props): JSX.Element {
   const { message } = App.useApp();
   const { mutate: deleteUser, isPending } = useDeleteUser();
 

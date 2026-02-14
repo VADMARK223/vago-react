@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useGetQuestionById } from './test.ts';
 import { Button, message, Space, Spin } from 'antd';
 import { CodeBlock } from '@/shared/ui/codeBlock';
-import { api, type KyResponse } from '@/shared/api/ky-client.ts';
+import { api, type ApiMessageResponse } from '@/shared/api/ky-client.ts';
 import { useMutation } from '@tanstack/react-query';
 import { URL } from '@/shared/constants';
 import { StepForwardOutlined, UndoOutlined } from '@ant-design/icons';
@@ -42,7 +42,7 @@ export const TestPage = () => {
     mutationFn: async (payload: CheckRequest) => {
       const resp = await api
         .post(`${URL.TEST}/check`, { json: payload })
-        .json<KyResponse<CheckResponseData>>();
+        .json<ApiMessageResponse<CheckResponseData>>();
       return resp.data;
     },
     onSuccess: (data) => {

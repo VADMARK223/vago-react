@@ -1,5 +1,5 @@
 import { type User, useUsers } from '../admin.ts';
-import { DeleteUserButton } from './DeleteUserButton.tsx';
+import { DeleteUserBtn } from './DeleteUserBtn.tsx';
 import { ScrollableContainer } from '@/shared/ui';
 
 export function UsersTab() {
@@ -31,7 +31,7 @@ export function UsersTab() {
               <span>Role: {user.role}</span>
             </div>
 
-            <DeleteUserButton id={user.id} />
+            <DeleteUserBtn id={user.id} />
           </div>
         ))}
       </div>

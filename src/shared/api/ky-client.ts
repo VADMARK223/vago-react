@@ -1,6 +1,6 @@
 import ky, { HTTPError } from 'ky';
 
-export type KyResponse<T = undefined> = { message: string } & (T extends undefined
+export type ApiMessageResponse<T = undefined> = { message: string } & (T extends undefined
   ? object
   : { data: T });
 
@@ -31,7 +31,7 @@ export async function getKyErrorMessage(error: unknown): Promise<string | null> 
   }
 
   try {
-    const body = await error.response.json<KyResponse>();
+    const body = await error.response.json<ApiMessageResponse>();
     return body?.message ?? null;
   } catch {
     return null;

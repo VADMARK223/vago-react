@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY, URL } from '@/shared/constants';
-import { api, type KyResponse } from '@/shared/api/ky-client.ts';
+import { api, type ApiMessageResponse } from '@/shared/api/ky-client.ts';
 import type { Id, Question } from '@/shared/types.ts';
 
 type AnswerPublic = {
@@ -12,8 +12,8 @@ type QuestionPublic = Question & {
   answers: AnswerPublic[];
 };
 
-type TestResponse = KyResponse<QuestionPublic>;
-type QuestionIdResponse = KyResponse<number>;
+type TestResponse = ApiMessageResponse<QuestionPublic>;
+type QuestionIdResponse = ApiMessageResponse<number>;
 
 export const useGetRandomQuestionId = () => {
   return useQuery({

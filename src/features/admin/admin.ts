@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY, URL } from '@/shared/constants';
-import { api, type KyResponse } from '@/shared/api/ky-client.ts';
+import { api, type ApiMessageResponse } from '@/shared/api/ky-client.ts';
 import type { Id, MessageResponse } from '@/shared/types.ts';
 
 export type User = {
@@ -10,9 +10,9 @@ export type User = {
   role: string;
 };
 
-type UsersResponse = KyResponse<{ users: User[] }>;
+type UsersResponse = ApiMessageResponse<{ users: User[] }>;
 
-type MessagesResponse = KyResponse<{ messages: MessageResponse[] }>;
+type MessagesResponse = ApiMessageResponse<{ messages: MessageResponse[] }>;
 
 export const useUsers = () => {
   return useQuery({
@@ -28,7 +28,7 @@ export const useDeleteUser = () => {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: number) => api.delete(`${URL.USERS}/${id}`).json<KyResponse>(),
+    mutationFn: (id: number) => api.delete(`${URL.USERS}/${id}`).json<ApiMessageResponse>(),
     onSuccess: async () => {
       await qc.invalidateQueries({ queryKey: [QUERY_KEY.USERS] });
     },
@@ -49,7 +49,7 @@ export const useDeleteMessage = () => {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: (id: number) => api.delete(`${URL.MESSAGES}/${id}`).json<KyResponse>(),
+    mutationFn: (id: number) => api.delete(`${URL.MESSAGES}/${id}`).json<ApiMessageResponse>(),
     onSuccess: async () => {
       await qc.invalidateQueries({ queryKey: [QUERY_KEY.MESSAGES] });
     },

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { api, type KyResponse } from '@/shared/api/ky-client.ts';
+import { api, type ApiMessageResponse } from '@/shared/api/ky-client.ts';
 import { QUERY_KEY, CODE, URL, ROUTE, MUTATION_KEY } from '@/shared/constants';
 import { useNavigate } from 'react-router-dom';
 import { ROLE, type Role } from '@/shared/constants';
@@ -26,7 +26,7 @@ export type User = {
 
 export type SignUpRole = Exclude<Role, 'admin'>;
 
-type MeResponse = KyResponse<User>;
+type MeResponse = ApiMessageResponse<User>;
 
 export type SignInRequest = {
   login: string;
@@ -47,8 +47,8 @@ export interface SignUpFormValues {
   [CODE.ROLE]: SignUpRole;
 }
 
-type SignInResponse = KyResponse;
-export type SignUpResponse = KyResponse;
+type SignInResponse = ApiMessageResponse;
+export type SignUpResponse = ApiMessageResponse;
 
 export const useMe = () => {
   return useQuery({

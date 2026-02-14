@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY, URL } from '@/shared/constants';
-import { api, type KyResponse } from '@/shared/api/ky-client.ts';
+import { api, type ApiMessageResponse } from '@/shared/api/ky-client.ts';
 import type { Id } from '@/shared/types.ts';
 
 type Task = {
@@ -10,8 +10,8 @@ type Task = {
   createdAt: Date;
   completed: boolean;
 };
-type TasksResponse = KyResponse<Task[]>;
-type TaskResponse = KyResponse;
+type TasksResponse = ApiMessageResponse<Task[]>;
+type TaskResponse = ApiMessageResponse;
 
 export interface TaskRequest {
   name: string;
@@ -60,7 +60,7 @@ export const useUpdateTaskMutation = () => {
         .put(`${URL.TASKS}/${id}`, {
           json: { completed },
         })
-        .json<KyResponse>();
+        .json<ApiMessageResponse>();
     },
     onSuccess: async () => {
       await qc.invalidateQueries({ queryKey: [QUERY_KEY.TASKS] });
