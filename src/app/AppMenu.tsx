@@ -1,7 +1,7 @@
 import { Menu, type MenuProps } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useMemo } from 'react';
-import { ROUTE } from '../shared/constants/routes.ts';
+import { ROUTE } from '@/shared/constants';
 import {
   HomeOutlined,
   ReadOutlined,
@@ -43,14 +43,14 @@ export function AppMenu({ onItemClick }: Props) {
     },
     { type: 'divider' as const },
     {
-      key: ROUTE.TASKS,
-      icon: <UnorderedListOutlined />,
-      label: <Link to={ROUTE.TASKS}>Задачи</Link>,
-    },
-    {
       key: ROUTE.CHAT,
       icon: <WechatOutlined />,
       label: <Link to={ROUTE.CHAT}>Чат</Link>,
+    },
+    {
+      key: ROUTE.TASKS,
+      icon: <UnorderedListOutlined />,
+      label: <Link to={ROUTE.TASKS}>Задачи</Link>,
     },
     {
       key: ROUTE.ADMIN,

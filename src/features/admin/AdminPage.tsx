@@ -1,5 +1,10 @@
 import { Tabs, type TabsProps } from 'antd';
 import { UsersTab } from './users/UsersTab';
+import { MessagesTab } from '@/features/admin/messages/MessagesTab.tsx';
+
+type TabsKey = 'users' | 'messages';
+
+const defaultTabs: TabsKey = 'messages';
 
 export const AdminPage = () => {
   const handleTabChange = (activeKey: string) => {
@@ -13,22 +18,16 @@ export const AdminPage = () => {
       children: <UsersTab />,
     },
     {
-      key: 'comments',
-      label: 'Комментарии',
-      children: 'Комментарии',
-      disabled: true,
-    },
-    {
       key: 'messages',
       label: 'Сообщения',
-      children: 'Сообщения',
-      disabled: true,
+      children: <MessagesTab />,
     },
+    { key: 'comments', label: 'Комментарии', children: 'Комментарии', disabled: true },
   ];
 
   return (
     <div className="tabs-page">
-      <Tabs defaultActiveKey="users" items={items} onChange={handleTabChange} />
+      <Tabs defaultActiveKey={defaultTabs} items={items} onChange={handleTabChange} />
     </div>
   );
 };

@@ -1,17 +1,16 @@
-import { DeleteOutlined } from '@ant-design/icons';
-import { App, Button } from 'antd';
-import { useDeleteUser } from '../admin.ts';
-import type { JSX } from 'react';
-import { getKyErrorMessage } from '@/shared/api/ky-client.ts';
 import type { Id } from '@/shared/types.ts';
+import type { JSX } from 'react';
+import { App, Button } from 'antd';
+import { useDeleteMessage } from '@/features/admin/admin.ts';
+import { getKyErrorMessage } from '@/shared/api/ky-client.ts';
+import { DeleteOutlined } from '@ant-design/icons';
 
 interface Props {
   id: Id;
 }
-
-export function DeleteUserButton({ id }: Props): JSX.Element {
+export const DeleteMessageBtn = ({ id }: Props): JSX.Element => {
   const { message } = App.useApp();
-  const { mutate: deleteUser, isPending } = useDeleteUser();
+  const { mutate: deleteUser, isPending } = useDeleteMessage();
 
   return (
     <Button
@@ -23,7 +22,7 @@ export function DeleteUserButton({ id }: Props): JSX.Element {
           },
           onError: async (err) => {
             const errorMsg = await getKyErrorMessage(err);
-            message.error(errorMsg ?? 'Ошибка удаления пользователя');
+            message.error(errorMsg ?? 'Ошибка удаления сообщение');
           },
         });
       }}
@@ -33,4 +32,4 @@ export function DeleteUserButton({ id }: Props): JSX.Element {
       icon={<DeleteOutlined />}
     />
   );
-}
+};

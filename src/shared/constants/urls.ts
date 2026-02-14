@@ -4,6 +4,7 @@ export const URL = {
   ME: 'me',
   USERS: 'users',
   TASKS: 'tasks',
+  MESSAGES: 'messages',
   QUESTION: 'questions',
   TEST: 'test',
 } as const;
