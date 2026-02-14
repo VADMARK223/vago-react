@@ -1,7 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY, URL } from '@/shared/constants';
 import { api, type ApiMessageResponse } from '@/shared/api/ky-client.ts';
 import type { Id, MessageResponse } from '@/shared/types.ts';
+import { useDeleteWithToast } from '@/shared/lib/react-query/use-delete-with-toast.ts';
 
 export type User = {
   id: Id;
@@ -24,17 +25,6 @@ export const useUsers = () => {
   });
 };
 
-export const useDeleteUser = () => {
-  const qc = useQueryClient();
-
-  return useMutation({
-    mutationFn: (id: number) => api.delete(`${URL.USERS}/${id}`).json<ApiMessageResponse>(),
-    onSuccess: async () => {
-      await qc.invalidateQueries({ queryKey: [QUERY_KEY.USERS] });
-    },
-  });
-};
-
 export const useMessages = () => {
   return useQuery({
     queryKey: [QUERY_KEY.MESSAGES],
@@ -45,13 +35,26 @@ export const useMessages = () => {
   });
 };
 
-export const useDeleteMessage = () => {
-  const qc = useQueryClient();
+const deleteUserRequest = async (id: Id) => {
+  return api.delete(`${URL.USERS}/${id}`).json<ApiMessageResponse>();
+};
 
-  return useMutation({
-    mutationFn: (id: number) => api.delete(`${URL.MESSAGES}/${id}`).json<ApiMessageResponse>(),
-    onSuccess: async () => {
-      await qc.invalidateQueries({ queryKey: [QUERY_KEY.MESSAGES] });
-    },
+export const useDeleteUser = () => {
+  return useDeleteWithToast(deleteUserRequest, {
+    errorFallback: 'Ошибка удаления пользователя',
+    successFallback: 'Пользователь удалён',
+    invalidateQueryKeys: [[QUERY_KEY.USERS]],
+  });
+};
+
+const deleteMessageRequest = async (id: Id) => {
+  return api.delete(`${URL.MESSAGES}/${id}`).json<ApiMessageResponse>();
+};
+
+export const useDeleteMessage = () => {
+  return useDeleteWithToast(deleteMessageRequest, {
+    errorFallback: 'Ошибка удаления сообщения',
+    successFallback: 'Сообщение удалёно',
+    invalidateQueryKeys: [[QUERY_KEY.MESSAGES]],
   });
 };
