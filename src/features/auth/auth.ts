@@ -12,8 +12,6 @@ export function useSignInRedirect() {
   const navigate = useNavigate();
 
   return (targetPathname: string) => {
-    console.log('useSignInRedirect targetPathname', targetPathname);
-
     const state: AuthRedirectState = {
       from: { pathname: targetPathname },
     };
@@ -21,9 +19,13 @@ export function useSignInRedirect() {
   };
 }
 
+export type HexColor = `#${string}`;
+export const GuestColor: HexColor = '#000000';
+
 export type User = {
-  username: string;
-  role: Role;
+  username?: string;
+  role?: Role;
+  color?: HexColor;
 };
 
 export type SignUpRole = Exclude<Role, 'admin'>;
@@ -83,7 +85,6 @@ export const useSignInMutation = () => {
     mutationKey: MUTATION_KEY.SIGN_IN,
     mutationFn: signInRequest,
     onSuccess: () => {
-      console.log('signIn success');
       qc.invalidateQueries({ queryKey: [QUERY_KEY.ME] }).then();
     },
   });

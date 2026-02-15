@@ -19,7 +19,6 @@ export function SignOutButton({ iconOnly }: Props) {
       await api.get(CODE.SIGN_OUT);
     },
     onMutate: async () => {
-      // СРАЗУ рубим локальное "я залогинен"
       await qc.cancelQueries({ queryKey: [QUERY_KEY.ME] });
       qc.setQueryData([QUERY_KEY.ME], null);
       qc.removeQueries({ queryKey: [QUERY_KEY.ME] });

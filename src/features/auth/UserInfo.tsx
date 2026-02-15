@@ -1,9 +1,9 @@
-import { useMe, useSignInRedirect } from './auth.ts';
-import { Button, Space } from 'antd';
+import { GuestColor, type HexColor, useMe, useSignInRedirect } from './auth.ts';
+import { Avatar, Button, Space, Tooltip } from 'antd';
 import { useLocation } from 'react-router-dom';
 import { LoginOutlined } from '@ant-design/icons';
 import { SignOutButton } from './SignOutButton.tsx';
-import { ROUTE, MUTATION_KEY } from '@/shared/constants';
+import { MUTATION_KEY, ROUTE } from '@/shared/constants';
 import { useIsMutating } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
@@ -22,20 +22,32 @@ export function UserInfo({ isPhone }: Props) {
   const handleSignIn = useCallback(() => {
     goSignIn(pathname);
   }, [goSignIn, pathname]);
-
   const isOnSignInPage = pathname === ROUTE.SIGN_IN;
+
+  const avatarLetter = me?.username?.trim().charAt(0).toUpperCase() ?? 'Г';
+  const tooltipTitle = me?.username ? me.username : 'Гость';
+  const avatarBg: HexColor | undefined = me ? me.color : GuestColor;
 
   return (
     <Space orientation="horizontal">
+      <Tooltip title={`Привет, ${tooltipTitle}!`} placement="bottom">
+        <Avatar
+          style={{
+            background: avatarBg,
+            cursor: 'pointer',
+            userSelect: 'none',
+          }}
+        >
+          {avatarLetter}
+        </Avatar>
+      </Tooltip>
+
       {me ? (
         <>
-          {!isPhone && <span>Привет, {me.username}!</span>}
           <SignOutButton iconOnly={isPhone} />
         </>
       ) : (
         <>
-          {!isPhone && <span>Привет, Гость!</span>}
-
           {!isOnSignInPage && (
             <Button
               icon={<LoginOutlined />}
