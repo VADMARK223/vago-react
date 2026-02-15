@@ -21,6 +21,7 @@ export function SignInPage() {
     signInMutation.mutate(values, {
       onSuccess: (data) => {
         message.success(data.message);
+        console.log('SignInPage onFinish > onSuccess: from', from);
         navigate(from, { replace: true });
       },
       onError: async (error) => {

@@ -1,8 +1,9 @@
 import { App, Button } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { CODE, QUERY_KEY, ROUTE } from '@/shared/constants';
 import { api } from '@/shared/api/ky-client.ts';
-import { CODE, QUERY_KEY } from '@/shared/constants';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   iconOnly?: boolean;
@@ -11,24 +12,31 @@ interface Props {
 export function SignOutButton({ iconOnly }: Props) {
   const { message } = App.useApp();
   const qc = useQueryClient();
+  const navigate = useNavigate();
 
-  const { refetch } = useQuery({
-    queryKey: [QUERY_KEY.SIGN_OUT],
-    queryFn: () => api.get(CODE.SIGN_OUT),
-    enabled: false,
+  const signOut = useMutation({
+    mutationFn: async () => {
+      await api.get(CODE.SIGN_OUT);
+    },
+    onMutate: async () => {
+      // СРАЗУ рубим локальное "я залогинен"
+      await qc.cancelQueries({ queryKey: [QUERY_KEY.ME] });
+      qc.setQueryData([QUERY_KEY.ME], null);
+      qc.removeQueries({ queryKey: [QUERY_KEY.ME] });
+    },
+    onSuccess: () => {
+      message.info('Успешный выход.').then();
+      navigate(ROUTE.SIGN_IN, { replace: true, state: { justLoggedOut: true } });
+    },
+    onError: () => {
+      // даже если сервер упал — локально считаем, что вышли
+      message.info('Вы вышли (локально).').then();
+      navigate(ROUTE.SIGN_IN, { replace: true, state: { justLoggedOut: true } });
+    },
   });
 
   return (
-    <Button
-      icon={<LogoutOutlined />}
-      onClick={() => {
-        refetch().then(() => {
-          message.info('Успешный выход.').then();
-          // qc.invalidateQueries({queryKey: [QUERY_KEY.ME]}).then()
-          qc.setQueryData([QUERY_KEY.ME], null);
-        });
-      }}
-    >
+    <Button icon={<LogoutOutlined />} loading={signOut.isPending} onClick={() => signOut.mutate()}>
       {!iconOnly && 'Выйти'}
     </Button>
   );

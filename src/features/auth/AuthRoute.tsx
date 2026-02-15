@@ -12,11 +12,13 @@ export function AuthRoute({ children }: { children: JSX.Element }) {
     return null;
   }
 
+  console.log('AuthRoute isAuthed', isAuthed);
   if (!isAuthed) {
     const state: AuthRedirectState = {
       from: { pathname: location.pathname },
     };
 
+    console.log('AuthRoute navigate to', state);
     return <Navigate to={ROUTE.SIGN_IN} replace state={state} />;
   }
 
