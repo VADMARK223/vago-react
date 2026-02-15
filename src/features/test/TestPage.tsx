@@ -183,7 +183,7 @@ export const TestPage = () => {
       <Space orientation="vertical">
         <hr />
         <div className={styles.explanation}>{explanationText}</div>
-        <Space orientation="horizontal">
+        <Space>
           <Button
             type="primary"
             onClick={handleNextRandom}

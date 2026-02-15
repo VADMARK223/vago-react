@@ -81,7 +81,7 @@ export function TasksPage() {
                       </span>
                     }
                     extra={
-                      <Space orientation="horizontal">
+                      <Space>
                         <Checkbox
                           checked={task.completed}
                           style={{ color: task.completed ? 'green' : undefined }}

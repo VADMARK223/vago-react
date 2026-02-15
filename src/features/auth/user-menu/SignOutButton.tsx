@@ -5,32 +5,31 @@ import { CODE, QUERY_KEY, ROUTE } from '@/shared/constants';
 import { api } from '@/shared/api/ky-client.ts';
 import { useNavigate } from 'react-router-dom';
 
-interface Props {
+type Props = {
   isCompact?: boolean;
-}
+  onDone?: () => void;
+};
 
-export function SignOutButton({ isCompact }: Props) {
+export function SignOutButton({ isCompact, onDone }: Props) {
   const { message } = App.useApp();
   const qc = useQueryClient();
   const navigate = useNavigate();
+
+  const finish = (text: string) => {
+    navigate(ROUTE.SIGN_IN, { replace: true, state: { justLoggedOut: true } });
+    message.info(text).then();
+  };
 
   const signOut = useMutation({
     mutationFn: async () => {
       await api.get(CODE.SIGN_OUT); // TODO: поменять на POST, потому что меняет состояние на сервере
     },
     onMutate: async () => {
+      onDone?.();
       await qc.cancelQueries({ queryKey: [QUERY_KEY.ME] });
       qc.setQueryData([QUERY_KEY.ME], null);
-      qc.removeQueries({ queryKey: [QUERY_KEY.ME] });
     },
-    onSuccess: () => {
-      navigate(ROUTE.SIGN_IN, { replace: true, state: { justLoggedOut: true } });
-    },
-    onError: () => {
-      // даже если сервер упал — локально считаем, что вышли
-      message.info('Вы вышли (локально).').then();
-      navigate(ROUTE.SIGN_IN, { replace: true, state: { justLoggedOut: true } });
-    },
+    onError: () => finish('Вы вышли (локально).'),
   });
 
   return (

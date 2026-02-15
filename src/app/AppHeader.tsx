@@ -4,7 +4,7 @@ import { Header } from 'antd/es/layout/layout';
 import { useMatches } from 'react-router-dom';
 import { useMemo } from 'react';
 import type { RouteHandle } from './route.ts';
-import { UserInfo } from '../features/auth/user-info/UserInfo.tsx';
+import { UserMenu } from '@/features/auth/user-menu/UserMenu.tsx';
 import { GoButton } from './GoButton.tsx';
 import { useAppUi } from '../shared/ui/useAppUi.ts';
 
@@ -40,7 +40,7 @@ export function AppHeader({ collapsed, onToggleCollapse }: AppHeaderProps) {
       </Space>
 
       <Space>
-        <UserInfo isPhone={isPhone} />
+        <UserMenu isPhone={isPhone} />
         <GoButton isPhone={isPhone} />
       </Space>
     </Header>
