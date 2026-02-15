@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { AdminTabsKey } from '@/shared/types.ts';
+import type { AdminTabsKey } from '@/shared/types';
 
 type UiState = {
   sidebarOpen: boolean;

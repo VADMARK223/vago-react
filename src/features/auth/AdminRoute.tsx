@@ -1,5 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { type AuthRedirectState, useAuth } from './auth.ts';
+import { type AuthRedirectState, useAuth } from './auth';
 import type { JSX } from 'react';
 import { ROUTE } from '@/shared/constants';
 

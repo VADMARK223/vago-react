@@ -1,4 +1,4 @@
-import type { Question } from './questions.ts';
+import type { Question } from './questions';
 import { CodeBlock } from '@/shared/ui/codeBlock';
 import styles from './QuestionPage.module.css';
 

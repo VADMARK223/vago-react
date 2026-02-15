@@ -1,26 +1,26 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { AppLayout } from './AppLayout.tsx';
-import { HomePage } from '../features/home/HomePage.tsx';
-import { SignInPage } from '../features/auth/SignInPage.tsx';
-import { NotFoundPage } from './NotFoundPage.tsx';
+import { AppLayout } from './AppLayout';
+import { HomePage } from '../features/home/HomePage';
+import { SignInPage } from '../features/auth/SignInPage';
+import { NotFoundPage } from './NotFoundPage';
 import { route } from './route';
-import { QuestionPage } from '../features/questions/QuestionPage.tsx';
-import { SignUpPage } from '../features/auth/SignUpPage.tsx';
-import { ROUTE } from '../shared/constants/routes.ts';
-import { TasksPage } from '../features/tasks/TasksPage.tsx';
+import { QuestionPage } from '../features/questions/QuestionPage';
+import { SignUpPage } from '../features/auth/SignUpPage';
+import { ROUTE } from '@/shared/constants';
+import { TasksPage } from '../features/tasks/TasksPage';
 import { lazy, Suspense } from 'react';
-import { adminLazy } from '../features/admin/admin.lazy.tsx';
-import { ChatPage } from '../features/chat/ChatPage.tsx';
-import { AuthRoute } from '../features/auth/AuthRoute.tsx';
-import { SettingsPage } from '../features/settings/SettingsPage.tsx';
-import { TestRandomRedirectPage } from '../features/test/TestRandomRedirectPage.tsx';
-import { TestPage } from '../features/test/TestPage.tsx';
+import { adminLazy } from '../features/admin/admin.lazy';
+import { ChatPage } from '../features/chat/ChatPage';
+import { AuthRoute } from '../features/auth/AuthRoute';
+import { SettingsPage } from '../features/settings/SettingsPage';
+import { TestRandomRedirectPage } from '../features/test/TestRandomRedirectPage';
+import { TestPage } from '../features/test/TestPage';
 
 const BookPage = lazy(
   () =>
     import(
       /* webpackChunkName: "book" */
-      '../features/book/BookPage.tsx'
+      '../features/book/BookPage'
     ),
 );
 
@@ -28,7 +28,7 @@ const BookTocPage = lazy(
   () =>
     import(
       /* webpackChunkName: "book_toc" */
-      '../features/book/BookTocPage.tsx'
+      '../features/book/BookTocPage'
     ),
 );
 
@@ -36,7 +36,7 @@ const BookChapterPage = lazy(
   () =>
     import(
       /* webpackChunkName: "book_chapter" */
-      '../features/book/BookChapterPage.tsx'
+      '../features/book/BookChapterPage'
     ),
 );
 

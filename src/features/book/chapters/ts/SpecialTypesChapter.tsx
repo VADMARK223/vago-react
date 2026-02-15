@@ -1,5 +1,5 @@
 import { CodeBlock } from '@/shared/ui/codeBlock';
-import { BookHashLink } from '@/features/book/chapters/BookHashLink.tsx';
+import { BookHashLink } from '@/features/book/chapters/BookHashLink';
 
 export default function SpecialTypesChapter() {
   return (

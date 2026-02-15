@@ -1,7 +1,7 @@
-import { GuestColor, type HexColor, type User } from '../auth.ts';
+import { GuestColor, type HexColor, type User } from '../auth';
 import { Avatar, Popover, Space, Tooltip } from 'antd';
 import { useState } from 'react';
-import { UserPopoverContent } from '@/features/auth/user-menu/UserPopoverContent.tsx';
+import { UserPopoverContent } from '@/features/auth/user-menu/UserPopoverContent';
 
 interface Props {
   me: User | undefined;

@@ -1,8 +1,8 @@
-import type { User } from '@/features/auth/auth.ts';
+import type { User } from '@/features/auth/auth';
 import { Space, Typography } from 'antd';
-import { SignOutButton } from '@/features/auth/user-menu/SignOutButton.tsx';
-import { SignUpButton } from '@/shared/ui/SignUpButton.tsx';
-import { SignInButton } from '@/shared/ui/SignInButton.tsx';
+import { SignOutButton } from '@/features/auth/user-menu/SignOutButton';
+import { SignUpButton } from '@/shared/ui/SignUpButton';
+import { SignInButton } from '@/shared/ui/SignInButton';
 import { useLocation } from 'react-router-dom';
 import { ROUTE } from '@/shared/constants';
 

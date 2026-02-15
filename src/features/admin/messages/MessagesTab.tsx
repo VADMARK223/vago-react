@@ -1,27 +1,27 @@
 import { ScrollableContainer } from '@/shared/ui';
-import type { MessageResponse } from '@/shared/types.ts';
-import { useMessages } from '@/features/admin/admin.ts';
-import { DeleteMessageBtn } from '@/features/admin/messages/DeleteMessageBtn.tsx';
+import { DeleteMessageBtn } from '@/features/admin/messages/DeleteMessageBtn';
+import { useMessages } from '@/shared/api/messages/use-messages';
 
 export const MessagesTab = () => {
   const { data, isLoading, isError } = useMessages();
 
-  const users: MessageResponse[] = data?.messages ?? [];
+  const messages = data?.messages ?? [];
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   if (isError) {
     return <div>Error</div>;
   }
-  if (!users.length) {
+  if (!messages.length) {
     return <div>Сообщений нет</div>;
   }
 
   return (
     <ScrollableContainer>
       <div className="stack">
-        {users.map((message: MessageResponse) => (
+        {messages.map((message) => (
           <div className="panel" key={message.id}>
             <div>
               <h3>ID: {message.id}</h3>

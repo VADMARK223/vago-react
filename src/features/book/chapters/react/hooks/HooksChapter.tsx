@@ -1,9 +1,9 @@
-import { UseMemoBlock } from './UseMemoBlock.tsx';
-import { UseEffectBlock } from './UseEffectBlock.tsx';
-import { UseStateBlock } from './UseStateBlock.tsx';
-import { UseReducerBlock } from './UseReducerBlock.tsx';
+import { UseMemoBlock } from './UseMemoBlock';
+import { UseEffectBlock } from './UseEffectBlock';
+import { UseStateBlock } from './UseStateBlock';
+import { UseReducerBlock } from './UseReducerBlock';
 import styles from '@/features/book/Book.module.css';
-import { BookHashLink } from '@/features/book/chapters/BookHashLink.tsx';
+import { BookHashLink } from '@/features/book/chapters/BookHashLink';
 
 export default function HooksChapter() {
   return (

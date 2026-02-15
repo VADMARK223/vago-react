@@ -1,6 +1,6 @@
 import { LoginOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import { useSignInRedirect } from '@/features/auth/auth.ts';
+import { useSignInRedirect } from '@/features/auth/auth';
 import { useLocation } from 'react-router-dom';
 import { useIsMutating } from '@tanstack/react-query';
 import { MUTATION_KEY } from '@/shared/constants';

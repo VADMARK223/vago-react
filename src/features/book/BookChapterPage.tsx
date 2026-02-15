@@ -3,7 +3,7 @@ import { chapters } from './chapters';
 import { ROUTE } from '@/shared/constants';
 import type { ComponentType } from 'react';
 import { useEffect, useState } from 'react';
-import type { Id } from '@/shared/types.ts';
+import type { Id } from '@/shared/types';
 
 type Loaded = { id: Id; Component: ComponentType } | null;
 

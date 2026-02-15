@@ -2,7 +2,7 @@ import { App, Button } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CODE, QUERY_KEY, ROUTE } from '@/shared/constants';
-import { api } from '@/shared/api/ky-client.ts';
+import { api } from '@/shared/api/ky-client';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {
@@ -26,8 +26,8 @@ export function SignOutButton({ isCompact, onDone }: Props) {
     },
     onMutate: async () => {
       onDone?.();
-      await qc.cancelQueries({ queryKey: [QUERY_KEY.ME] });
-      qc.setQueryData([QUERY_KEY.ME], null);
+      await qc.cancelQueries({ queryKey: [QUERY_KEY.me] });
+      qc.setQueryData([QUERY_KEY.me], null);
     },
     onError: () => finish('Вы вышли (локально).'),
   });

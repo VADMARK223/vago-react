@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEY, URL } from '@/shared/constants';
-import { api, type ApiMessageResponse } from '@/shared/api/ky-client.ts';
-import type { Id } from '@/shared/types.ts';
+import { api, type ApiMessageResponse } from '@/shared/api/ky-client';
+import type { Id } from '@/shared/types';
 
 type Task = {
   id: Id;
@@ -21,7 +21,7 @@ export interface TaskRequest {
 
 export const useTasks = () => {
   return useQuery({
-    queryKey: [QUERY_KEY.TASKS],
+    queryKey: [QUERY_KEY.tasks],
     queryFn: async () => {
       const response = await api.get(URL.TASKS).json<TasksResponse>();
       return response.data;
@@ -36,7 +36,7 @@ export const useCreateTask = () => {
       return await api.post(URL.TASKS, { json: data }).json<TaskResponse>();
     },
     onSuccess: async () => {
-      await qc.invalidateQueries({ queryKey: [QUERY_KEY.TASKS] });
+      await qc.invalidateQueries({ queryKey: [QUERY_KEY.tasks] });
     },
   });
 };
@@ -47,7 +47,7 @@ export const useDeleteTask = () => {
   return useMutation({
     mutationFn: (id: number) => api.delete(`${URL.TASKS}/${id}`).json<TaskResponse>(),
     onSuccess: async () => {
-      await qc.invalidateQueries({ queryKey: [QUERY_KEY.TASKS] });
+      await qc.invalidateQueries({ queryKey: [QUERY_KEY.tasks] });
     },
   });
 };
@@ -63,7 +63,7 @@ export const useUpdateTaskMutation = () => {
         .json<ApiMessageResponse>();
     },
     onSuccess: async () => {
-      await qc.invalidateQueries({ queryKey: [QUERY_KEY.TASKS] });
+      await qc.invalidateQueries({ queryKey: [QUERY_KEY.tasks] });
     },
   });
 };

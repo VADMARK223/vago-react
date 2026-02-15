@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY, URL } from '@/shared/constants';
-import { api, type ApiMessageResponse } from '@/shared/api/ky-client.ts';
-import type { Id, MessageResponse } from '@/shared/types.ts';
-import { useDeleteWithToast } from '@/shared/lib/react-query/use-delete-with-toast.ts';
+import { api, type ApiMessageResponse } from '@/shared/api/ky-client';
+import type { Id } from '@/shared/types';
+import { useDeleteWithToast } from '@/shared/lib/react-query/use-delete-with-toast';
 
 export type User = {
   id: Id;
@@ -13,23 +13,11 @@ export type User = {
 
 type UsersResponse = ApiMessageResponse<{ users: User[] }>;
 
-type MessagesResponse = ApiMessageResponse<{ messages: MessageResponse[] }>;
-
 export const useUsers = () => {
   return useQuery({
-    queryKey: [QUERY_KEY.USERS],
+    queryKey: [QUERY_KEY.users],
     queryFn: async () => {
       const resp = await api.get(URL.USERS).json<UsersResponse>();
-      return resp.data;
-    },
-  });
-};
-
-export const useMessages = () => {
-  return useQuery({
-    queryKey: [QUERY_KEY.MESSAGES],
-    queryFn: async () => {
-      const resp = await api.get(URL.MESSAGES).json<MessagesResponse>();
       return resp.data;
     },
   });
@@ -43,7 +31,7 @@ export const useDeleteUser = () => {
   return useDeleteWithToast(deleteUserRequest, {
     errorFallback: 'Ошибка удаления пользователя',
     successFallback: 'Пользователь удалён',
-    invalidateQueryKeys: [[QUERY_KEY.USERS]],
+    invalidateQueryKeys: [[QUERY_KEY.users]],
   });
 };
 
@@ -55,6 +43,6 @@ export const useDeleteMessage = () => {
   return useDeleteWithToast(deleteMessageRequest, {
     errorFallback: 'Ошибка удаления сообщения',
     successFallback: 'Сообщение удалёно',
-    invalidateQueryKeys: [[QUERY_KEY.MESSAGES]],
+    invalidateQueryKeys: [[QUERY_KEY.messages]],
   });
 };

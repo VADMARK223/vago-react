@@ -1,9 +1,9 @@
 export const QUERY_KEY = {
-  ME: 'me',
-  SIGN_OUT: 'sign_out',
-  USERS: 'users',
-  TASKS: 'tasks',
-  QUESTIONS: 'questions',
-  MESSAGES: 'messages',
-  TEST: 'test',
+  me: 'me',
+  sign_out: 'sign_out',
+  users: 'users',
+  tasks: 'tasks',
+  questions: 'questions',
+  messages: 'messages',
+  test: 'test',
 } as const;

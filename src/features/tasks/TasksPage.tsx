@@ -1,12 +1,12 @@
 import styles from './TaskPage.module.css';
 import { App, Button, Card, Checkbox, Empty, Form, Input, Space, Spin } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
-import { type TaskRequest, useCreateTask, useTasks, useUpdateTaskMutation } from './tasks.ts';
+import { type TaskRequest, useCreateTask, useTasks, useUpdateTaskMutation } from './tasks';
 import { ScrollableContainer } from '@/shared/ui';
 import { CODE } from '@/shared/constants';
 import TextArea from 'antd/es/input/TextArea';
-import { getKyErrorMessage } from '@/shared/api/ky-client.ts';
-import { DeleteTaskButton } from './DeleteTaskButton.tsx';
+import { getKyErrorMessage } from '@/shared/api/ky-client';
+import { DeleteTaskButton } from './DeleteTaskButton';
 import dayjs from 'dayjs';
 
 export function TasksPage() {

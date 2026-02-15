@@ -3,13 +3,13 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Header } from 'antd/es/layout/layout';
 import { useLocation, useMatches } from 'react-router-dom';
 import { useMemo } from 'react';
-import type { RouteHandle } from './route.ts';
-import { UserMenu } from '@/features/auth/user-menu/UserMenu.tsx';
-import { GoButton } from './GoButton.tsx';
-import { useAppUi } from '../shared/ui/useAppUi.ts';
-import { SignInButton } from '@/shared/ui/SignInButton.tsx';
-import { SignUpButton } from '@/shared/ui/SignUpButton.tsx';
-import { useMe } from '@/features/auth/auth.ts';
+import type { RouteHandle } from './route';
+import { UserMenu } from '@/features/auth/user-menu/UserMenu';
+import { GoButton } from './GoButton';
+import { useAppUi } from '../shared/ui/useAppUi';
+import { SignInButton } from '@/shared/ui/SignInButton';
+import { SignUpButton } from '@/shared/ui/SignUpButton';
+import { useMe } from '@/features/auth/auth';
 import { ROUTE } from '@/shared/constants';
 
 type AppHeaderProps = {

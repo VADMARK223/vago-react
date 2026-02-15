@@ -1,6 +1,6 @@
 import { CodeBlock } from '@/shared/ui/codeBlock';
 import styles from '@/features/book/Book.module.css';
-import { BookHashLink } from '@/features/book/chapters/BookHashLink.tsx';
+import { BookHashLink } from '@/features/book/chapters/BookHashLink';
 
 export default function ConstObjectAsEnumPattern() {
   return (

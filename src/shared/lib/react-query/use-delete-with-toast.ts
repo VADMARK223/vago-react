@@ -1,5 +1,5 @@
-import { type ApiMessageResponse, getKyErrorMessage } from '@/shared/api/ky-client.ts';
-import type { Id } from '@/shared/types.ts';
+import { type ApiMessageResponse, getKyErrorMessage } from '@/shared/api/ky-client';
+import type { Id } from '@/shared/types';
 import {
   type QueryKey,
   useMutation,

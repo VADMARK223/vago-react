@@ -51,6 +51,16 @@ export default defineConfig([
           argsIgnorePattern: '^_',
         },
       ],
+      'import/extensions': [
+        'error',
+        'ignorePackages',
+        {
+          ts: 'never',
+          tsx: 'never',
+          js: 'never',
+          jsx: 'never',
+        },
+      ],
       'import/no-internal-modules': [
         'error',
         {

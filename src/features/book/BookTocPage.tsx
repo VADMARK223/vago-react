@@ -1,7 +1,7 @@
-import type { Chapter, ChapterType } from './book.ts';
+import type { Chapter, ChapterType } from './book';
 import { Link } from 'react-router-dom';
 import { ROUTE } from '@/shared/constants';
-import { chapters } from './chapters.tsx';
+import { chapters } from './chapters';
 
 export default function BookTocPage() {
   const groupedChapters = chapters.reduce<Record<ChapterType, Chapter[]>>(

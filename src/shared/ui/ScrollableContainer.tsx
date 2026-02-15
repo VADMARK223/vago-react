@@ -1,7 +1,7 @@
 import style from './ScrollableContainer.module.css';
 import * as React from 'react';
 import { useRef } from 'react';
-import { ScrollToTopButton } from './ScrollToTopButton.tsx';
+import { ScrollToTopButton } from './ScrollToTopButton';
 
 type Props = {
   children: React.ReactNode;

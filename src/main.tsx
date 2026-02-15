@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import './styles/index.css';
 import { App as AntApp, ConfigProvider, theme } from 'antd';
 import { RouterProvider } from 'react-router-dom';
-import { router } from './app/router.tsx';
+import { router } from './app/router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // import {StrictMode} from 'react'
 

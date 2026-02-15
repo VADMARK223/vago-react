@@ -1,4 +1,4 @@
-import { useGetRandomQuestionId } from './test.ts';
+import { useGetRandomQuestionId } from './test';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Spin } from 'antd';

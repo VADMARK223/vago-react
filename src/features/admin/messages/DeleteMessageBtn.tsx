@@ -1,7 +1,7 @@
-import type { Id } from '@/shared/types.ts';
+import type { Id } from '@/shared/types';
 import type { JSX } from 'react';
-import { useDeleteMessage } from '@/features/admin/admin.ts';
-import { DeleteButton } from '@/shared/ui/DeleteButton.tsx';
+import { useDeleteMessage } from '@/features/admin/admin';
+import { DeleteButton } from '@/shared/ui/DeleteButton';
 
 interface Props {
   id: Id;

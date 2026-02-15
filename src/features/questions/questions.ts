@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY, URL } from '@/shared/constants';
-import { api, type ApiMessageResponse } from '@/shared/api/ky-client.ts';
-import type { Id } from '@/shared/types.ts';
+import { api, type ApiMessageResponse } from '@/shared/api/ky-client';
+import type { Id } from '@/shared/types';
 
 type QuestionsPageData = {
   chapters: QuestionsChapter[];
@@ -40,7 +40,7 @@ type QuestionsResponse = ApiMessageResponse<QuestionsPageData>;
 
 export const useQuestions = (topicId?: number) => {
   return useQuery({
-    queryKey: [QUERY_KEY.QUESTIONS, topicId ?? null],
+    queryKey: [QUERY_KEY.questions, topicId ?? null],
     queryFn: async () => {
       const searchParams = topicId != null ? { topic_id: String(topicId) } : undefined;
       return await api.get(URL.QUESTION, { searchParams: searchParams }).json<QuestionsResponse>();

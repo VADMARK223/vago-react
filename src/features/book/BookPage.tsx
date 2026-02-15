@@ -4,7 +4,7 @@ import { MenuOutlined, StepBackwardOutlined } from '@ant-design/icons';
 
 import { Outlet, useMatch, useNavigate, useParams } from 'react-router-dom';
 import { ROUTE } from '@/shared/constants';
-import { chapters } from './chapters.tsx';
+import { chapters } from './chapters';
 import { ScrollableContainer } from '@/shared/ui';
 
 export default function BookPage() {

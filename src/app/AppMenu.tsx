@@ -12,7 +12,7 @@ import {
   SettingOutlined,
   QuestionCircleOutlined,
 } from '@ant-design/icons';
-import { useAuth, useSignInRedirect } from '../features/auth/auth.ts';
+import { useAuth, useSignInRedirect } from '../features/auth/auth';
 
 interface Props {
   onItemClick?: () => void;

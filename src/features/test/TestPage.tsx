@@ -1,10 +1,10 @@
 import styles from './TestPage.module.css';
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetQuestionById } from './test.ts';
+import { useGetQuestionById } from './test';
 import { Button, message, Space, Spin } from 'antd';
 import { CodeBlock } from '@/shared/ui/codeBlock';
-import { api, type ApiMessageResponse } from '@/shared/api/ky-client.ts';
+import { api, type ApiMessageResponse } from '@/shared/api/ky-client';
 import { useMutation } from '@tanstack/react-query';
 import { URL } from '@/shared/constants';
 import { StepForwardOutlined, UndoOutlined } from '@ant-design/icons';

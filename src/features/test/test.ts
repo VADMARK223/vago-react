@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEY, URL } from '@/shared/constants';
-import { api, type ApiMessageResponse } from '@/shared/api/ky-client.ts';
-import type { Id, Question } from '@/shared/types.ts';
+import { api, type ApiMessageResponse } from '@/shared/api/ky-client';
+import type { Id, Question } from '@/shared/types';
 
 type AnswerPublic = {
   id: Id;
@@ -17,7 +17,7 @@ type QuestionIdResponse = ApiMessageResponse<number>;
 
 export const useGetRandomQuestionId = () => {
   return useQuery({
-    queryKey: [QUERY_KEY.TEST],
+    queryKey: [QUERY_KEY.test],
     queryFn: async () => {
       const resp = await api.get(URL.TEST).json<QuestionIdResponse>();
       return resp.data;
@@ -27,7 +27,7 @@ export const useGetRandomQuestionId = () => {
 
 export const useGetQuestionById = (id: number | undefined) => {
   return useQuery({
-    queryKey: [QUERY_KEY.TEST, id],
+    queryKey: [QUERY_KEY.test, id],
     queryFn: async () => {
       const resp = await api.get(URL.TEST + `/${id}`).json<TestResponse>();
       return resp.data;

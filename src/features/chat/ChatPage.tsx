@@ -3,12 +3,11 @@ import styles from './ChatPage.module.css';
 import { Button, Input, type InputRef } from 'antd';
 import { Virtuoso } from 'react-virtuoso';
 import { SendOutlined } from '@ant-design/icons';
-import type { MessageResponse } from '@/shared/types.ts';
+import type { MessageResponse } from '@/shared/types';
 import clsx from 'clsx';
 
 const WS_URL = 'ws://localhost:5555/ws';
 
-// На сервер
 type MessageRequest = {
   type: string;
   text: string;

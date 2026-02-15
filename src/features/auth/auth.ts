@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { api, type ApiMessageResponse } from '@/shared/api/ky-client.ts';
+import { api, type ApiMessageResponse } from '@/shared/api/ky-client';
 import { QUERY_KEY, CODE, URL, ROUTE, MUTATION_KEY } from '@/shared/constants';
 import { useNavigate } from 'react-router-dom';
 import { ROLE, type Role } from '@/shared/constants';
@@ -56,7 +56,7 @@ export type SignUpResponse = ApiMessageResponse;
 
 export const useMe = () => {
   return useQuery({
-    queryKey: [QUERY_KEY.ME],
+    queryKey: [QUERY_KEY.me],
     queryFn: async () => {
       const response = await api.get(URL.ME).json<MeResponse>();
       return response.data;
@@ -85,7 +85,7 @@ export const useSignInMutation = () => {
     mutationKey: MUTATION_KEY.SIGN_IN,
     mutationFn: signInRequest,
     onSuccess: () => {
-      qc.invalidateQueries({ queryKey: [QUERY_KEY.ME] }).then();
+      qc.invalidateQueries({ queryKey: [QUERY_KEY.me] }).then();
     },
   });
 };

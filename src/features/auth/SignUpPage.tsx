@@ -4,14 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ROUTE, CODE } from '@/shared/constants';
 import { useState } from 'react';
 import capitalize from 'antd/es/_util/capitalize';
-import { MAX_VALUE } from './constants.ts';
-import {
-  type SignUpFormValues,
-  type SignUpRole,
-  toSignUpRequest,
-  useSignUpMutation,
-} from './auth.ts';
-import { getKyErrorMessage } from '@/shared/api/ky-client.ts';
+import { MAX_VALUE } from './constants';
+import { type SignUpFormValues, type SignUpRole, toSignUpRequest, useSignUpMutation } from './auth';
+import { getKyErrorMessage } from '@/shared/api/ky-client';
 
 const DEFAULT_ROLE: SignUpRole = 'moderator';
 const ROLE_HINT: Record<SignUpRole, string> = {

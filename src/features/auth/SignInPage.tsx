@@ -1,9 +1,9 @@
 import { App, Button, Form, Input, Space, Typography } from 'antd';
-import { type AuthRedirectState, type SignInRequest, useSignInMutation } from './auth.ts';
+import { type AuthRedirectState, type SignInRequest, useSignInMutation } from './auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Auth.module.css';
 import { ROUTE, CODE } from '@/shared/constants';
-import { getKyErrorMessage } from '@/shared/api/ky-client.ts';
+import { getKyErrorMessage } from '@/shared/api/ky-client';
 
 export function SignInPage() {
   const { message } = App.useApp();

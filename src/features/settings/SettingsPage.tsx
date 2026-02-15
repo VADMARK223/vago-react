@@ -1,7 +1,7 @@
 import { theme } from 'antd';
 import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
-import { useAppUi } from '@/shared/ui/useAppUi.ts';
-import { useMe } from '../auth/auth.ts';
+import { useAppUi } from '@/shared/ui/useAppUi';
+import { useMe } from '../auth/auth';
 
 export function SettingsPage() {
   const { isPhone, isTablet, isDesktop } = useAppUi();

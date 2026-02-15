@@ -1,5 +1,5 @@
 import { CodeBlock } from '@/shared/ui/codeBlock';
-import { BookHashLink } from '../BookHashLink.tsx';
+import { BookHashLink } from '../BookHashLink';
 import styles from '../../Book.module.css';
 
 export default function KeysChapter() {
