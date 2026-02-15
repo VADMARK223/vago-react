@@ -2,10 +2,10 @@ import { GoogleOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
 interface Props {
-  isPhone?: boolean;
+  isCompact?: boolean;
 }
 
-export function GoButton({ isPhone }: Props) {
+export const GoButton = ({ isCompact }: Props) => {
   return (
     <Button
       type="primary"
@@ -16,7 +16,7 @@ export function GoButton({ isPhone }: Props) {
       }}
       icon={<GoogleOutlined />}
     >
-      {!isPhone && 'Портал на Golang'}
+      {!isCompact && 'Портал на Golang'}
     </Button>
   );
-}
+};

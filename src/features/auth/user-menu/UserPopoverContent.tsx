@@ -1,26 +1,24 @@
 import type { User } from '@/features/auth/auth.ts';
 import { Space, Typography } from 'antd';
 import { SignOutButton } from '@/features/auth/user-menu/SignOutButton.tsx';
-import { SignUpButton } from '@/features/auth/user-menu/SignUpButton.tsx';
-import { SignInButton } from '@/features/auth/user-menu/SignInButton.tsx';
+import { SignUpButton } from '@/shared/ui/SignUpButton.tsx';
+import { SignInButton } from '@/shared/ui/SignInButton.tsx';
+import { useLocation } from 'react-router-dom';
+import { ROUTE } from '@/shared/constants';
 
 type Props = {
   me: User | undefined;
   isCompact: boolean;
   isMeLoading: boolean;
-  isOnSignInPage: boolean;
-  isOnSignUpPage: boolean;
   onRequestClose: () => void;
 };
 
-export function UserPopoverContent({
-  me,
-  isCompact,
-  isMeLoading,
-  isOnSignInPage,
-  isOnSignUpPage,
-  onRequestClose,
-}: Props) {
+export function UserPopoverContent({ me, isCompact, isMeLoading, onRequestClose }: Props) {
+  const { pathname } = useLocation();
+
+  const isOnSignInPage = pathname === ROUTE.SIGN_IN;
+  const isOnSignUpPage = pathname === ROUTE.SIGN_UP;
+
   if (me) {
     return (
       <Space orientation="vertical" size={8} style={{ minWidth: 220 }}>
