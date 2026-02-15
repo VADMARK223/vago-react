@@ -6,17 +6,17 @@ import { api } from '@/shared/api/ky-client.ts';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  iconOnly?: boolean;
+  isCompact?: boolean;
 }
 
-export function SignOutButton({ iconOnly }: Props) {
+export function SignOutButton({ isCompact }: Props) {
   const { message } = App.useApp();
   const qc = useQueryClient();
   const navigate = useNavigate();
 
   const signOut = useMutation({
     mutationFn: async () => {
-      await api.get(CODE.SIGN_OUT);
+      await api.get(CODE.SIGN_OUT); // TODO: поменять на POST, потому что меняет состояние на сервере
     },
     onMutate: async () => {
       await qc.cancelQueries({ queryKey: [QUERY_KEY.ME] });
@@ -24,7 +24,6 @@ export function SignOutButton({ iconOnly }: Props) {
       qc.removeQueries({ queryKey: [QUERY_KEY.ME] });
     },
     onSuccess: () => {
-      message.info('Успешный выход.').then();
       navigate(ROUTE.SIGN_IN, { replace: true, state: { justLoggedOut: true } });
     },
     onError: () => {
@@ -36,7 +35,7 @@ export function SignOutButton({ iconOnly }: Props) {
 
   return (
     <Button icon={<LogoutOutlined />} loading={signOut.isPending} onClick={() => signOut.mutate()}>
-      {!iconOnly && 'Выйти'}
+      {!isCompact && 'Выйти'}
     </Button>
   );
 }
