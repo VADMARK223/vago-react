@@ -15,7 +15,7 @@ export default function HooksChapter() {
         <BookHashLink id="useReducer">Хук useReducer</BookHashLink>
         <BookHashLink id="useImperativeHandle">Хук useImperativeHandle</BookHashLink>
       </nav>
-      Хук <hr />
+      <hr />
       <UseStateBlock />
       <hr />
       <UseEffectBlock />

@@ -1,3 +1,27 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.listArea {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Протягиваем высоту сквозь Spin-обёртки */
+.listArea :global(.ant-spin-nested-loading),
+.listArea :global(.ant-spin-container) {
+  height: 100%;
+  min-height: 0;
+}
+
+/* Важно: чтобы контент мог скроллиться внутри, а не раздувать контейнер */
+.listArea :global(.ant-spin-container) {
+  display: flex;
+  flex-direction: column;
+}
+
 .taskTitleCompleted {
   text-decoration: line-through;
   opacity: 0.6;

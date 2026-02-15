@@ -1,11 +1,11 @@
-import { type User, useUsers } from '../admin.ts';
+import { useUsers } from '../admin.ts';
 import { DeleteUserBtn } from './DeleteUserBtn.tsx';
 import { ScrollableContainer } from '@/shared/ui';
 
 export function UsersTab() {
   const { data, isLoading, isError } = useUsers();
 
-  const users: User[] = data?.users ?? [];
+  const users = data?.users ?? [];
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -20,7 +20,7 @@ export function UsersTab() {
   return (
     <ScrollableContainer>
       <div className="stack">
-        {users.map((user: User) => (
+        {users.map((user) => (
           <div className="panel" key={user.id}>
             <div>
               <h2>ID: {user.id}</h2>

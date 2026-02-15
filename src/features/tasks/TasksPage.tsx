@@ -1,5 +1,5 @@
 import styles from './TaskPage.module.css';
-import { App, Button, Card, Checkbox, Empty, Form, Input, Space } from 'antd';
+import { App, Button, Card, Checkbox, Empty, Form, Input, Space, Spin } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { type TaskRequest, useCreateTask, useTasks, useUpdateTaskMutation } from './tasks.ts';
 import { ScrollableContainer } from '@/shared/ui';
@@ -18,9 +18,6 @@ export function TasksPage() {
   const name: string = Form.useWatch(CODE.NAME, form);
   const isDisabled: boolean = !name;
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
   if (isError) {
     return <div>Error</div>;
   }
@@ -35,7 +32,7 @@ export function TasksPage() {
   };
 
   return (
-    <>
+    <div className={styles.page}>
       <Form<TaskRequest> form={form} style={{ marginBottom: '8px' }} onFinish={onFinish}>
         <Form.Item
           name={CODE.NAME}
@@ -67,47 +64,53 @@ export function TasksPage() {
           Создать задачу
         </Button>
       </Form>
-      <ScrollableContainer>
-        {tasks && tasks.length === 0 ? (
-          <Empty description="Список задач пуст" />
-        ) : (
-          <Space orientation="vertical" style={{ width: '100%' }}>
-            {tasks?.map((task) => (
-              <Card
-                key={task.id}
-                title={
-                  <span className={task.completed ? styles.taskTitleCompleted : undefined}>
-                    {task.name}
-                  </span>
-                }
-                extra={
-                  <Space orientation="horizontal">
-                    <Checkbox
-                      checked={task.completed}
-                      style={{ color: task.completed ? 'green' : undefined }}
-                      onChange={(e) => {
-                        updateTaskMutation.mutate({
-                          id: task.id,
-                          completed: e.target.checked,
-                        });
-                      }}
-                    >
-                      Выполнена
-                    </Checkbox>
-                    <DeleteTaskButton id={task.id} />
-                  </Space>
-                }
-              >
-                <div className={styles.taskBody}>{task.description}</div>
+      <div className={styles.listArea}>
+        <Spin spinning={isLoading} tip="Загрузка..." size="large">
+          {/*<div style={{ height: '60vh', overflow: 'hidden' }}>*/}
+          <ScrollableContainer>
+            {tasks && tasks.length === 0 ? (
+              <Empty description="Список задач пуст" />
+            ) : (
+              <Space orientation="vertical" style={{ width: '100%' }}>
+                {tasks?.map((task) => (
+                  <Card
+                    key={task.id}
+                    title={
+                      <span className={task.completed ? styles.taskTitleCompleted : undefined}>
+                        {task.name}
+                      </span>
+                    }
+                    extra={
+                      <Space orientation="horizontal">
+                        <Checkbox
+                          checked={task.completed}
+                          style={{ color: task.completed ? 'green' : undefined }}
+                          onChange={(e) => {
+                            updateTaskMutation.mutate({
+                              id: task.id,
+                              completed: e.target.checked,
+                            });
+                          }}
+                        >
+                          Выполнена
+                        </Checkbox>
+                        <DeleteTaskButton id={task.id} />
+                      </Space>
+                    }
+                  >
+                    <div className={styles.taskBody}>{task.description}</div>
 
-                <div className={styles.taskFooter}>
-                  Создана: {dayjs(task.createdAt).format('DD.MM.YYYY HH:mm')}
-                </div>
-              </Card>
-            ))}
-          </Space>
-        )}
-      </ScrollableContainer>
-    </>
+                    <div className={styles.taskFooter}>
+                      Создана: {dayjs(task.createdAt).format('DD.MM.YYYY HH:mm')}
+                    </div>
+                  </Card>
+                ))}
+              </Space>
+            )}
+          </ScrollableContainer>
+          {/*</div>*/}
+        </Spin>
+      </div>
+    </div>
   );
 }
