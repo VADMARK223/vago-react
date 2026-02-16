@@ -5,9 +5,10 @@ import { DeleteAllMessagesButton } from '@/features/admin/messages/DeleteAllMess
 
 type Props = {
   isConnected: boolean;
+  clearPending: () => void;
 };
 
-export const ChatTop = ({ isConnected }: Props) => {
+export const ChatTop = ({ isConnected, clearPending }: Props) => {
   return (
     <div className={styles.connection}>
       <span
@@ -19,7 +20,7 @@ export const ChatTop = ({ isConnected }: Props) => {
       <span className={styles.label}>
         {isConnected ? `Connected: (${WS_URL})` : 'Disconnected'}
       </span>
-      <DeleteAllMessagesButton />
+      <DeleteAllMessagesButton clearPending={clearPending} />
     </div>
   );
 };

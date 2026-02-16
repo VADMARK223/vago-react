@@ -5,10 +5,19 @@ import { DeleteButton } from '@/shared/ui/DeleteButton';
 
 interface Props {
   id: Id;
+  removeFromPending?: (id: number) => void;
 }
 
-export const DeleteMessageBtn = ({ id }: Props): JSX.Element => {
+export const DeleteMessageButton = ({ id, removeFromPending }: Props): JSX.Element => {
   const { mutate: deleteMessage, isPending } = useDeleteMessage();
 
-  return <DeleteButton onClick={() => deleteMessage(id)} loading={isPending} />;
+  return (
+    <DeleteButton
+      onClick={() => {
+        deleteMessage(id);
+        removeFromPending?.(id);
+      }}
+      loading={isPending}
+    />
+  );
 };

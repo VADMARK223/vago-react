@@ -2,8 +2,13 @@ import { App, Button } from 'antd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api, type ApiMessageResponse } from '@/shared/api/ky-client';
 import { QUERY_KEY, URL } from '@/shared/constants';
+import { DeleteOutlined } from '@ant-design/icons';
 
-export const DeleteAllMessagesButton = () => {
+type Props = {
+  clearPending?: () => void;
+};
+
+export const DeleteAllMessagesButton = ({ clearPending }: Props) => {
   const { message } = App.useApp();
   const qc = useQueryClient();
 
@@ -21,7 +26,14 @@ export const DeleteAllMessagesButton = () => {
   });
 
   return (
-    <Button danger onClick={() => mutation.mutate()}>
+    <Button
+      danger
+      onClick={() => {
+        clearPending?.();
+        mutation.mutate();
+      }}
+      icon={<DeleteOutlined />}
+    >
       Удалить все сообщения
     </Button>
   );

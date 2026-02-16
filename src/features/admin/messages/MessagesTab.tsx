@@ -1,5 +1,5 @@
 import { ScrollableContainer } from '@/shared/ui';
-import { DeleteMessageBtn } from '@/features/admin/messages/DeleteMessageBtn';
+import { DeleteMessageButton } from '@/features/admin/messages/DeleteMessageButton';
 import { useMessages } from '@/shared/api/messages/use-messages';
 import { DeleteAllMessagesButton } from '@/features/admin/messages/DeleteAllMessagesButton';
 
@@ -18,8 +18,21 @@ export const MessagesTab = () => {
   }
 
   return (
-    <div style={{ width: '100%' }}>
-      <div style={{ marginBottom: '12px' }}>
+    <div
+      style={{
+        width: '100%',
+        // background: 'gray',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          margin: '8px',
+        }}
+      >
+        <div>Всего: {messages.length}</div>
         <DeleteAllMessagesButton />
       </div>
 
@@ -39,7 +52,7 @@ export const MessagesTab = () => {
                 <div>Sent at: {message.sentAt}</div>
               </div>
 
-              <DeleteMessageBtn id={message.id} />
+              <DeleteMessageButton id={message.id} />
             </div>
           ))}
         </div>

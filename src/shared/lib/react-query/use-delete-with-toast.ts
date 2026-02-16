@@ -14,7 +14,6 @@ type DeleteFn = (id: Id) => Promise<ApiMessageResponse>;
 type Options = {
   successFallback?: string;
   errorFallback: string;
-
   invalidateQueryKeys: QueryKey[];
 };
 
@@ -29,7 +28,11 @@ export function useDeleteWithToast(
     mutationFn,
     onSuccess: async (res) => {
       message.success(res?.message ?? successFallback);
-      await Promise.all(invalidateQueryKeys.map((queryKey) => qc.invalidateQueries({ queryKey })));
+      await Promise.all(
+        invalidateQueryKeys.map((queryKey) =>
+          qc.invalidateQueries({ queryKey, refetchType: 'active' }),
+        ),
+      );
     },
     onError: async (err) => {
       const errorMsg = await getKyErrorMessage(err);

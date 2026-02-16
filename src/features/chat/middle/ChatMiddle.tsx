@@ -7,17 +7,22 @@ import type { MessageResponse } from '@/shared/api/messages/messages.types';
 
 type Props = {
   messages: MessageResponse[];
+  atBottom: boolean;
+  unread: number;
+  onAtBottomChange: (val: boolean) => void;
+  removeFromPending: (id: number) => void;
 };
 
-export const ChatMiddle = ({ messages }: Props) => {
+export const ChatMiddle = ({
+  messages,
+  atBottom,
+  unread,
+  onAtBottomChange,
+  removeFromPending,
+}: Props) => {
   const virtuosoRef = useRef<VirtuosoHandle>(null);
-
-  const atBottomRef = useRef(true);
-  const [atBottom, setAtBottom] = useState(true);
-  const [unread, setUnread] = useState(0);
   const [initialScrollDone, setInitialScrollDone] = useState(false);
 
-  // Первый скролл вниз при входе / когда пришла история
   useLayoutEffect(() => {
     if (initialScrollDone) {
       return;
@@ -39,30 +44,11 @@ export const ChatMiddle = ({ messages }: Props) => {
     });
   }, [initialScrollDone, messages.length]);
 
-  // 2) считаем unread без эффектов — прямо на изменении списка
-  const prevLenRef = useRef(0);
-  if (prevLenRef.current !== messages.length) {
-    const prev = prevLenRef.current;
-    prevLenRef.current = messages.length;
-
-    // добавились сообщения (не первая загрузка)
-    if (prev !== 0 && messages.length > prev && !atBottomRef.current) {
-      // ⚠️ setState в render обычно нельзя, поэтому завернём в microtask
-      queueMicrotask(() => setUnread((n) => n + (messages.length - prev)));
-    }
-  }
-
   const handleBottomChange = (val: boolean) => {
-    atBottomRef.current = val;
-    setAtBottom(val);
+    onAtBottomChange(val);
 
-    if (val) {
-      setUnread(0);
-
-      // ✅ считаем инициализацию завершённой только когда реально внизу
-      if (!initialScrollDone) {
-        setInitialScrollDone(true);
-      }
+    if (val && !initialScrollDone) {
+      setInitialScrollDone(true);
     }
   };
 
@@ -78,7 +64,7 @@ export const ChatMiddle = ({ messages }: Props) => {
         }
         itemContent={(_, message) => (
           <div className={styles.itemWrap}>
-            <MessageItem data={message} />
+            <MessageItem data={message} removeFromPending={removeFromPending} />
           </div>
         )}
       />
