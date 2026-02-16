@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import styles from './ChatPage.module.css';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 import clsx from 'clsx';
@@ -16,26 +16,23 @@ function getCookie(name: string) {
 }
 
 export const ChatPage = () => {
-  const virtuosoRef = useRef<VirtuosoHandle>(null);
-
   const wsRef = useRef<WebSocket | null>(null);
+  const token = useMemo(() => getCookie('vago_token'), []);
+
+  const virtuosoRef = useRef<VirtuosoHandle>(null);
 
   const { data: serverMessages } = useMessages();
   const [pending, setPending] = useState<MessageResponse[]>([]);
   const messages = [...serverMessages, ...pending];
-  /*const messages = useMemo(() => {
-    const map = new Map<string, MessageResponse>();
-    for (const m of serverMessages ?? []) map.set(m.id, m);
-    for (const m of pending) map.set(m.id, m);
-    return Array.from(map.values());
-  }, [serverMessages, pending]);*/
-  const [isConnected, setIsConnected] = useState(false);
 
-  const token = useMemo(() => getCookie('vago_token'), []);
+  const [isConnected, setIsConnected] = useState(false);
 
   const atBottomRef = useRef(true);
   const [atBottom, setAtBottom] = useState(true);
   const [unread, setUnread] = useState(0);
+
+  // ✅ state, чтобы ререндерилось и props Virtuoso менялись предсказуемо
+  const [initialScrollDone, setInitialScrollDone] = useState(false);
 
   useEffect(() => {
     const wsUrl = `${WS_URL}?token=${encodeURIComponent(token)}`;
@@ -73,12 +70,43 @@ export const ChatPage = () => {
     };
   }, [token]);
 
+  const scrollToBottom = () => {
+    const last = messages.length - 1;
+    if (last < 0) {
+      return;
+    }
+
+    // 2 rAF — самый надёжный способ дождаться измерений Virtuoso
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        virtuosoRef.current?.scrollToIndex({ index: last, behavior: 'auto' });
+      });
+    });
+  };
+
+  // ✅ useLayoutEffect — после DOM-изменений, но до покраски
+  useLayoutEffect(() => {
+    if (initialScrollDone) {
+      return;
+    }
+    if (messages.length === 0) {
+      return;
+    }
+
+    scrollToBottom();
+  }, [initialScrollDone, messages.length, scrollToBottom]);
+
   const handleBottomChange = (val: boolean) => {
     atBottomRef.current = val;
     setAtBottom(val);
 
     if (val) {
       setUnread(0);
+
+      // ✅ считаем инициализацию завершённой только когда реально внизу
+      if (!initialScrollDone) {
+        setInitialScrollDone(true);
+      }
     }
   };
 
@@ -103,7 +131,9 @@ export const ChatPage = () => {
               data={messages}
               alignToBottom
               atBottomStateChange={handleBottomChange}
-              followOutput={(isAtBottom) => (isAtBottom ? 'smooth' : false)}
+              followOutput={
+                initialScrollDone ? (isAtBottom) => (isAtBottom ? 'smooth' : false) : 'auto' // ✅ пока инициализируемся — всегда держим низ
+              }
               itemContent={(_, message) => (
                 <div className={styles.itemWrap}>
                   <MessageItem data={message} />
