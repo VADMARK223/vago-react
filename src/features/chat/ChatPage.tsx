@@ -1,17 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './ChatPage.module.css';
-import { Button, Input, type InputRef } from 'antd';
-import { Virtuoso } from 'react-virtuoso';
-import { SendOutlined } from '@ant-design/icons';
-import type { MessageResponse } from '@/shared/types';
+import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 import clsx from 'clsx';
+import { useMessages } from '@/shared/api/messages/use-messages';
+import type { MessageResponse } from '@/shared/api/messages/messages.types';
+import { ChatBottom } from '@/features/chat/ChatBottom';
+import { MessageItem } from '@/features/chat/MessageItem';
+import { AtBottomButton } from '@/features/chat/AtBottomButton';
 
 const WS_URL = 'ws://localhost:5555/ws';
-
-type MessageRequest = {
-  type: string;
-  text: string;
-};
 
 function getCookie(name: string) {
   const m = document.cookie.match(new RegExp(`(?:^|;\\s*)${name}=([^;]+)`));
@@ -19,27 +16,26 @@ function getCookie(name: string) {
 }
 
 export const ChatPage = () => {
-  const wsRef = useRef<WebSocket | null>(null);
-  const messagesRef = useRef<HTMLDivElement | null>(null);
-  const inputRef = useRef<InputRef>(null);
-  const sendBtnRef = useRef<HTMLButtonElement | null>(null);
+  const virtuosoRef = useRef<VirtuosoHandle>(null);
 
-  const [input, setInput] = useState('');
-  const [messages, setMessages] = useState<MessageResponse[]>([]);
+  const wsRef = useRef<WebSocket | null>(null);
+
+  const { data: serverMessages } = useMessages();
+  const [pending, setPending] = useState<MessageResponse[]>([]);
+  const messages = [...serverMessages, ...pending];
+  /*const messages = useMemo(() => {
+    const map = new Map<string, MessageResponse>();
+    for (const m of serverMessages ?? []) map.set(m.id, m);
+    for (const m of pending) map.set(m.id, m);
+    return Array.from(map.values());
+  }, [serverMessages, pending]);*/
   const [isConnected, setIsConnected] = useState(false);
 
   const token = useMemo(() => getCookie('vago_token'), []);
 
-  useEffect(() => {
-    if (!isConnected) {
-      return;
-    }
-
-    const el = inputRef.current;
-    if (el) {
-      el.focus();
-    }
-  }, [isConnected]);
+  const atBottomRef = useRef(true);
+  const [atBottom, setAtBottom] = useState(true);
+  const [unread, setUnread] = useState(0);
 
   useEffect(() => {
     const wsUrl = `${WS_URL}?token=${encodeURIComponent(token)}`;
@@ -53,7 +49,11 @@ export const ChatPage = () => {
     ws.onmessage = (event) => {
       try {
         const dto = JSON.parse(event.data);
-        setMessages((prev) => [...prev, dto]);
+        setPending((prev) => [...prev, dto]);
+
+        if (!atBottomRef.current) {
+          setUnread((n) => n + 1);
+        }
       } catch {
         throw Error('Could not parse message');
       }
@@ -73,27 +73,13 @@ export const ChatPage = () => {
     };
   }, [token]);
 
-  const handleSend = () => {
-    const text = input.trim();
-    if (!text) {
-      setInput('');
-      return;
+  const handleBottomChange = (val: boolean) => {
+    atBottomRef.current = val;
+    setAtBottom(val);
+
+    if (val) {
+      setUnread(0);
     }
-
-    const ws = wsRef.current;
-    if (!ws || ws.readyState !== WebSocket.OPEN) {
-      console.error('WS not valid');
-      return;
-    }
-
-    const newMessage: MessageRequest = {
-      text: input,
-      type: 'message',
-    };
-
-    ws.send(JSON.stringify(newMessage));
-
-    setInput('');
   };
 
   return (
@@ -111,41 +97,29 @@ export const ChatPage = () => {
               {isConnected ? `Connected: (${WS_URL})` : 'Disconnected'}
             </span>
           </div>
-          <div id="messagesDiv" ref={messagesRef} className={styles.messages}>
+          <div id="messagesDiv" className={styles.messages}>
             <Virtuoso
+              ref={virtuosoRef}
               data={messages}
-              followOutput="auto"
+              alignToBottom
+              atBottomStateChange={handleBottomChange}
+              followOutput={(isAtBottom) => (isAtBottom ? 'smooth' : false)}
               itemContent={(_, message) => (
-                <div key={message.id} className={styles.message}>
-                  {message.username} : <b>{message.body}</b>
+                <div className={styles.itemWrap}>
+                  <MessageItem data={message} />
                 </div>
               )}
             />
+
+            <AtBottomButton
+              atBottom={atBottom}
+              unread={unread}
+              messages={messages}
+              virtuosoRef={virtuosoRef}
+            />
           </div>
 
-          <div
-            style={{
-              display: 'flex',
-              gap: 8,
-              width: '100%',
-            }}
-          >
-            <Input
-              ref={inputRef}
-              placeholder="Сообщение"
-              disabled={!isConnected}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onPressEnter={handleSend}
-            />
-            <Button
-              type="primary"
-              ref={sendBtnRef}
-              icon={<SendOutlined />}
-              onClick={handleSend}
-              disabled={!input.trim() || !isConnected}
-            />
-          </div>
+          <ChatBottom isConnected={isConnected} wsRef={wsRef} />
         </div>
       </div>
     </>

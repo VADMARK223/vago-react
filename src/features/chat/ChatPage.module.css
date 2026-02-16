@@ -21,20 +21,26 @@
     flex-direction: column;
     gap: var(--space-3);
     flex: 1;
-    min-height: var(--space-0);
+    min-height: 0;
 }
 
+
 .messages {
+    position: relative;
     flex: 1;
-    flex-direction: row;
+    min-height: 0;
+    overflow: hidden;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
+    display: flex;
+    /*flex-direction: row;*/
+    flex-direction: column;
 }
 
 .message {
     width: 100%;
     padding: 10px;
-    margin: 6px 0;
+    margin: 0;
     border-radius: 6px;
     background: #313335;
     color: #eee;
@@ -44,6 +50,20 @@
     transition: background 0.2s ease, transform 0.1s;
 }
 
+.itemWrap {
+    padding: 6px 0;
+}
+
+.toBottom {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    border: 0;
+    cursor: pointer;
+}
+
 
 /* контейнер индикатора */
 .connection {
@@ -51,7 +71,6 @@
     align-items: center;
     gap: 8px;
     font-size: 14px;
-    margin-bottom: 12px;
 }
 
 /* сама точка */

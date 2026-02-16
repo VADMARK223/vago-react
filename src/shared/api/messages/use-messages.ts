@@ -6,4 +6,6 @@ export const useMessages = () =>
   useQuery({
     queryKey: [QUERY_KEY.messages],
     queryFn: getMessages,
+    select: (data) => data.messages,
+    initialData: { messages: [] },
   });
