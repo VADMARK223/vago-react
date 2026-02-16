@@ -2,7 +2,7 @@ import { App, Button, Form, Input, Space, Typography } from 'antd';
 import { type AuthRedirectState, type SignInRequest, useSignInMutation } from './auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Auth.module.css';
-import { ROUTE, CODE } from '@/shared/constants';
+import { CODE, ROUTE } from '@/shared/constants';
 import { getKyErrorMessage } from '@/shared/api/ky-client';
 
 export function SignInPage() {
@@ -36,13 +36,13 @@ export function SignInPage() {
         Вход
       </Typography.Title>
 
-      <Form form={form} layout="vertical" onFinish={onFinish}>
+      <Form form={form} layout="vertical" onFinish={onFinish} autoComplete="on">
         <Form.Item
           label="Логин"
           name={CODE.LOGIN}
           rules={[{ required: true, message: 'Введите логин' }]}
         >
-          <Input placeholder="Введите логин" allowClear autoComplete="username" />
+          <Input placeholder="Введите логин" allowClear autoComplete="username" autoFocus />
         </Form.Item>
 
         <Form.Item

@@ -156,7 +156,7 @@ export const TestPage = () => {
       <p>Тема: {q.topicName}</p>
       {q.code && <CodeBlock code={q.code} />}
       <div>{resulText}</div>
-      {q.answers.map((a) => {
+      {q.answers.map((a, index) => {
         const mark = marks[a.id]; // "wrong" | "correct" | undefined
 
         const className =
@@ -175,7 +175,7 @@ export const TestPage = () => {
             onClick={() => handleAnswerClick(a.id)}
             disabled={disabled}
           >
-            {a.id}) {a.text}
+            {index + 1}) {a.text}
           </button>
         );
       })}

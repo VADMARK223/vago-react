@@ -1,7 +1,7 @@
 import styles from './Auth.module.css';
 import { App, Button, Form, Input, Select, Space, Typography } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
-import { ROUTE, CODE } from '@/shared/constants';
+import { CODE, ROUTE } from '@/shared/constants';
 import { useState } from 'react';
 import capitalize from 'antd/es/_util/capitalize';
 import { MAX_VALUE } from './constants';
@@ -62,13 +62,14 @@ export function SignUpPage() {
         onValuesChange={handleValueChange}
         onFinish={onFinish}
         initialValues={{ role: DEFAULT_ROLE }}
+        autoComplete="off"
       >
         <Form.Item
           label="Логин"
           name={CODE.LOGIN}
           rules={[{ required: true, message: 'Введите логин' }]}
         >
-          <Input placeholder="Введите логин" maxLength={MAX_VALUE.LOGIN} allowClear />
+          <Input placeholder="Введите логин" maxLength={MAX_VALUE.LOGIN} allowClear autoFocus />
         </Form.Item>
 
         <Form.Item
