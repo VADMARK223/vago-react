@@ -1,6 +1,7 @@
-import { Button, Input, type InputRef } from 'antd';
+import { Button, type InputRef } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import { type RefObject, useEffect, useRef, useState } from 'react';
+import TextArea from 'antd/es/input/TextArea';
 
 type Props = {
   isConnected: boolean;
@@ -58,13 +59,20 @@ export const ChatBottom = ({ isConnected, wsRef }: Props) => {
         width: '100%',
       }}
     >
-      <Input
+      <TextArea
         ref={inputRef}
         placeholder="Сообщение"
         disabled={!isConnected}
         value={input}
+        autoSize={{ minRows: 1, maxRows: 6 }}
         onChange={(e) => setInput(e.target.value)}
-        onPressEnter={handleSend}
+        onKeyDown={(e) => {
+          // Enter отправляет, Shift+Enter перенос строки
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSend();
+          }
+        }}
       />
       <Button
         type="primary"

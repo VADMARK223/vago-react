@@ -12,7 +12,7 @@ export const MessageItem = ({ data }: Props) => {
       <div>
         <b>{data.username}</b>
       </div>
-      <div>{data.body}</div>
+      <div className={styles.messageBody}>{data.body}</div>
       <div>
         <Typography.Text type="secondary">{data.sentAt}</Typography.Text>
       </div>

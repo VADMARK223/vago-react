@@ -48,6 +48,13 @@
     cursor: pointer;
     text-align: left;
     transition: background 0.2s ease, transform 0.1s;
+    overflow-x: hidden;
+}
+
+.messageBody {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .itemWrap {
