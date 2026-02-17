@@ -1,8 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { api, type ApiMessageResponse } from '@/shared/api/ky-client';
-import { QUERY_KEY, CODE, URL, ROUTE, MUTATION_KEY } from '@/shared/constants';
+import { CODE, MUTATION_KEY, QUERY_KEY, ROLE, type Role, ROUTE, URL } from '@/shared/constants';
 import { useNavigate } from 'react-router-dom';
-import { ROLE, type Role } from '@/shared/constants';
+import type { Id } from '@/shared/types';
 
 export type AuthRedirectState = {
   from?: { pathname: string };
@@ -23,9 +23,10 @@ export type HexColor = `#${string}`;
 export const GuestColor: HexColor = '#000000';
 
 export type User = {
-  username?: string;
-  role?: Role;
-  color?: HexColor;
+  id: Id;
+  username: string;
+  role: Role;
+  color: HexColor;
 };
 
 export type SignUpRole = Exclude<Role, 'admin'>;
@@ -62,8 +63,8 @@ export const useMe = () => {
       return response.data;
     },
     retry: false,
-    // staleTime: Infinity,
-    staleTime: 60_000, // 1 min
+    staleTime: Infinity,
+    // staleTime: 60_000, // 1 min
     refetchOnWindowFocus: false,
   });
 };

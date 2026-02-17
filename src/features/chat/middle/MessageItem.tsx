@@ -1,18 +1,18 @@
 import styles from '@/features/chat/middle/ChatMiddle.module.css';
 import { Typography } from 'antd';
-import type { MessageResponse } from '@/shared/api/messages/messages.types';
+import type { UiMessage } from '@/shared/api/messages/messages.types';
 import { DeleteMessageButton } from '@/features/admin/messages/DeleteMessageButton';
 
 type Props = {
-  data: MessageResponse;
+  data: UiMessage;
   removeFromPending: (id: number) => void;
 };
 
 export const MessageItem = ({ data, removeFromPending }: Props) => {
   return (
-    <div className={styles.messageContainer}>
+    <div className={`${styles.messageContainer} ${data.isMine ? styles.mine : styles.other}`}>
       <div className={styles.messageHeader}>
-        <b>{data.username}</b>
+        {data.isMine ? <b className={styles.username}>{data.username}</b> : <b>Вы</b>}
         <div className={styles.messageActions}>
           <DeleteMessageButton id={data.id} removeFromPending={removeFromPending} size="small" />
         </div>

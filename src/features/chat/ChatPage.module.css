@@ -26,21 +26,32 @@
 
 
 .messages {
+    display: flex;
     position: relative;
     flex: 1;
     min-height: 0;
     overflow: hidden;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
-    display: flex;
-    /*flex-direction: row;*/
     flex-direction: column;
 }
 
-
+/*Выбрать .vItem, который идёт сразу после другого .vItem*/
+.vItem + .vItem {
+    margin-top: 8px;
+}
 
 .itemWrap {
-    padding: 6px 0;
+    display: flex;
+    width: 100%;
+}
+
+.itemWrapMine {
+    justify-content: flex-end;
+}
+
+.itemWrapOther {
+    justify-content: flex-start;
 }
 
 .toBottom {

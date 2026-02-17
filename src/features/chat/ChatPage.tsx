@@ -1,22 +1,25 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './ChatPage.module.css';
 import { useMessages } from '@/shared/api/messages/use-messages';
-import type { MessageResponse } from '@/shared/api/messages/messages.types';
+import type { MessageResponse, UiMessage } from '@/shared/api/messages/messages.types';
 import { ChatBottom } from '@/features/chat/bottom/ChatBottom';
 import { ChatTop } from '@/features/chat/top/ChatTop';
 
 import { ChatMiddle } from '@/features/chat/middle/ChatMiddle';
 import { getCookie, getWsUrl } from '@/features/chat/chat';
+import { useMe } from '@/features/auth/auth';
 
 export const ChatPage = () => {
   const wsRef = useRef<WebSocket | null>(null);
   const wsUrl = getWsUrl();
-  const token = useMemo(() => getCookie('vago_token'), []);
+  const token = getCookie('vago_token');
 
+  const { data: me } = useMe();
   const { data: serverMessages } = useMessages();
   const [pending, setPending] = useState<MessageResponse[]>([]);
 
-  const messages = useMemo((): MessageResponse[] => {
+  const messages = useMemo((): UiMessage[] => {
+    const myId = me?.id;
     const map = new Map<number, MessageResponse>();
 
     for (const m of serverMessages) {
@@ -29,8 +32,8 @@ export const ChatPage = () => {
       }
     }
 
-    return Array.from(map.values());
-  }, [serverMessages, pending]);
+    return Array.from(map.values()).map((m) => ({ ...m, isMine: myId === m.authorId }));
+  }, [me?.id, serverMessages, pending]);
 
   const removeFromPending = (id: number) => {
     setPending((p) => p.filter((m) => m.id !== id));

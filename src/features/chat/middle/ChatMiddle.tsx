@@ -3,10 +3,10 @@ import styles from '@/features/chat/ChatPage.module.css';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 import { MessageItem } from '@/features/chat/middle/MessageItem';
 import { useLayoutEffect, useRef, useState } from 'react';
-import type { MessageResponse } from '@/shared/api/messages/messages.types';
+import type { UiMessage } from '@/shared/api/messages/messages.types';
 
 type Props = {
-  messages: MessageResponse[];
+  messages: UiMessage[];
   atBottom: boolean;
   unread: number;
   onAtBottomChange: (val: boolean) => void;
@@ -62,8 +62,15 @@ export const ChatMiddle = ({
         followOutput={
           initialScrollDone ? (isAtBottom) => (isAtBottom ? 'smooth' : false) : 'auto' // ✅ пока инициализируемся — всегда держим низ
         }
+        components={{
+          Item: (props) => <div {...props} className={styles.vItem} />,
+        }}
         itemContent={(_, message) => (
-          <div className={styles.itemWrap}>
+          <div
+            className={`${styles.itemWrap} ${
+              message.isMine ? styles.itemWrapMine : styles.itemWrapOther
+            }`}
+          >
             <MessageItem data={message} removeFromPending={removeFromPending} />
           </div>
         )}

@@ -1,15 +1,25 @@
 .messageContainer {
-    width: 100%;
+    max-width: min(75%, 680px); /* 75% ширины, но не больше 680px */
+    width: fit-content;         /* пузырь по контенту, но с max-width */
     padding: 10px;
     margin: 0;
     border-radius: 6px;
     background: #313335;
     color: #eee;
     border: 1px solid #444;
-    cursor: pointer;
     text-align: left;
     transition: background 0.2s ease, transform 0.1s;
     overflow-x: hidden;
+}
+
+.mine {
+    background: #2b3a4a;
+    border-color: #3c5166;
+}
+
+.other {
+    background: #313335;
+    border-color: #444;
 }
 
 .messageHeader {
