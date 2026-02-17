@@ -42,7 +42,9 @@ export default function BookChapterPage() {
 
   return (
     <>
-      <h1>{chapter.title}</h1>
+      <h1>
+        {chapter.ru} ({chapter.en})
+      </h1>
       {ChapterComponent ? <ChapterComponent /> : <div>Загрузка главы...</div>}
     </>
   );

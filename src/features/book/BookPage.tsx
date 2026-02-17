@@ -28,7 +28,7 @@ export default function BookPage() {
         .filter((ch) => ch.type === 'react')
         .map((ch) => ({
           value: ch.id,
-          label: ch.title,
+          label: ch.ru,
         })),
     },
     {
@@ -37,7 +37,7 @@ export default function BookPage() {
         .filter((ch) => ch.type === 'ts')
         .map((ch) => ({
           value: ch.id,
-          label: ch.title,
+          label: ch.ru,
         })),
     },
     {
@@ -46,7 +46,7 @@ export default function BookPage() {
         .filter((ch) => ch.type === 'js')
         .map((ch) => ({
           value: ch.id,
-          label: ch.title,
+          label: ch.ru,
         })),
     },
   ];

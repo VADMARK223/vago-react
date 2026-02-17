@@ -6,10 +6,11 @@ import { ChatBottom } from '@/features/chat/bottom/ChatBottom';
 import { ChatTop } from '@/features/chat/top/ChatTop';
 
 import { ChatMiddle } from '@/features/chat/middle/ChatMiddle';
-import { getCookie, WS_URL } from '@/features/chat/chat';
+import { getCookie, getWsUrl } from '@/features/chat/chat';
 
 export const ChatPage = () => {
   const wsRef = useRef<WebSocket | null>(null);
+  const wsUrl = getWsUrl();
   const token = useMemo(() => getCookie('vago_token'), []);
 
   const { data: serverMessages } = useMessages();
@@ -53,8 +54,8 @@ export const ChatPage = () => {
   };
 
   useEffect(() => {
-    const wsUrl = `${WS_URL}?token=${encodeURIComponent(token)}`;
-    const ws = new WebSocket(wsUrl);
+    const wsUrlWithToken = `${wsUrl}?token=${encodeURIComponent(token)}`;
+    const ws = new WebSocket(wsUrlWithToken);
     wsRef.current = ws;
 
     ws.onopen = () => setIsConnected(true);
@@ -80,13 +81,13 @@ export const ChatPage = () => {
       ws.close();
       wsRef.current = null;
     };
-  }, [token]);
+  }, [token, wsUrl]);
 
   return (
     <>
       <div className={styles.container}>
         <div className={styles.chat}>
-          <ChatTop isConnected={isConnected} clearPending={clearPending} />
+          <ChatTop wsUrl={wsUrl} isConnected={isConnected} clearPending={clearPending} />
           <ChatMiddle
             messages={messages}
             atBottom={atBottom}

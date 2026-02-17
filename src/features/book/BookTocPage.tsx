@@ -17,7 +17,9 @@ export default function BookTocPage() {
       <h2>{title}</h2>
       {items.map((chapter: Chapter) => (
         <div key={chapter.id}>
-          <Link to={`${ROUTE.BOOK}/${chapter.id}`}>{chapter.title}</Link>
+          <Link to={`${ROUTE.BOOK}/${chapter.id}`}>
+            {chapter.ru} ({chapter.en})
+          </Link>
         </div>
       ))}
       <hr />

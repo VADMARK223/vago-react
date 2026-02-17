@@ -1,14 +1,14 @@
 import styles from '@/features/chat/top/ChatTop.module.css';
 import clsx from 'clsx';
-import { WS_URL } from '@/features/chat/chat';
 import { DeleteAllMessagesButton } from '@/features/admin/messages/DeleteAllMessagesButton';
 
 type Props = {
+  wsUrl: string;
   isConnected: boolean;
   clearPending: () => void;
 };
 
-export const ChatTop = ({ isConnected, clearPending }: Props) => {
+export const ChatTop = ({ wsUrl, isConnected, clearPending }: Props) => {
   return (
     <div className={styles.connection}>
       <div className={styles.status}>
@@ -19,7 +19,7 @@ export const ChatTop = ({ isConnected, clearPending }: Props) => {
           })}
         />
         <span className={styles.label}>
-          {isConnected ? `Connected: (${WS_URL})` : 'Disconnected'}
+          {isConnected ? `Connected: (${wsUrl})` : `Disconnected: (${wsUrl})`}
         </span>
       </div>
 

@@ -5,7 +5,8 @@ export type ChapterType = 'react' | 'ts' | 'js';
 
 export type Chapter = {
   id: Id;
-  title: string;
+  ru: string;
+  en: string;
   type: ChapterType;
   load: () => Promise<{ default: ComponentType<unknown> }>;
 };
