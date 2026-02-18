@@ -10,16 +10,9 @@ type Props = {
   atBottom: boolean;
   unread: number;
   onAtBottomChange: (val: boolean) => void;
-  removeFromPending: (id: number) => void;
 };
 
-export const ChatMiddle = ({
-  messages,
-  atBottom,
-  unread,
-  onAtBottomChange,
-  removeFromPending,
-}: Props) => {
+export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Props) => {
   const virtuosoRef = useRef<VirtuosoHandle>(null);
   const [initialScrollDone, setInitialScrollDone] = useState(false);
 
@@ -71,7 +64,7 @@ export const ChatMiddle = ({
               message.isMine ? styles.itemWrapMine : styles.itemWrapOther
             }`}
           >
-            <MessageItem data={message} removeFromPending={removeFromPending} />
+            <MessageItem data={message} />
           </div>
         )}
       />

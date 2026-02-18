@@ -6,12 +6,15 @@ import { App } from 'antd';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api, type ApiMessageResponse } from '@/shared/api/ky-client';
 import { QUERY_KEY, URL } from '@/shared/constants';
+import { useDeleteMessage } from '@/features/admin/admin';
 
 export const MessagesTab = () => {
   const { data: messages, isLoading, isError } = useMessages();
 
   const { message } = App.useApp();
   const qc = useQueryClient();
+
+  const { mutate: deleteMessage } = useDeleteMessage();
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -77,7 +80,7 @@ export const MessagesTab = () => {
                   <div>Sent at: {message.sentAt}</div>
                 </div>
 
-                <DeleteMessageButton id={message.id} />
+                <DeleteMessageButton id={message.id} deleteFn={deleteMessage} />
               </div>
             ))}
           </div>

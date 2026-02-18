@@ -4,11 +4,11 @@ import * as React from 'react';
 
 type Props = {
   onClick: () => void;
-  loading: boolean;
   size?: React.ComponentProps<typeof Button>['size'];
+  loading?: boolean;
 };
 
-export const DeleteButton = ({ onClick, loading, size = 'middle' }: Props) => {
+export const DeleteButton = ({ onClick, loading = false, size = 'middle' }: Props) => {
   return (
     <Button
       type="primary"

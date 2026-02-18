@@ -19,7 +19,6 @@ export const ChatPage = () => {
   const { data: serverMessages } = useMessages();
   const liveMessages = useChatStore((s) => s.liveMessages);
   const addLiveMessage = useChatStore((s) => s.addLiveMessage);
-  const removeLiveMessage = useChatStore((s) => s.removeLiveMessage);
 
   const messages = useMemo((): UiMessage[] => {
     const myId = me?.id;
@@ -37,10 +36,6 @@ export const ChatPage = () => {
 
     return Array.from(map.values()).map((m) => ({ ...m, isMine: myId === m.authorId }));
   }, [me?.id, serverMessages, liveMessages]);
-
-  const removeFromPending = (id: number) => {
-    removeLiveMessage(id);
-  };
 
   const [isConnected, setIsConnected] = useState(false);
 
@@ -97,7 +92,6 @@ export const ChatPage = () => {
             atBottom={atBottom}
             unread={unread}
             onAtBottomChange={handleBottomChange}
-            removeFromPending={removeFromPending}
           />
           <ChatBottom isConnected={isConnected} wsRef={wsRef} />
         </div>
