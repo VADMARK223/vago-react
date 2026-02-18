@@ -17,6 +17,7 @@ export const ChatInput = ({ onSend, disabled, input, onChange, inputRef }: Props
       placeholder="Сообщение"
       disabled={disabled}
       value={input}
+      maxLength={2000}
       autoSize={{ minRows: 1, maxRows: 6 }}
       onChange={(e) => onChange(e.target.value)}
       onKeyDown={(e) => {

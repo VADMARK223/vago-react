@@ -1,5 +1,5 @@
 import { useUsers } from '../admin';
-import { DeleteUserButton } from './DeleteUserButton.tsx';
+import { DeleteUserButton } from './DeleteUserButton';
 import { ScrollableContainer } from '@/shared/ui';
 
 export function UsersTab() {

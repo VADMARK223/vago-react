@@ -4,15 +4,11 @@ import { ChatInput } from '@/features/chat/ui/bottom/ChatInput';
 import { SendButton } from '@/features/chat/ui/bottom/SendButton';
 import styles from '../../ChatPage.module.css';
 import { useChatStore } from '@/features/chat/model/chat.store';
+import type { ChatInbound, MessageSendPayload } from '@/features/chat/model/chat.ws.protocol';
 
 type Props = {
   isConnected: boolean;
   wsRef: RefObject<WebSocket | null>;
-};
-
-type MessageRequest = {
-  type: string;
-  text: string;
 };
 
 export const ChatBottom = ({ isConnected, wsRef }: Props) => {
@@ -41,8 +37,12 @@ export const ChatBottom = ({ isConnected, wsRef }: Props) => {
       return;
     }
 
-    const payload: MessageRequest = { type: 'message', text };
-    ws.send(JSON.stringify(payload));
+    const msg: ChatInbound<MessageSendPayload> = {
+      type: 'message.send',
+      payload: { text },
+    } satisfies ChatInbound;
+
+    ws.send(JSON.stringify(msg));
 
     setDraft('');
   };

@@ -1,8 +1,8 @@
 import { api, type ApiMessageResponse } from '@/shared/api/ky-client';
 import { URL } from '@/shared/constants';
-import type { MessageResponse } from '@/shared/api/messages/messages.types';
+import type { MessageDTO } from '@/shared/api/messages/messages.types';
 
-type MessagesResponse = ApiMessageResponse<{ messages: MessageResponse[] }>;
+type MessagesResponse = ApiMessageResponse<{ messages: MessageDTO[] }>;
 
 export const getMessages = async () => {
   const resp = await api.get(URL.MESSAGES).json<MessagesResponse>();

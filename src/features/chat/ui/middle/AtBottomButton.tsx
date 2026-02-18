@@ -1,12 +1,12 @@
 import styles from '@/features/chat/ChatPage.module.css';
-import type { MessageResponse } from '@/shared/api/messages/messages.types';
+import type { UiMessage } from '@/shared/api/messages/messages.types';
 import type { RefObject } from 'react';
 import type { VirtuosoHandle } from 'react-virtuoso';
 
 type Props = {
   atBottom: boolean;
   unread: number;
-  messages: MessageResponse[];
+  messages: UiMessage[];
   virtuosoRef: RefObject<VirtuosoHandle | null>;
 };
 

@@ -1,19 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './ChatPage.module.css';
 import { useMessages } from '@/shared/api/messages/use-messages';
-import type { MessageResponse } from '@/shared/api/messages/messages.types';
 import { ChatBottom } from '@/features/chat/ui/bottom/ChatBottom';
 import { ChatTop } from '@/features/chat/ui/top/ChatTop';
 
 import { ChatMiddle } from '@/features/chat/ui/middle/ChatMiddle';
-import { getCookie, getWsUrl } from '@/features/chat/model/chat.api';
+import {
+  type ChatOutbound,
+  getCookie,
+  getWsUrl,
+  isOutbound,
+} from '@/features/chat/model/chat.ws.protocol';
 import { useMe } from '@/features/auth/auth';
 import { QUERY_KEY } from '@/shared/constants';
 import { useQueryClient } from '@tanstack/react-query';
-
-type Temp = {
-  messages: MessageResponse[];
-};
+import { type MessagesQueryData } from '@/shared/api/messages/messages.types';
 
 export const ChatPage = () => {
   const wsRef = useRef<WebSocket | null>(null);
@@ -48,17 +49,49 @@ export const ChatPage = () => {
 
     ws.onmessage = (event) => {
       try {
-        const dto = JSON.parse(event.data) as MessageResponse;
+        const raw = JSON.parse(event.data) as ChatOutbound;
 
-        qc.setQueryData([QUERY_KEY.messages], (prev: Temp): Temp => {
-          return { messages: [...prev.messages, dto] };
-        });
+        if (!isOutbound(raw)) {
+          console.warn('Invalid WS message shape', raw);
+          return;
+        }
 
-        if (!atBottomRef.current) {
-          setUnread((n) => n + 1);
+        const msg = raw;
+
+        switch (msg.type) {
+          case 'message.new': {
+            const dto = msg.payload;
+
+            qc.setQueryData(
+              [QUERY_KEY.messages],
+              (prev: MessagesQueryData | undefined): MessagesQueryData => {
+                const messages = prev?.messages ?? [];
+
+                // минимальная защита от дублей
+                if (messages.length > 0 && messages[messages.length - 1]?.id === dto.id) {
+                  return { messages };
+                }
+
+                return { messages: [...messages, dto] };
+              },
+            );
+
+            if (!atBottomRef.current) {
+              setUnread((n) => n + 1);
+            }
+            break;
+          }
+
+          case 'error': {
+            console.error('WS error:', msg.payload.message);
+            break;
+          }
+
+          default:
+            console.warn('Unknown WS message type!'); //, msg.type);
         }
       } catch (e) {
-        console.error('Could not parse message', e);
+        console.error('Could not parse WS message', e);
       }
     };
 
