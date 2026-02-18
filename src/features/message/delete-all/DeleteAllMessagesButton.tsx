@@ -1,18 +1,16 @@
 import { Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import { useAllDeleteMessages } from '@/features/message/delete-all/use-all-delete-messages';
 
-type Props = {
-  clearFn: () => void;
-  disable: boolean;
-};
+export const DeleteAllMessagesButton = () => {
+  const allDeleteMessages = useAllDeleteMessages();
 
-export const DeleteAllMessagesButton = ({ clearFn, disable }: Props) => {
   return (
     <Button
       danger
-      disabled={disable}
+      disabled={false}
       onClick={() => {
-        clearFn();
+        allDeleteMessages.mutate();
       }}
       icon={<DeleteOutlined />}
     >

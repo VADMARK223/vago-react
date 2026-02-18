@@ -34,15 +34,3 @@ export const useDeleteUser = () => {
     invalidateQueryKeys: [[QUERY_KEY.users]],
   });
 };
-
-const deleteMessageRequest = async (id: Id) => {
-  return api.delete(`${URL.MESSAGES}/${id}`).json<ApiMessageResponse>();
-};
-
-export const useDeleteMessage = () => {
-  return useDeleteWithToast(deleteMessageRequest, {
-    errorFallback: 'Ошибка удаления сообщения',
-    successFallback: 'Сообщение удалёно',
-    invalidateQueryKeys: [[QUERY_KEY.messages]],
-  });
-};

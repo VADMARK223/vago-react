@@ -1,42 +1,29 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './ChatPage.module.css';
 import { useMessages } from '@/shared/api/messages/use-messages';
-import type { MessageResponse, UiMessage } from '@/shared/api/messages/messages.types';
+import type { MessageResponse } from '@/shared/api/messages/messages.types';
 import { ChatBottom } from '@/features/chat/ui/bottom/ChatBottom';
 import { ChatTop } from '@/features/chat/ui/top/ChatTop';
 
 import { ChatMiddle } from '@/features/chat/ui/middle/ChatMiddle';
 import { getCookie, getWsUrl } from '@/features/chat/model/chat.api';
 import { useMe } from '@/features/auth/auth';
-import { useChatStore } from '@/features/chat/model/chat.store';
+import { QUERY_KEY } from '@/shared/constants';
+import { useQueryClient } from '@tanstack/react-query';
+
+type Temp = {
+  messages: MessageResponse[];
+};
 
 export const ChatPage = () => {
   const wsRef = useRef<WebSocket | null>(null);
   const wsUrl = getWsUrl();
   const token = getCookie('vago_token');
 
+  const qc = useQueryClient();
   const { data: me } = useMe();
-  const { data: serverMessages } = useMessages();
-  const liveMessages = useChatStore((s) => s.liveMessages);
-  const addLiveMessage = useChatStore((s) => s.addLiveMessage);
-
-  const messages = useMemo((): UiMessage[] => {
-    const myId = me?.id;
-    const map = new Map<number, MessageResponse>();
-
-    for (const m of serverMessages) {
-      map.set(m.id, m);
-    }
-
-    for (const m of liveMessages) {
-      if (!map.has(m.id)) {
-        map.set(m.id, m);
-      }
-    }
-
-    return Array.from(map.values()).map((m) => ({ ...m, isMine: myId === m.authorId }));
-  }, [me?.id, serverMessages, liveMessages]);
-
+  const myId = me?.id;
+  const { data: messages } = useMessages();
   const [isConnected, setIsConnected] = useState(false);
 
   const atBottomRef = useRef(true);
@@ -62,9 +49,11 @@ export const ChatPage = () => {
     ws.onmessage = (event) => {
       try {
         const dto = JSON.parse(event.data) as MessageResponse;
-        addLiveMessage(dto);
 
-        // ✅ unread считаем тут (внешняя система)
+        qc.setQueryData([QUERY_KEY.messages], (prev: Temp): Temp => {
+          return { messages: [...prev.messages, dto] };
+        });
+
         if (!atBottomRef.current) {
           setUnread((n) => n + 1);
         }
@@ -80,7 +69,11 @@ export const ChatPage = () => {
       ws.close();
       wsRef.current = null;
     };
-  }, [addLiveMessage, token, wsUrl]);
+  }, [qc, token, wsUrl]);
+
+  const uiMessages = messages.map((m) => {
+    return { ...m, isMine: myId === m.authorId };
+  });
 
   return (
     <>
@@ -88,7 +81,7 @@ export const ChatPage = () => {
         <div className={styles.chat}>
           <ChatTop wsUrl={wsUrl} isConnected={isConnected} />
           <ChatMiddle
-            messages={messages}
+            messages={uiMessages}
             atBottom={atBottom}
             unread={unread}
             onAtBottomChange={handleBottomChange}

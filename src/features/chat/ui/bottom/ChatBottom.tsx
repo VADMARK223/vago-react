@@ -1,8 +1,9 @@
 import { type InputRef } from 'antd';
-import { type RefObject, useEffect, useRef, useState } from 'react';
+import { type RefObject, useEffect, useRef } from 'react';
 import { ChatInput } from '@/features/chat/ui/bottom/ChatInput';
 import { SendButton } from '@/features/chat/ui/bottom/SendButton';
 import styles from '../../ChatPage.module.css';
+import { useChatStore } from '@/features/chat/model/chat.store';
 
 type Props = {
   isConnected: boolean;
@@ -15,10 +16,10 @@ type MessageRequest = {
 };
 
 export const ChatBottom = ({ isConnected, wsRef }: Props) => {
-  const [value, setValue] = useState<string>(''); // Строка введенного сообщения
+  const draft = useChatStore((s) => s.draft);
+  const setDraft = useChatStore((s) => s.setDraft);
   const inputRef = useRef<InputRef>(null);
 
-  // Автоматическая фокусировка на поле ввода
   useEffect(() => {
     if (!isConnected) {
       return;
@@ -28,9 +29,9 @@ export const ChatBottom = ({ isConnected, wsRef }: Props) => {
   }, [isConnected]);
 
   const send = () => {
-    const text = value.trim();
+    const text = draft.trim();
     if (!text) {
-      setValue('');
+      setDraft('');
       return;
     }
 
@@ -43,19 +44,19 @@ export const ChatBottom = ({ isConnected, wsRef }: Props) => {
     const payload: MessageRequest = { type: 'message', text };
     ws.send(JSON.stringify(payload));
 
-    setValue('');
+    setDraft('');
   };
 
   return (
     <div className={styles.bottomWrapper}>
       <ChatInput
         onSend={send}
-        onChange={setValue}
-        disabled={isConnected}
-        input={value}
+        onChange={setDraft}
+        disabled={!isConnected}
+        input={draft}
         inputRef={inputRef}
       />
-      <SendButton onSend={send} disabled={!value.trim() || !isConnected} />
+      <SendButton onSend={send} disabled={!draft.trim() || !isConnected} />
     </div>
   );
 };

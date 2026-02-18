@@ -8,3 +8,8 @@ export const getMessages = async () => {
   const resp = await api.get(URL.MESSAGES).json<MessagesResponse>();
   return resp.data;
 };
+
+/*export const useAddMessage = async () => {
+  const resp = await api.get(URL.MESSAGES).json<MessagesResponse>();
+  return resp.data;
+}*/

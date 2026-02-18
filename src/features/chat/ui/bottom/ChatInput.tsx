@@ -15,7 +15,7 @@ export const ChatInput = ({ onSend, disabled, input, onChange, inputRef }: Props
     <TextArea
       ref={inputRef}
       placeholder="Сообщение"
-      disabled={!disabled}
+      disabled={disabled}
       value={input}
       autoSize={{ minRows: 1, maxRows: 6 }}
       onChange={(e) => onChange(e.target.value)}
