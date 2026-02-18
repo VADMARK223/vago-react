@@ -2,12 +2,13 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './ChatPage.module.css';
 import { useMessages } from '@/shared/api/messages/use-messages';
 import type { MessageResponse, UiMessage } from '@/shared/api/messages/messages.types';
-import { ChatBottom } from '@/features/chat/bottom/ChatBottom';
-import { ChatTop } from '@/features/chat/top/ChatTop';
+import { ChatBottom } from '@/features/chat/ui/bottom/ChatBottom';
+import { ChatTop } from '@/features/chat/ui/top/ChatTop';
 
-import { ChatMiddle } from '@/features/chat/middle/ChatMiddle';
-import { getCookie, getWsUrl } from '@/features/chat/chat';
+import { ChatMiddle } from '@/features/chat/ui/middle/ChatMiddle';
+import { getCookie, getWsUrl } from '@/features/chat/model/chat.api';
 import { useMe } from '@/features/auth/auth';
+import { useChatStore } from '@/features/chat/model/chat.store';
 
 export const ChatPage = () => {
   const wsRef = useRef<WebSocket | null>(null);
@@ -16,7 +17,9 @@ export const ChatPage = () => {
 
   const { data: me } = useMe();
   const { data: serverMessages } = useMessages();
-  const [pending, setPending] = useState<MessageResponse[]>([]);
+  const liveMessages = useChatStore((s) => s.liveMessages);
+  const addLiveMessage = useChatStore((s) => s.addLiveMessage);
+  const removeLiveMessage = useChatStore((s) => s.removeLiveMessage);
 
   const messages = useMemo((): UiMessage[] => {
     const myId = me?.id;
@@ -26,20 +29,18 @@ export const ChatPage = () => {
       map.set(m.id, m);
     }
 
-    for (const m of pending) {
+    for (const m of liveMessages) {
       if (!map.has(m.id)) {
         map.set(m.id, m);
       }
     }
 
     return Array.from(map.values()).map((m) => ({ ...m, isMine: myId === m.authorId }));
-  }, [me?.id, serverMessages, pending]);
+  }, [me?.id, serverMessages, liveMessages]);
 
   const removeFromPending = (id: number) => {
-    setPending((p) => p.filter((m) => m.id !== id));
+    removeLiveMessage(id);
   };
-
-  const clearPending = () => setPending([]);
 
   const [isConnected, setIsConnected] = useState(false);
 
@@ -66,7 +67,7 @@ export const ChatPage = () => {
     ws.onmessage = (event) => {
       try {
         const dto = JSON.parse(event.data) as MessageResponse;
-        setPending((prev) => [...prev, dto]);
+        addLiveMessage(dto);
 
         // ✅ unread считаем тут (внешняя система)
         if (!atBottomRef.current) {
@@ -84,13 +85,13 @@ export const ChatPage = () => {
       ws.close();
       wsRef.current = null;
     };
-  }, [token, wsUrl]);
+  }, [addLiveMessage, token, wsUrl]);
 
   return (
     <>
       <div className={styles.container}>
         <div className={styles.chat}>
-          <ChatTop wsUrl={wsUrl} isConnected={isConnected} clearPending={clearPending} />
+          <ChatTop wsUrl={wsUrl} isConnected={isConnected} />
           <ChatMiddle
             messages={messages}
             atBottom={atBottom}

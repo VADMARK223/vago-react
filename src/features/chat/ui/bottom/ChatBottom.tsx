@@ -1,8 +1,8 @@
 import { type InputRef } from 'antd';
 import { type RefObject, useEffect, useRef, useState } from 'react';
-import { ChatInput } from '@/features/chat/bottom/ChatInput';
-import { SendButton } from '@/features/chat/bottom/SendButton';
-import styles from '../ChatPage.module.css';
+import { ChatInput } from '@/features/chat/ui/bottom/ChatInput';
+import { SendButton } from '@/features/chat/ui/bottom/SendButton';
+import styles from '../../ChatPage.module.css';
 
 type Props = {
   isConnected: boolean;

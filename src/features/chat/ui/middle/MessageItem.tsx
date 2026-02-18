@@ -1,4 +1,4 @@
-import styles from '@/features/chat/middle/ChatMiddle.module.css';
+import styles from '@/features/chat/ui/middle/ChatMiddle.module.css';
 import { Typography } from 'antd';
 import type { UiMessage } from '@/shared/api/messages/messages.types';
 import { DeleteMessageButton } from '@/features/admin/messages/DeleteMessageButton';

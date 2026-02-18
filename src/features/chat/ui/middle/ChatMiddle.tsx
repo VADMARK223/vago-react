@@ -1,7 +1,7 @@
-import { AtBottomButton } from '@/features/chat/middle/AtBottomButton';
+import { AtBottomButton } from '@/features/chat/ui/middle/AtBottomButton';
 import styles from '@/features/chat/ChatPage.module.css';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
-import { MessageItem } from '@/features/chat/middle/MessageItem';
+import { MessageItem } from '@/features/chat/ui/middle/MessageItem';
 import { useLayoutEffect, useRef, useState } from 'react';
 import type { UiMessage } from '@/shared/api/messages/messages.types';
 
