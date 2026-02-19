@@ -9,17 +9,25 @@ import {
   type ChatOutbound,
   getCookie,
   getWsUrl,
-  isOutbound,
+  isOutboundEnvelope,
 } from '@/features/chat/model/chat.ws.protocol';
 import { useMe } from '@/features/auth/auth';
 import { QUERY_KEY } from '@/shared/constants';
 import { useQueryClient } from '@tanstack/react-query';
 import { type MessagesQueryData } from '@/shared/api/messages/messages.types';
+import { App } from 'antd';
+import { useChatStore } from '@/features/chat/model/chat.store';
 
 export const ChatPage = () => {
+  const { message } = App.useApp();
   const wsRef = useRef<WebSocket | null>(null);
   const wsUrl = getWsUrl();
   const token = getCookie('vago_token');
+
+  const setSnapshot = useChatStore((s) => s.setSnapshot);
+  const userCount = useChatStore((s) => s.onlineUsers.length);
+  const userJoined = useChatStore((s) => s.userJoined);
+  const userLeft = useChatStore((s) => s.userLeft);
 
   const qc = useQueryClient();
   const { data: me } = useMe();
@@ -49,10 +57,10 @@ export const ChatPage = () => {
 
     ws.onmessage = (event) => {
       try {
-        const raw = JSON.parse(event.data) as ChatOutbound;
+        const raw = JSON.parse(event.data) as ChatOutbound; // TODO: прикрутить ZOD
 
-        if (!isOutbound(raw)) {
-          console.warn('Invalid WS message shape', raw);
+        if (!isOutboundEnvelope(raw)) {
+          console.warn('Invalid WS message envelope', raw);
           return;
         }
 
@@ -82,6 +90,26 @@ export const ChatPage = () => {
             break;
           }
 
+          case 'users.snapshot': {
+            console.log('Список пользователей:', msg.payload.users);
+            setSnapshot(msg.payload.users);
+            break;
+          }
+
+          case 'user.joined': {
+            console.log(`Новый пользователь: ${msg.payload.username}`);
+            message.info(`Новый пользователь: ${msg.payload.username}`).then();
+            userJoined(msg.payload);
+            break;
+          }
+
+          case 'user.left': {
+            console.log('User left chat', msg.payload);
+            message.info(`Пользователь: ${msg.payload.userId} покинул чат.`).then();
+            userLeft(msg.payload.userId);
+            break;
+          }
+
           case 'error': {
             console.error('WS error:', msg.payload.message);
             break;
@@ -102,7 +130,7 @@ export const ChatPage = () => {
       ws.close();
       wsRef.current = null;
     };
-  }, [qc, token, wsUrl]);
+  }, [message, qc, token, wsUrl]);
 
   const uiMessages = messages.map((m) => {
     return { ...m, isMine: myId === m.authorId };
@@ -112,7 +140,7 @@ export const ChatPage = () => {
     <>
       <div className={styles.container}>
         <div className={styles.chat}>
-          <ChatTop wsUrl={wsUrl} isConnected={isConnected} />
+          <ChatTop wsUrl={wsUrl} userCount={userCount + 1} isConnected={isConnected} />
           <ChatMiddle
             messages={uiMessages}
             atBottom={atBottom}

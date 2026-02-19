@@ -3,7 +3,7 @@ import { CodeBlock } from '@/shared/ui/codeBlock';
 export function UseReducerBlock() {
   return (
     <>
-      <h2 id="useReducer">useReducer</h2>
+      <h2 id="useReducer">8. Хук useReducer</h2>
       <p>
         Хук для управления <b>более сложным состоянием</b>, когда <code>useState</code> уже начинает
         путаться и перегружен.

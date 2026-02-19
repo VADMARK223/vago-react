@@ -6,9 +6,10 @@ import { Tooltip } from 'antd';
 type Props = {
   wsUrl: string;
   isConnected: boolean;
+  userCount: number;
 };
 
-export const ChatTop = ({ wsUrl, isConnected }: Props) => {
+export const ChatTop = ({ wsUrl, userCount, isConnected }: Props) => {
   return (
     <div className={styles.connection}>
       <Tooltip title={isConnected ? `${wsUrl}` : `${wsUrl}`}>
@@ -21,7 +22,7 @@ export const ChatTop = ({ wsUrl, isConnected }: Props) => {
           />
         </div>
       </Tooltip>
-      <span className={styles.label}>{isConnected ? 'Онлайн' : 'Офлайн'}</span>
+      <span className={styles.label}>{isConnected ? `Онлайн (Всего:${userCount})` : 'Офлайн'}</span>
       <div className={styles.actions}>
         <DeleteAllMessagesButton />
       </div>

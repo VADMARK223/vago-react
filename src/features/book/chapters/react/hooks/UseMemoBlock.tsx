@@ -3,7 +3,7 @@ import { CodeBlock } from '@/shared/ui/codeBlock';
 export function UseMemoBlock() {
   return (
     <div>
-      <h2 id="useMemo">useMemo</h2>
+      <h2 id="useMemo">6. Хук useMemo</h2>
       <p>
         Хук{' '}
         <b>

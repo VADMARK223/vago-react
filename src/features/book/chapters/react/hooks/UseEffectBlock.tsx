@@ -3,7 +3,7 @@ import { CodeBlock } from '@/shared/ui/codeBlock';
 export function UseEffectBlock() {
   return (
     <>
-      <h2 id="useEffect">useEffect</h2>
+      <h2 id="useEffect">2. Хук useEffect</h2>
       <p>Это хук для побочных эффектов (side effects).</p>
       <CodeBlock
         code={`useEffect(() => {}, [])        // 1 раз (mount)
