@@ -1,4 +1,4 @@
-import { Button, Input } from 'antd';
+import { Button } from 'antd';
 import { CirclePauseIcon, CirclePlay, StopCircle } from 'lucide-react';
 
 type Props = {
@@ -56,13 +56,13 @@ export const Player = ({
         icon={<StopCircle size={30} color="#ff4d4f" />}
       />
 
-      <Input
+      <input
         type="range"
         min={0}
         max={max}
         step={0.01}
         value={Math.min(currentTimeSec, max)}
-        onChange={(e) => onSeek(Number(e.target.value))}
+        onChange={(e) => onSeek(Number(e.currentTarget.value))}
         style={{ flex: 1 }}
         disabled={max === 0}
       />

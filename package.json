@@ -24,6 +24,7 @@
     "react-router-dom": "^7.13.0",
     "react-router-hash-link": "^2.4.3",
     "react-virtuoso": "^4.18.1",
+    "tone": "^15.1.22",
     "zustand": "^5.0.11"
   },
   "devDependencies": {

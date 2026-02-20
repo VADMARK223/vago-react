@@ -1,17 +1,23 @@
 import { App, Button } from 'antd';
 import { type ChangeEvent, useRef } from 'react';
 import type { MidiData } from '@/features/bayan/bayan.types';
+import { Ear } from 'lucide-react';
+import { LucideIcon } from '@/shared/ui/LucideIcon';
+import { useMidiAudioPlayer } from '@/features/bayan/use-midi-audio-player';
+import type { ParsedMidi } from '@/features/bayan/midi.types';
 
 const ACCEPT = '.mid,.midi,audio/midi,audio/x-midi';
 
 type Props = {
   onMidiLoaded: (data: MidiData) => void;
   disabled: boolean;
+  parsed?: ParsedMidi | null;
 };
 
-export const MidiUploader = ({ onMidiLoaded, disabled }: Props) => {
+export const MidiUploader = ({ onMidiLoaded, disabled, parsed }: Props) => {
   const { message } = App.useApp();
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const audio = useMidiAudioPlayer();
 
   const handlePick = () => {
     inputRef.current?.click();
@@ -51,6 +57,20 @@ export const MidiUploader = ({ onMidiLoaded, disabled }: Props) => {
       </Button>
 
       <span style={{ opacity: 0.7, fontSize: 12 }}>.mid / .midi</span>
+
+      {parsed && (
+        <Button
+          onClick={() => {
+            if (parsed) {
+              audio.playNotes(parsed.notes).then();
+            }
+          }}
+          disabled={disabled}
+          icon={<LucideIcon icon={Ear} />}
+        >
+          Прослушать
+        </Button>
+      )}
     </div>
   );
 };
