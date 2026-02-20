@@ -7,7 +7,7 @@ import type { ParsedMidi } from '@/features/bayan/midi.types';
 import { Player } from '@/features/bayan/player/Player';
 import { useSimplePlayer } from '@/features/bayan/use-simple-player';
 import { MidIInfo } from '@/features/bayan/MidIInfo';
-import { NotesTimeline } from '@/features/bayan/NotesTimeline';
+import { NotesTimeline } from '@/features/bayan/notes-timeline/NotesTimeline';
 
 const BayanPage = () => {
   const [midiInfo, setMidiInfo] = useState<MidiInfo | null>(null);

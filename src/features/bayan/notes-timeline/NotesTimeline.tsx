@@ -1,6 +1,8 @@
 import type { MidiNote } from '@/features/bayan/midi.types';
+import { NoteGlyph } from '@/features/bayan/notes-timeline/NoteGlyph';
+import { NotesLines } from '@/features/bayan/notes-timeline/NotesLines';
 
-const noteH = 8;
+const notesLinesEnable = false; // ноты (палочки)
 
 type Props = {
   notes: MidiNote[];
@@ -39,9 +41,22 @@ export const NotesTimeline = ({
     maxPitch = 60;
   }
 
-  const pitchRange = Math.max(1, maxPitch - minPitch);
-
   const playheadLeft = currentTimeSec * pxPerSec;
+
+  // вертикальная шкала: чем выше midi, тем меньше y
+  const minMidi = Math.min(...notes.map((n) => n.pitch));
+  const maxMidi = Math.max(...notes.map((n) => n.pitch));
+
+  const padding = 20;
+  const usableH = Math.max(1, height - padding * 2);
+
+  const yOfMidi = (midi: number) => {
+    const t = (midi - minMidi) / Math.max(1, maxMidi - minMidi);
+    // t=0 низ -> y внизу, t=1 верх -> y вверху
+    return padding + (1 - t) * usableH;
+  };
+
+  const width = Math.max(1, ...notes.map((n) => (n.startSec + n.durationSec) * pxPerSec));
 
   return (
     <div
@@ -56,7 +71,6 @@ export const NotesTimeline = ({
     >
       <div
         style={{
-          background: 'gray',
           position: 'relative',
           width: widthPx,
           height,
@@ -90,32 +104,38 @@ export const NotesTimeline = ({
           />
         ))}
 
-        {/* ноты */}
-        {notes.map((n, idx) => {
-          const left = n.startSec * pxPerSec;
-          const w = Math.max(2, n.durationSec * pxPerSec);
+        {notesLinesEnable && (
+          <NotesLines
+            notes={notes}
+            minPitch={minPitch}
+            maxPitch={maxPitch}
+            pxPerSec={pxPerSec}
+            height={height}
+          />
+        )}
 
-          // Чем выше pitch, тем выше на панели (инверсия)
-          const norm = (n.pitch - minPitch) / pitchRange; // 0..1
-          const top = Math.round((1 - norm) * (height - noteH));
+        <svg
+          width={width}
+          height={height}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            overflow: 'visible',
+            zIndex: 20,
+            pointerEvents: 'none',
+          }}
+        >
+          {notes.map((n) => {
+            const x = n.startSec * pxPerSec;
+            const y = yOfMidi(n.pitch);
 
-          return (
-            <div
-              key={`${n.trackIndex}-${idx}-${n.startSec}`}
-              title={`pitch=${n.pitch} t=${n.startSec.toFixed(2)} dur=${n.durationSec.toFixed(2)} track=${n.trackIndex}`}
-              style={{
-                position: 'absolute',
-                left,
-                top,
-                width: w,
-                height: noteH,
-                borderRadius: 6,
-                background: '#4b7bec',
-                opacity: 0.85,
-              }}
-            />
-          );
-        })}
+            // если хочешь длительности: можно делать “хвостики/флаги” позже.
+            // пока просто filled/empty по длительности
+            const isFilled = n.durationSec < 1; // заглушка, подстроишь под свою шкалу
+
+            return <NoteGlyph key={n.startSec} x={x} y={y} midi={n.pitch} isFilled={isFilled} />;
+          })}
+        </svg>
       </div>
     </div>
   );
