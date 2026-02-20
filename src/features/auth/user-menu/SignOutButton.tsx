@@ -1,9 +1,9 @@
 import { App, Button } from 'antd';
-import { LogoutOutlined } from '@ant-design/icons';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CODE, QUERY_KEY, ROUTE } from '@/shared/constants';
 import { api } from '@/shared/api/ky-client';
 import { useNavigate } from 'react-router-dom';
+import { LogOut } from 'lucide-react';
 
 type Props = {
   isCompact?: boolean;
@@ -33,7 +33,11 @@ export function SignOutButton({ isCompact, onDone }: Props) {
   });
 
   return (
-    <Button icon={<LogoutOutlined />} loading={signOut.isPending} onClick={() => signOut.mutate()}>
+    <Button
+      icon={<LogOut size={16} />}
+      loading={signOut.isPending}
+      onClick={() => signOut.mutate()}
+    >
       {!isCompact && 'Выйти'}
     </Button>
   );

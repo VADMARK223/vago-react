@@ -4,13 +4,14 @@ import { useMemo } from 'react';
 import { ROUTE } from '@/shared/constants';
 import {
   HomeOutlined,
+  QuestionCircleOutlined,
   ReadOutlined,
   RobotOutlined,
   ScheduleOutlined,
+  SettingOutlined,
+  SoundOutlined,
   UnorderedListOutlined,
   WechatOutlined,
-  SettingOutlined,
-  QuestionCircleOutlined,
 } from '@ant-design/icons';
 import { useAuth, useSignInRedirect } from '../features/auth/auth';
 
@@ -42,6 +43,11 @@ export function AppMenu({ onItemClick }: Props) {
       label: <Link to={ROUTE.QUESTIONS}>Вопросы</Link>,
     },
     { type: 'divider' as const },
+    {
+      key: ROUTE.BAYAN,
+      icon: <SoundOutlined />,
+      label: <Link to={ROUTE.CHAT}>Тренажер по бояну</Link>,
+    },
     {
       key: ROUTE.CHAT,
       icon: <WechatOutlined />,

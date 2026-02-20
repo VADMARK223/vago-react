@@ -13,10 +13,12 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.20",
+    "@tonejs/midi": "^2.0.28",
     "antd": "^6.2.2",
     "dayjs": "^1.11.19",
     "highlight.js": "^11.11.1",
     "ky": "^1.14.3",
+    "lucide-react": "^0.575.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0",

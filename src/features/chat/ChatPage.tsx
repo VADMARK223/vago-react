@@ -130,7 +130,7 @@ export const ChatPage = () => {
       ws.close();
       wsRef.current = null;
     };
-  }, [message, qc, token, wsUrl]);
+  }, [message, qc, setSnapshot, token, userJoined, userLeft, wsUrl]);
 
   const uiMessages = messages.map((m) => {
     return { ...m, isMine: myId === m.authorId };

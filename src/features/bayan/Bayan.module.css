@@ -1,0 +1,12 @@
+.container {
+    padding: 10px;
+    height: 100%;
+    margin: 0;
+    border-radius: 6px;
+    background: #313335;
+    color: #eee;
+    border: 1px solid #444;
+    text-align: left;
+    transition: background 0.2s ease, transform 0.1s;
+    overflow-x: hidden;
+}

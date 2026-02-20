@@ -1,14 +1,13 @@
 import { UpOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import * as React from 'react';
-import { useEffect } from 'react';
+import { type RefObject, useEffect, useState } from 'react';
 
 type Props = {
-  containerRef: React.RefObject<HTMLDivElement | null>;
+  containerRef: RefObject<HTMLDivElement | null>;
 };
 
 export function ScrollToTopButton({ containerRef }: Props) {
-  const [visible, setVisible] = React.useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const container = containerRef.current;

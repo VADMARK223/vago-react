@@ -1,13 +1,12 @@
 import type { Id } from '@/shared/types';
-import * as React from 'react';
-import { type JSX } from 'react';
+import { type ComponentProps, type JSX } from 'react';
 import { DeleteButton } from '@/shared/ui/DeleteButton';
 import { Button, Tooltip } from 'antd';
 import { useDeleteMessage } from '@/features/message/delete/use-delete-message';
 
 interface Props {
   id: Id;
-  size?: React.ComponentProps<typeof Button>['size'];
+  size?: ComponentProps<typeof Button>['size'];
 }
 
 export const DeleteMessageButton = ({ id, size = 'middle' }: Props): JSX.Element => {

@@ -1,10 +1,10 @@
 import { Button } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import * as React from 'react';
+import type { ComponentProps } from 'react';
 
 type Props = {
   onClick: () => void;
-  size?: React.ComponentProps<typeof Button>['size'];
+  size?: ComponentProps<typeof Button>['size'];
   loading?: boolean;
 };
 

@@ -1,9 +1,9 @@
 import { HashLink } from 'react-router-hash-link';
-import * as React from 'react';
+import type { ReactNode } from 'react';
 
 interface Props {
   id: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export const BookHashLink = ({ id, children }: Props) => {

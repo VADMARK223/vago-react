@@ -43,7 +43,7 @@ export const useQuestions = (topicId?: number) => {
     queryKey: [QUERY_KEY.questions, topicId ?? null],
     queryFn: async () => {
       const searchParams = topicId != null ? { topic_id: String(topicId) } : undefined;
-      return await api.get(URL.QUESTION, { searchParams: searchParams }).json<QuestionsResponse>();
+      return await api.get(URL.QUESTION, { searchParams }).json<QuestionsResponse>();
     },
   });
 };

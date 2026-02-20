@@ -77,7 +77,7 @@ export const TestPage = () => {
     try {
       const res = await checkMutation.mutateAsync({
         questionId: q.id,
-        answerId: answerId,
+        answerId,
       });
 
       if (res.correct) {

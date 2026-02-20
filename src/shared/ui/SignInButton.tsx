@@ -1,9 +1,10 @@
-import { LoginOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { useSignInRedirect } from '@/features/auth/auth';
 import { useLocation } from 'react-router-dom';
 import { useIsMutating } from '@tanstack/react-query';
 import { MUTATION_KEY } from '@/shared/constants';
+import { LucideIcon } from '@/shared/ui/LucideIcon';
+import { LogIn } from 'lucide-react';
 
 type Props = {
   isCompact?: boolean;
@@ -26,7 +27,12 @@ export const SignInButton = ({ isCompact, isMeLoading, onClick }: Props) => {
   };
 
   return (
-    <Button icon={<LoginOutlined />} onClick={handleClick} loading={isBlocked} disabled={isBlocked}>
+    <Button
+      icon={<LucideIcon icon={LogIn} />}
+      onClick={handleClick}
+      loading={isBlocked}
+      disabled={isBlocked}
+    >
       {!isCompact && 'Войти'}
     </Button>
   );
