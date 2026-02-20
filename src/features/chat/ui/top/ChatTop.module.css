@@ -33,6 +33,11 @@
 }
 
 .label {
+    opacity: 1;
+    font-weight: bold;
+}
+
+.subLabel {
     opacity: 0.8;
 }
 

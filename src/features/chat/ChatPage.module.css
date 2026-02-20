@@ -36,11 +36,6 @@
     flex-direction: column;
 }
 
-/*Выбрать .vItem, который идёт сразу после другого .vItem*/
-.vItem + .vItem {
-    margin-top: 8px;
-}
-
 .itemWrap {
     display: flex;
     width: 100%;

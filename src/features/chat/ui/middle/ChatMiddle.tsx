@@ -32,7 +32,7 @@ export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Pro
     // 2 rAF — самый надёжный способ дождаться измерений Virtuoso
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        virtuosoRef.current?.scrollToIndex({ index: last, behavior: 'auto' });
+        virtuosoRef.current?.scrollToIndex({ index: last, align: 'end', behavior: 'auto' });
       });
     });
   }, [initialScrollDone, messages.length]);
@@ -55,17 +55,17 @@ export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Pro
         followOutput={
           initialScrollDone ? (isAtBottom) => (isAtBottom ? 'smooth' : false) : 'auto' // ✅ пока инициализируемся — всегда держим низ
         }
-        components={{
-          Item: (props) => <div {...props} className={styles.vItem} />,
-        }}
-        itemContent={(_, message) => (
-          <div
-            className={`${styles.itemWrap} ${
-              message.isMine ? styles.itemWrapMine : styles.itemWrapOther
-            }`}
-          >
-            <MessageItem data={message} />
-          </div>
+        itemContent={(index, message) => (
+          <>
+            {index !== 0 && <div style={{ height: 8 }} />}
+            <div
+              className={`${styles.itemWrap} ${
+                message.isMine ? styles.itemWrapMine : styles.itemWrapOther
+              }`}
+            >
+              <MessageItem data={message} />
+            </div>
+          </>
         )}
       />
 

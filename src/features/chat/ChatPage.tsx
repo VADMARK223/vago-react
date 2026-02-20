@@ -25,7 +25,7 @@ export const ChatPage = () => {
   const token = getCookie('vago_token');
 
   const setSnapshot = useChatStore((s) => s.setSnapshot);
-  const userCount = useChatStore((s) => s.onlineUsers.length);
+  const onlineUsers = useChatStore((s) => s.onlineUsers);
   const userJoined = useChatStore((s) => s.userJoined);
   const userLeft = useChatStore((s) => s.userLeft);
 
@@ -91,7 +91,6 @@ export const ChatPage = () => {
           }
 
           case 'users.snapshot': {
-            console.log('Список пользователей:', msg.payload.users);
             setSnapshot(msg.payload.users);
             break;
           }
@@ -140,7 +139,7 @@ export const ChatPage = () => {
     <>
       <div className={styles.container}>
         <div className={styles.chat}>
-          <ChatTop wsUrl={wsUrl} userCount={userCount + 1} isConnected={isConnected} />
+          <ChatTop wsUrl={wsUrl} onlineUsers={onlineUsers} isConnected={isConnected} />
           <ChatMiddle
             messages={uiMessages}
             atBottom={atBottom}
