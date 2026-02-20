@@ -51,6 +51,7 @@ export const useSimplePlayer = (params: Params) => {
       setCurrentTimeSec(next); // Обновляем состояние (UI перерисовывается)
 
       const d = durationRef.current;
+
       if (d > 0 && next >= d) {
         setIsPlaying(false);
         stopRaf();

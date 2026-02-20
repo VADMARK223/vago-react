@@ -1,5 +1,5 @@
-import { Button } from 'antd';
-import { CirclePauseIcon, CirclePlay, StopCircle } from 'lucide-react';
+import { StopButton } from '@/features/bayan/player/StopButton';
+import { PlayPauseButton } from '@/features/bayan/player/PlayPauseButton';
 
 type Props = {
   isPlaying: boolean;
@@ -23,6 +23,12 @@ export const Player = ({
 }: Props) => {
   const max = durationSec > 0 ? durationSec : 0;
 
+  const isEnd = max !== 0 && currentTimeSec === max;
+
+  if (isEnd) {
+    console.log('IS END!');
+  }
+
   return (
     <div
       style={{
@@ -34,27 +40,14 @@ export const Player = ({
         borderRadius: 12,
       }}
     >
-      <Button
-        type="text"
-        size="large"
-        onClick={isPlaying ? onPause : onPlay}
-        disabled={max === 0}
-        icon={
-          isPlaying ? (
-            <CirclePauseIcon size={30} color="#1890ff" />
-          ) : (
-            <CirclePlay size={30} color="#52c41a" />
-          )
-        }
+      <PlayPauseButton
+        isPlaying={isPlaying}
+        onPlay={onPlay}
+        onPause={onPause}
+        disabled={max === 0 || isEnd}
       />
 
-      <Button
-        type="text"
-        size="large"
-        onClick={onStop}
-        disabled={max === 0}
-        icon={<StopCircle size={30} color="#ff4d4f" />}
-      />
+      <StopButton onClick={onStop} disabled={max === 0 || currentTimeSec === 0} />
 
       <input
         type="range"
