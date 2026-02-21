@@ -1,10 +1,14 @@
-import { AtBottomButton } from '@/features/chat/ui/middle/AtBottomButton';
 import styles from '@/features/chat/ChatPage.module.css';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 import { MessageItem } from '@/features/chat/ui/middle/MessageItem';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import type { UiMessage } from '@/shared/api/messages/messages.types';
+import { AtBottomButton } from '@/features/chat/ui/middle/AtBottomButton';
 
+/**
+ * asdasd
+ *
+ */
 type Props = {
   messages: UiMessage[];
   atBottom: boolean;
@@ -14,29 +18,19 @@ type Props = {
 
 export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Props) => {
   const virtuosoRef = useRef<VirtuosoHandle>(null);
-  const [initialScrollDone, setInitialScrollDone] = useState(false);
 
-  useLayoutEffect(() => {
-    if (initialScrollDone) {
-      return;
-    }
-    if (messages.length === 0) {
-      return;
-    }
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        virtuosoRef.current?.scrollToIndex({ index: 'LAST' });
-      });
-    });
-  }, [initialScrollDone, messages.length]);
-
+  /**
+   * Вызывается со значениями true/false, когда список достигает конца или прокручивается вверх.
+   * Can be used to load newer items, like `tail -f`.
+   */
   const handleBottomChange = (val: boolean) => {
-    onAtBottomChange(val);
-
-    if (val && !initialScrollDone) {
-      setInitialScrollDone(true);
+    if (val) {
+      console.log('ВНИЗУ');
+    } else {
+      console.log('НЕ ВНИЗУ');
     }
+
+    onAtBottomChange(val);
   };
 
   return (
@@ -44,11 +38,11 @@ export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Pro
       <Virtuoso
         ref={virtuosoRef}
         data={messages}
+        initialTopMostItemIndex={messages.length - 1} // При инициализации кидает в самый них
+        atBottomThreshold={8}
         alignToBottom
         atBottomStateChange={handleBottomChange}
-        followOutput={
-          initialScrollDone ? (isAtBottom) => (isAtBottom ? 'smooth' : false) : 'auto' // ✅ пока инициализируемся — всегда держим низ
-        }
+        followOutput={(isAtBottom) => (isAtBottom ? 'smooth' : false)}
         itemContent={(index, message) => (
           <>
             {index !== 0 && <div style={{ height: 8 }} />}
@@ -63,7 +57,12 @@ export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Pro
         )}
       />
 
-      <AtBottomButton atBottom={atBottom} unread={unread} virtuosoRef={virtuosoRef} />
+      <AtBottomButton
+        atBottom={atBottom}
+        unread={unread}
+        virtuosoRef={virtuosoRef}
+        total={messages.length}
+      />
     </div>
   );
 };

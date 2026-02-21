@@ -36,3 +36,13 @@
     overflow-wrap: anywhere;
     word-break: break-word;
 }
+
+.toBottom {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    border: 0;
+    cursor: pointer;
+}

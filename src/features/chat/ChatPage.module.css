@@ -49,16 +49,6 @@
     justify-content: flex-start;
 }
 
-.toBottom {
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
-    padding: 8px 10px;
-    border-radius: 999px;
-    border: 0;
-    cursor: pointer;
-}
-
 .bottomWrapper {
     display: flex;
     gap: 8px;
