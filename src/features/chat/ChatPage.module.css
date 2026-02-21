@@ -26,7 +26,6 @@
 
 
 .messages {
-    display: flex;
     position: relative;
     flex: 1;
     min-height: 0;

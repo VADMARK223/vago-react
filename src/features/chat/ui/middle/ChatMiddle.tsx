@@ -5,10 +5,6 @@ import { useRef } from 'react';
 import type { UiMessage } from '@/shared/api/messages/messages.types';
 import { AtBottomButton } from '@/features/chat/ui/middle/AtBottomButton';
 
-/**
- * asdasd
- *
- */
 type Props = {
   messages: UiMessage[];
   atBottom: boolean;
@@ -24,28 +20,20 @@ export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Pro
    * Can be used to load newer items, like `tail -f`.
    */
   const handleBottomChange = (val: boolean) => {
-    if (val) {
-      console.log('ВНИЗУ');
-    } else {
-      console.log('НЕ ВНИЗУ');
-    }
-
     onAtBottomChange(val);
   };
 
   return (
-    <div id="messagesDiv" className={styles.messages}>
+    <div className={styles.messages}>
       <Virtuoso
         ref={virtuosoRef}
         data={messages}
-        initialTopMostItemIndex={messages.length - 1} // При инициализации кидает в самый них
-        atBottomThreshold={8}
+        atBottomThreshold={40}
         alignToBottom
         atBottomStateChange={handleBottomChange}
         followOutput={(isAtBottom) => (isAtBottom ? 'smooth' : false)}
-        itemContent={(index, message) => (
+        itemContent={(_index, message) => (
           <>
-            {index !== 0 && <div style={{ height: 8 }} />}
             <div
               className={`${styles.itemWrap} ${
                 message.isMine ? styles.itemWrapMine : styles.itemWrapOther

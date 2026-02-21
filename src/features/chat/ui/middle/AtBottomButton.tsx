@@ -9,27 +9,20 @@ type Props = {
   total: number;
 };
 
-export const AtBottomButton = ({ atBottom, unread, virtuosoRef, total }: Props) => {
+export const AtBottomButton = ({ atBottom, unread, virtuosoRef }: Props) => {
   return (
     <>
       {!atBottom && unread > 0 && (
         <button
           className={styles.toBottom}
           onClick={() => {
-            const last = total - 1;
-            if (last < 0) {
-              return;
-            }
-
-            virtuosoRef.current?.scrollToIndex({
-              index: last,
-              align: 'end',
+            virtuosoRef.current?.scrollTo({
+              top: 1000000,
               behavior: 'smooth',
             });
 
-            // добивка после измерений/перерендера
             requestAnimationFrame(() => {
-              virtuosoRef.current?.scrollToIndex({ index: last, align: 'end' });
+              virtuosoRef.current?.scrollTo({ top: 1000000 });
             });
           }}
         >
