@@ -24,15 +24,9 @@ export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Pro
       return;
     }
 
-    const last = messages.length - 1;
-    if (last < 0) {
-      return;
-    }
-
-    // 2 rAF — самый надёжный способ дождаться измерений Virtuoso
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        virtuosoRef.current?.scrollToIndex({ index: last, align: 'end', behavior: 'auto' });
+        virtuosoRef.current?.scrollToIndex({ index: 'LAST' });
       });
     });
   }, [initialScrollDone, messages.length]);
@@ -69,12 +63,7 @@ export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Pro
         )}
       />
 
-      <AtBottomButton
-        atBottom={atBottom}
-        unread={unread}
-        messages={messages}
-        virtuosoRef={virtuosoRef}
-      />
+      <AtBottomButton atBottom={atBottom} unread={unread} virtuosoRef={virtuosoRef} />
     </div>
   );
 };
