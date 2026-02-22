@@ -37,17 +37,21 @@
     word-break: break-word;
 }
 
-.toBottom {
+
+
+/* позиционирование внизу справа + скрытие/появление (как раньше) */
+.toBottomWrap {
     position: absolute;
     right: 12px;
     bottom: 12px;
 
     opacity: 0;
     transform: translateY(4px);
+    pointer-events: none;
     visibility: hidden;
 
     transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear;
-    transition-delay: 0ms, 0ms, 0ms; /* скрытие без задержки */
+    transition-delay: 0ms, 0ms, 0ms;
 }
 
 .toBottomVisible {
@@ -56,14 +60,26 @@
     pointer-events: auto;
     visibility: visible;
 
-    /* задержка только на появление */
     transition-delay: 150ms, 150ms, 0ms;
 }
 
+.toBottomWrap .toBottomBtn:hover {
+    background: #1d2b3a;
+}
+
 .unreadBadge {
-    margin-left: 6px;
-    font-size: 12px;
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    transform: translate(-50%, 4px);
+
     padding: 2px 6px;
     border-radius: 999px;
-    background: rgba(0,0,0,0.35);
+    font-size: 12px;
+    line-height: 1;
+    background: #4082bc;
+    color: #fff;
+
+    pointer-events: none;
+    user-select: none;
 }

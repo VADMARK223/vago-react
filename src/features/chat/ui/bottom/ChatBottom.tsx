@@ -1,8 +1,9 @@
+import styles from '@/features/chat/ui/bottom/ChatBottom.module.css';
 import { type InputRef } from 'antd';
 import { type RefObject, useEffect, useRef } from 'react';
 import { ChatInput } from '@/features/chat/ui/bottom/ChatInput';
 import { SendButton } from '@/features/chat/ui/bottom/SendButton';
-import styles from '../../ChatPage.module.css';
+
 import { useChatStore } from '@/features/chat/model/chat.store';
 import type { ChatInbound, MessageSendPayload } from '@/features/chat/model/chat.ws.protocol';
 

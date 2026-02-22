@@ -12,3 +12,9 @@
   min-height: 0;
   overflow-y: auto;
 }
+
+.toTopButton {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+}

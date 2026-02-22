@@ -1,6 +1,7 @@
-import { UpOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import style from './ScrollableContainer.module.css';
 import { type RefObject, useEffect, useState } from 'react';
+import { VagoButton } from '@/shared/ui/VagoButton';
+import { ChevronUp } from 'lucide-react';
 
 type Props = {
   containerRef: RefObject<HTMLDivElement | null>;
@@ -33,15 +34,12 @@ export function ScrollToTopButton({ containerRef }: Props) {
   };
 
   return (
-    <Button
-      type="primary"
+    <VagoButton
       shape="circle"
-      icon={<UpOutlined />}
+      icon={ChevronUp}
       onClick={scrollToTop}
+      className={style.toTopButton}
       style={{
-        position: 'absolute',
-        right: 16,
-        bottom: 16,
         opacity: visible ? 1 : 0,
       }}
     />

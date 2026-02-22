@@ -14,21 +14,27 @@ export const AtBottomButton = ({ atBottom, unread, virtuosoRef }: Props) => {
   const visible = !atBottom;
 
   return (
-    <VagoButton
-      shape="circle"
-      icon={ChevronDown}
-      className={`${styles.toBottom} ${visible ? styles.toBottomVisible : ''}`}
-      onClick={() => {
-        virtuosoRef.current?.scrollToIndex({
-          index: 'LAST',
-          align: 'end',
-          behavior: 'smooth',
-        });
-      }}
-      aria-hidden={!visible}
-      tabIndex={visible ? 0 : -1}
-    >
-      {/*{unread > 0 && <span className={styles.unreadBadge}>{unread}</span>}*/}
-    </VagoButton>
+    <div className={`${styles.toBottomWrap} ${visible ? styles.toBottomVisible : ''}`}>
+      <VagoButton
+        shape="circle"
+        icon={ChevronDown}
+        className={styles.toBottomBtn}
+        onClick={() => {
+          virtuosoRef.current?.scrollToIndex({
+            index: 'LAST',
+            align: 'end',
+            behavior: 'smooth',
+          });
+        }}
+        aria-hidden={!visible}
+        tabIndex={visible ? 0 : -1}
+      />
+
+      {unread > 0 && (
+        <span className={styles.unreadBadge} aria-label={`Непрочитанных: ${unread}`}>
+          {unread}
+        </span>
+      )}
+    </div>
   );
 };

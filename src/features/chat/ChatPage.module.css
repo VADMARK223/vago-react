@@ -47,10 +47,3 @@
 .itemWrapOther {
     justify-content: flex-start;
 }
-
-.bottomWrapper {
-    display: flex;
-    gap: 8px;
-    width: 100%;
-    align-items: flex-end;
-}

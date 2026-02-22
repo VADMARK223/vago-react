@@ -1,0 +1,6 @@
+.bottomWrapper {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    align-items: flex-end;
+}
