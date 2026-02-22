@@ -1,17 +1,17 @@
 import { useQuestions } from './questions';
 import { Select } from 'antd';
-import { useMemo, useRef, useState } from 'react';
+import { type RefObject, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CODE } from '@/shared/constants';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 import { QuestionItem } from './QuestionItem';
-import { ToTopButton } from './ToTopButton';
+import { ScrollToTopButton } from '@/shared/ui/scrollable-container/ScrollToTopButton';
 
 export const QuestionPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedIdRaw = Number(searchParams.get(CODE.TOPIC_ID)) || 0;
   const topicId = selectedIdRaw ? Number(selectedIdRaw) : undefined;
-  const virtuosoRef = useRef<VirtuosoHandle>(null);
+  const virtuosoRef: RefObject<VirtuosoHandle | null> = useRef<VirtuosoHandle>(null);
   const [showTop, setShowTop] = useState(false);
 
   const { data: questionsPageData, isLoading, isError } = useQuestions(topicId);
@@ -71,25 +71,19 @@ export const QuestionPage = () => {
         />
       </div>
 
-      <Virtuoso
-        ref={virtuosoRef}
-        style={{ height: '100%' }}
-        data={questionsPageData?.data.questions}
-        itemContent={(_, question) => <QuestionItem question={question} />}
-        rangeChanged={(range) => {
-          setShowTop(range.startIndex > 5);
-        }}
-      />
+      <div style={{ position: 'relative', height: '100%' }}>
+        <Virtuoso
+          ref={virtuosoRef}
+          style={{ height: '100%' }}
+          data={questionsPageData?.data.questions}
+          itemContent={(_, question) => <QuestionItem question={question} />}
+          rangeChanged={(range) => {
+            setShowTop(range.startIndex > 2);
+          }}
+        />
 
-      <ToTopButton
-        visible={showTop}
-        onClick={() =>
-          virtuosoRef.current?.scrollToIndex({
-            index: 0,
-            behavior: 'smooth',
-          })
-        }
-      />
+        {showTop && <ScrollToTopButton kind="virtuoso" virtuosoRef={virtuosoRef} />}
+      </div>
     </>
   );
 };

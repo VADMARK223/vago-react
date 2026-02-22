@@ -1,36 +1,21 @@
 import style from './ScrollableContainer.module.css';
-import { type RefObject, useEffect, useState } from 'react';
+import { type RefObject } from 'react';
 import { VagoButton } from '@/shared/ui/VagoButton';
 import { ChevronUp } from 'lucide-react';
+import type { VirtuosoHandle } from 'react-virtuoso';
 
-type Props = {
-  containerRef: RefObject<HTMLDivElement | null>;
-};
+type Props =
+  | { kind: 'container'; containerRef: RefObject<HTMLDivElement | null> }
+  | { kind: 'virtuoso'; virtuosoRef: RefObject<VirtuosoHandle | null> };
 
-export function ScrollToTopButton({ containerRef }: Props) {
-  const [visible, setVisible] = useState<boolean>(false);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) {
+export function ScrollToTopButton(props: Props) {
+  const scrollToTop = () => {
+    if (props.kind === 'container') {
+      props.containerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
 
-    const handleScroll = () => {
-      setVisible(container.scrollTop > 30);
-    };
-
-    container.addEventListener('scroll', handleScroll);
-    return () => {
-      container.removeEventListener('scroll', handleScroll);
-    };
-  }, [containerRef]);
-
-  const scrollToTop = () => {
-    containerRef?.current?.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    props.virtuosoRef.current?.scrollToIndex({ index: 0, behavior: 'smooth' });
   };
 
   return (
@@ -39,9 +24,6 @@ export function ScrollToTopButton({ containerRef }: Props) {
       icon={ChevronUp}
       onClick={scrollToTop}
       className={style.toTopButton}
-      style={{
-        opacity: visible ? 1 : 0,
-      }}
     />
   );
 }

@@ -17,4 +17,23 @@
   position: absolute;
   right: 16px;
   bottom: 16px;
+
+  animation: popIn 0.35s ease-out;
+}
+
+@keyframes popIn {
+  0% {
+    transform: translateY(30px) scale(0.7);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-6px) scale(1.1);
+  }
+  70% {
+    transform: translateY(2px) scale(0.98);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
 }
