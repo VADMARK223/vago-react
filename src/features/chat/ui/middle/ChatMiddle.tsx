@@ -32,8 +32,9 @@ export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Pro
         alignToBottom
         atBottomStateChange={handleBottomChange}
         followOutput={(isAtBottom) => (isAtBottom ? 'smooth' : false)}
-        itemContent={(_index, message) => (
+        itemContent={(index, message) => (
           <>
+            {index !== 0 && <div style={{ height: 8 }} />}
             <div
               className={`${styles.itemWrap} ${
                 message.isMine ? styles.itemWrapMine : styles.itemWrapOther

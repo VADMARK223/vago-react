@@ -41,8 +41,29 @@
     position: absolute;
     right: 12px;
     bottom: 12px;
-    padding: 8px 10px;
+
+    opacity: 0;
+    transform: translateY(4px);
+    visibility: hidden;
+
+    transition: opacity 0.15s ease, transform 0.15s ease, visibility 0s linear;
+    transition-delay: 0ms, 0ms, 0ms; /* скрытие без задержки */
+}
+
+.toBottomVisible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    visibility: visible;
+
+    /* задержка только на появление */
+    transition-delay: 150ms, 150ms, 0ms;
+}
+
+.unreadBadge {
+    margin-left: 6px;
+    font-size: 12px;
+    padding: 2px 6px;
     border-radius: 999px;
-    border: 0;
-    cursor: pointer;
+    background: rgba(0,0,0,0.35);
 }
