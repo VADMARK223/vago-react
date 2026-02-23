@@ -11,6 +11,7 @@ export const parseMidi = (arrayBuffer: ArrayBuffer): ParsedMidi => {
         durationSec: n.duration,
         endSec: n.time + n.duration,
         pitch: n.midi,
+        note: midiToNote(n.midi),
         velocity: n.velocity,
         trackIndex,
         channel: t.channel,
@@ -25,4 +26,14 @@ export const parseMidi = (arrayBuffer: ArrayBuffer): ParsedMidi => {
     durationSec: midi.duration,
     tracksCount: midi.tracks.length,
   };
+};
+
+const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+const SOLFEGE = ['До', 'До#', 'Ре', 'Ре#', 'Ми', 'Фа', 'Фа#', 'Соль', 'Соль#', 'Ля', 'Ля#', 'Си'];
+
+const midiToNote = (midi: number) => {
+  const index = midi % 12;
+  const octave = Math.floor(midi / 12) - 1;
+  return `${NOTES[index]}${octave} (${SOLFEGE[index]})`;
 };

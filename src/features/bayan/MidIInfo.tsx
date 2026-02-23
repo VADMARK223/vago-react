@@ -1,44 +1,100 @@
-import type { ParsedMidi } from '@/features/bayan/midi.types';
+import styles from './Bayan.module.css';
+import type { MidiNote, ParsedMidi } from '@/features/bayan/midi.types';
 import type { MidiInfo } from '@/features/bayan/bayan.types';
+import { Table } from 'antd';
+import { useState } from 'react';
 
 interface MidIInfoProps {
   parsed: ParsedMidi;
   midiInfo: MidiInfo;
+  onSeek: (sec: number) => void;
 }
+const columns = [
+  {
+    title: 'Старт',
+    dataIndex: 'startSec',
+    render: (val: number) => {
+      return <>{val.toFixed(3)}</>;
+    },
+  },
+  {
+    title: 'Длительность',
+    key: 'durationSec',
+    render: (_: unknown, r: MidiNote) => (r.endSec - r.startSec).toFixed(3),
+  },
+  {
+    title: 'Pitch (высота)',
+    dataIndex: 'pitch',
+    render: (val: number) => <>{val}</>,
+  },
+  {
+    title: 'Нота',
+    dataIndex: 'note',
+  },
+  {
+    title: 'Velocity (сила)',
+    dataIndex: 'velocity',
+    render: (val: number) => {
+      return <>{val.toFixed(2)}</>;
+    },
+  },
+  {
+    title: 'Индекс трека',
+    dataIndex: 'trackIndex',
+    hidden: false,
+  },
+];
 
-export const MidIInfo = ({ midiInfo, parsed }: MidIInfoProps) => {
+const makeRowKey = (r: MidiNote) => `${r.trackIndex}-${r.startSec}-${r.pitch}-${r.endSec}`;
+
+export const MidIInfo = ({ midiInfo, parsed, onSeek }: MidIInfoProps) => {
+  const [selectedRowKey, setSelectedRowKey] = useState<string | null>(null);
+
+  const handleRowClick = (record: MidiNote) => {
+    const key = makeRowKey(record);
+    setSelectedRowKey(key);
+    onSeek(record.startSec);
+  };
+
   return (
-    <div>
-      <div style={{ marginTop: 12, opacity: 0.8 }}>
-        <h2>
-          Загружен: {midiInfo.name} ({midiInfo.size} байт)
-        </h2>
-      </div>
+    <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th>Файл</th>
+            <th>Длительность</th>
+            <th>Треков</th>
+            <th>Нот</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{midiInfo.name}</td>
+            <td>{parsed.durationSec.toFixed(2)} сек</td>
+            <td>{parsed.tracksCount}</td>
+            <td>{parsed.notes.length}</td>
+          </tr>
+        </tbody>
+      </table>
 
-      <div style={{ marginTop: 12, opacity: 0.9 }}>
-        <div>
-          <b>Файл:</b> {midiInfo.name}
-        </div>
-        <div>
-          <b>Длительность:</b> {parsed.durationSec.toFixed(2)} сек
-        </div>
-        <div>
-          <b>Треков:</b> {parsed.tracksCount}
-        </div>
-        <div>
-          <b>Нот:</b> {parsed.notes.length}
-        </div>
-
-        <div
-          style={{ marginTop: 10, fontFamily: 'monospace', fontSize: 12, whiteSpace: 'pre-wrap' }}
-        >
-          {parsed.notes.slice(0, 10).map((n, i) => (
-            <div key={i}>
-              t={n.startSec.toFixed(3)}..{n.endSec.toFixed(3)} pitch={n.pitch} vel=
-              {n.velocity.toFixed(2)} track={n.trackIndex}
-            </div>
-          ))}
-        </div>
+      <div style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
+        <Table<MidiNote>
+          rowKey={makeRowKey}
+          dataSource={parsed.notes}
+          columns={columns}
+          pagination={false}
+          rowSelection={{
+            type: 'radio',
+            selectedRowKeys: selectedRowKey ? [selectedRowKey] : [],
+            onChange: (keys) => setSelectedRowKey((keys[0] as string) ?? null),
+          }}
+          onRow={(record) => ({
+            onClick: () => handleRowClick(record),
+          })}
+          rowClassName={(record) =>
+            makeRowKey(record) === selectedRowKey ? styles.selectedRow : ''
+          }
+        />
       </div>
     </div>
   );

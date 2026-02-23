@@ -49,7 +49,7 @@ const BayanPage = () => {
         currentTimeSec={player.currentTimeSec}
       />
 
-      {midiInfo && parsed && <MidIInfo midiInfo={midiInfo} parsed={parsed} />}
+      {midiInfo && parsed && <MidIInfo midiInfo={midiInfo} parsed={parsed} onSeek={player.seek} />}
     </div>
   );
 };

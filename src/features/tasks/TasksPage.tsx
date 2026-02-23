@@ -66,7 +66,6 @@ export function TasksPage() {
       </Form>
       <div className={styles.listArea}>
         <Spin spinning={isLoading} tip="Загрузка..." size="large">
-          {/*<div style={{ height: '60vh', overflow: 'hidden' }}>*/}
           <ScrollableContainer>
             {tasks && tasks.length === 0 ? (
               <Empty description="Список задач пуст" />
