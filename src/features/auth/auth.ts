@@ -76,7 +76,7 @@ export const useAuth = () => {
   const isAdmin = !!me?.role?.includes(ROLE.admin);
   const isModerator = !!me?.role?.includes(ROLE.moderator);
 
-  return { me, isLoading, isAuthed, isAdminModerator: isAdmin || isModerator };
+  return { me, isAdmin, isLoading, isAuthed, isAdminModerator: isAdmin || isModerator };
 };
 
 export const useSignInMutation = () => {

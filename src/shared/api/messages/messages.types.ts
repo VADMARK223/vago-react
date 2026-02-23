@@ -16,10 +16,6 @@ export type ErrorPayload = {
   message: string;
 };
 
-export type UiMessage = MessageDTO & {
-  isMine: boolean;
-};
-
 export type MessagesQueryData = {
   messages: MessageDTO[];
 };

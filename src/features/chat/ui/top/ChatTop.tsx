@@ -1,6 +1,5 @@
 import styles from '@/features/chat/ui/top/ChatTop.module.css';
 import clsx from 'clsx';
-import { DeleteAllMessagesButton } from '@/features/message/delete-all/DeleteAllMessagesButton';
 import { Tooltip } from 'antd';
 import type { OnlineUser } from '@/features/chat/model/chat.store';
 
@@ -11,6 +10,8 @@ type Props = {
 };
 
 export const ChatTop = ({ wsUrl, onlineUsers, isConnected }: Props) => {
+  // const { isAdmin } = useAuth();
+
   return (
     <div className={styles.connection}>
       <Tooltip title={isConnected ? `${wsUrl}` : `${wsUrl}`}>
@@ -26,9 +27,11 @@ export const ChatTop = ({ wsUrl, onlineUsers, isConnected }: Props) => {
       <span className={styles.label}>{isConnected ? 'Онлайн' : 'Офлайн'}</span>
 
       {isConnected && <span className={styles.subLabel}>{getCountUserText(onlineUsers)}</span>}
-      <div className={styles.actions}>
-        <DeleteAllMessagesButton />
-      </div>
+      {/*{isAdmin && (
+        <div className={styles.actions}>
+          <DeleteAllMessagesButton />
+        </div>
+      )}*/}
     </div>
   );
 };

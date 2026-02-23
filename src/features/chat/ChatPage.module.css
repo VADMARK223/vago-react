@@ -23,27 +23,3 @@
     flex: 1;
     min-height: 0;
 }
-
-
-.messages {
-    position: relative;
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    flex-direction: column;
-}
-
-.itemWrap {
-    display: flex;
-    width: 100%;
-}
-
-.itemWrapMine {
-    justify-content: flex-end;
-}
-
-.itemWrapOther {
-    justify-content: flex-start;
-}

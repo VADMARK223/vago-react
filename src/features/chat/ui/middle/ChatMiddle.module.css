@@ -1,5 +1,6 @@
 .messageContainer {
     max-width: min(75%, 680px); /* 75% ширины, но не больше 680px */
+    min-width: 200px;
     width: fit-content;         /* пузырь по контенту, но с max-width */
     padding: 10px;
     margin: 0;
@@ -82,4 +83,49 @@
 
     pointer-events: none;
     user-select: none;
+}
+
+.messages {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    flex-direction: column;
+}
+
+.dateDivider {
+    display: flex;
+    justify-content: center;
+    margin: 18px 0;
+    pointer-events: none;
+}
+
+.dateBubble {
+    padding: 6px 14px;
+    font-size: 13px;
+    border-radius: 999px;
+
+    color: rgba(255, 255, 255, 0.85);
+
+    background: rgba(25, 35, 45, 0.75);
+    backdrop-filter: blur(6px);
+
+    box-shadow:
+            0 1px 2px rgba(0, 0, 0, 0.4),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.itemWrap {
+    display: flex;
+    width: 100%;
+}
+
+.itemWrapMine {
+    justify-content: flex-end;
+}
+
+.itemWrapOther {
+    justify-content: flex-start;
 }

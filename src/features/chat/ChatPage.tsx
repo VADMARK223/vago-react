@@ -8,10 +8,10 @@ import { ChatMiddle } from '@/features/chat/ui/middle/ChatMiddle';
 import { getCookie, getWsUrl } from '@/features/chat/model/chat.ws.protocol';
 import { useMe } from '@/features/auth/auth';
 import { useQueryClient } from '@tanstack/react-query';
-import { type UiMessage } from '@/shared/api/messages/messages.types';
 import { App } from 'antd';
 import { useChatStore } from '@/features/chat/model/chat.store';
 import { useChatWs } from '@/features/chat/use-chat-ws';
+import { buildChatListItems, type UiMessage } from '@/features/chat/chat-page';
 
 export const ChatPage = () => {
   const { message } = App.useApp();
@@ -55,7 +55,11 @@ export const ChatPage = () => {
     userLeft,
   });
 
-  const uiMessages = messages.map((m): UiMessage => ({ ...m, isMine: myId === m.authorId }));
+  const items = buildChatListItems(
+    messages.map((m): UiMessage => ({ ...m, isMine: myId === m.authorId })),
+  );
+
+  console.log('items', items);
 
   return (
     <>
@@ -63,7 +67,7 @@ export const ChatPage = () => {
         <div className={styles.chat}>
           <ChatTop wsUrl={wsUrl} onlineUsers={onlineUsers} isConnected={isConnected} />
           <ChatMiddle
-            messages={uiMessages}
+            messages={items}
             atBottom={atBottom}
             unread={unread}
             onAtBottomChange={handleBottomChange}
