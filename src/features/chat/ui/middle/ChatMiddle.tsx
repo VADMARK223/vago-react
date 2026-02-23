@@ -28,6 +28,7 @@ export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Pro
       <Virtuoso
         ref={virtuosoRef}
         data={messages}
+        initialTopMostItemIndex={Math.max(messages.length - 1, 0)}
         atBottomThreshold={40}
         alignToBottom
         atBottomStateChange={handleBottomChange}
@@ -46,12 +47,7 @@ export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Pro
         )}
       />
 
-      <AtBottomButton
-        atBottom={atBottom}
-        unread={unread}
-        virtuosoRef={virtuosoRef}
-        total={messages.length}
-      />
+      <AtBottomButton atBottom={atBottom} unread={unread} virtuosoRef={virtuosoRef} />
     </div>
   );
 };
