@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { parseMidi } from '@/features/bayan/parse-midi';
+import { persist } from 'zustand/middleware';
 
 export type MidiInfo = {
   name: string;
@@ -30,28 +31,53 @@ export type MidiDTO = {
 
 type LoadedMidi = {
   info: MidiInfo;
-  parsed: ParsedMidi;
+  base64: string;
 };
 
 type BayanState = {
   midi: LoadedMidi | null;
+  parsed: ParsedMidi | null;
   setMidiLoaded: (dto: MidiDTO) => void;
   reset: () => void;
 };
 
-export const useBayanStore = create<BayanState>((set) => ({
-  midi: null,
-  setMidiLoaded: (dto: MidiDTO) => {
-    const arrayBuffer = dto.arrayBuffer;
-    const name = dto.fileName ?? 'local_store';
-    const parsed = parseMidi(arrayBuffer);
+export const useBayanStore = create<BayanState>()(
+  persist(
+    (set) => ({
+      midi: null,
+      parsed: null,
 
-    set({
-      midi: {
-        info: { name, size: arrayBuffer.byteLength },
-        parsed,
+      setMidiLoaded: ({ arrayBuffer, fileName }) => {
+        const name = fileName ?? 'local_store';
+
+        const base64 = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+
+        const parsed = parseMidi(arrayBuffer);
+
+        set({
+          midi: {
+            info: { name, size: arrayBuffer.byteLength },
+            base64,
+          },
+          parsed,
+        });
       },
-    });
-  },
-  reset: () => set({ midi: null }),
-}));
+
+      reset: () => set({ midi: null, parsed: null }),
+    }),
+    {
+      name: 'bayan-storage',
+      partialize: (state) => ({
+        midi: state.midi, // parsed НЕ сохраняем
+      }),
+      onRehydrateStorage: () => (state) => {
+        if (state?.midi?.base64) {
+          const binary = atob(state.midi.base64);
+          const buffer = new Uint8Array([...binary].map((c) => c.charCodeAt(0))).buffer;
+
+          state.parsed = parseMidi(buffer);
+        }
+      },
+    },
+  ),
+);

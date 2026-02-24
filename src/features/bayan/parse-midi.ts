@@ -55,17 +55,3 @@ export const loadFromStorage = (): ArrayBuffer | null => {
 
   return bytes.buffer;
 };
-
-export const saveToStorage = (arrayBuffer: ArrayBuffer) => {
-  const bytes = new Uint8Array(arrayBuffer);
-  const binary = Array.from(bytes)
-    .map((b) => String.fromCharCode(b))
-    .join('');
-
-  const base64 = btoa(binary);
-  localStorage.setItem(LOCAL_STORAGE_KEY, base64);
-};
-
-export const resetStore = () => {
-  localStorage.removeItem(LOCAL_STORAGE_KEY);
-};

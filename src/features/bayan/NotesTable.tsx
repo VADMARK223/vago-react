@@ -1,11 +1,10 @@
 import styles from './Bayan.module.css';
 import { Table } from 'antd';
 import { useState } from 'react';
-import type { MidiInfo, MidiNote, ParsedMidi } from '@/features/bayan/bayan.store';
+import type { MidiNote, ParsedMidi } from '@/features/bayan/bayan.store';
 
 interface MidIInfoProps {
   parsed: ParsedMidi;
-  midiInfo: MidiInfo;
   onSeek: (sec: number) => void;
 }
 const columns = [
@@ -46,7 +45,7 @@ const columns = [
 
 const makeRowKey = (r: MidiNote) => `${r.trackIndex}-${r.startSec}-${r.pitch}-${r.endSec}`;
 
-export const MidIInfo = ({ midiInfo, parsed, onSeek }: MidIInfoProps) => {
+export const NotesTable = ({ parsed, onSeek }: MidIInfoProps) => {
   const [selectedRowKey, setSelectedRowKey] = useState<string | null>(null);
 
   const handleRowClick = (record: MidiNote) => {
@@ -57,25 +56,6 @@ export const MidIInfo = ({ midiInfo, parsed, onSeek }: MidIInfoProps) => {
 
   return (
     <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Файл</th>
-            <th>Длительность</th>
-            <th>Треков</th>
-            <th>Нот</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{midiInfo.name}</td>
-            <td>{parsed.durationSec.toFixed(2)} сек</td>
-            <td>{parsed.tracksCount}</td>
-            <td>{parsed.notes.length}</td>
-          </tr>
-        </tbody>
-      </table>
-
       <div style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>
         <Table<MidiNote>
           rowKey={makeRowKey}

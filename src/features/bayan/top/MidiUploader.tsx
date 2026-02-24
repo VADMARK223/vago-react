@@ -1,8 +1,5 @@
 import { App, Button } from 'antd';
 import { type ChangeEvent, useEffect, useRef } from 'react';
-import { Ear } from 'lucide-react';
-import { LucideIcon } from '@/shared/ui/LucideIcon';
-import { useMidiAudioPlayer } from '@/features/bayan/top/use-midi-audio-player';
 import { loadFromStorage } from '@/features/bayan/parse-midi';
 import { useBayanStore } from '@/features/bayan/bayan.store';
 
@@ -13,20 +10,20 @@ type Props = {
 };
 
 export const MidiUploader = ({ disabled }: Props) => {
-  const parsed = useBayanStore((s) => s.midi?.parsed);
+  const parsed = useBayanStore((s) => s.parsed);
   const setMidiLoaded = useBayanStore((s) => s.setMidiLoaded);
   const reset = useBayanStore((s) => s.reset);
 
   const { message } = App.useApp();
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const audio = useMidiAudioPlayer();
+  // const audio = useMidiAudioPlayer();
 
   useEffect(() => {
     const buffer = loadFromStorage();
     if (buffer) {
       setMidiLoaded({ arrayBuffer: buffer });
     }
-  }, []);
+  }, [setMidiLoaded]);
 
   const handlePick = () => {
     inputRef.current?.click();
@@ -49,8 +46,6 @@ export const MidiUploader = ({ disabled }: Props) => {
     setMidiLoaded({ fileName: file.name, arrayBuffer });
 
     e.target.value = '';
-
-    // saveToStorage(arrayBuffer);
   };
 
   return (
@@ -62,38 +57,25 @@ export const MidiUploader = ({ disabled }: Props) => {
         onChange={handleChange}
         style={{ display: 'none' }}
       />
-      <Button type="primary" onClick={handlePick} disabled={disabled || !!parsed}>
-        Загрузить MIDI
-      </Button>
-
-      <Button
-        type="primary"
-        danger
-        onClick={() => {
-          // resetStore();
-          //audio.stop()?.();
-          reset();
-        }}
-        disabled={disabled || !parsed}
-      >
-        Очистить выбор
-      </Button>
-
-      <span style={{ opacity: 0.7, fontSize: 12 }}>.mid / .midi</span>
-
-      {parsed && (
+      {parsed ? (
         <Button
+          type="primary"
+          danger
           onClick={() => {
-            if (parsed) {
-              audio.playNotes(parsed.notes).then();
-            }
+            //audio.stop()?.();
+            reset();
           }}
-          disabled={disabled}
-          icon={<LucideIcon icon={Ear} />}
+          disabled={disabled || !parsed}
         >
-          Прослушать
+          Сбросить выбранный файл
+        </Button>
+      ) : (
+        <Button type="primary" onClick={handlePick} disabled={disabled || !!parsed}>
+          Загрузить MIDI-файл
         </Button>
       )}
+
+      <span style={{ opacity: 0.7, fontSize: 12 }}>.mid / .midi</span>
     </div>
   );
 };

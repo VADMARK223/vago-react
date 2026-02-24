@@ -2,12 +2,14 @@ import styles from './Bayan.module.css';
 import { MidiUploader } from '@/features/bayan/top/MidiUploader';
 import { Player } from '@/features/bayan/player/Player';
 import { useSimplePlayer } from '@/features/bayan/use-simple-player';
-import { MidIInfo } from '@/features/bayan/MidIInfo';
+import { NotesTable } from '@/features/bayan/NotesTable';
 import { NotesTimeline } from '@/features/bayan/notes-timeline/NotesTimeline';
 import { useBayanStore } from '@/features/bayan/bayan.store';
+import { MidiInfo } from '@/features/bayan/top/MidiInfo';
+import { VStack } from '@/shared/ui/v-stack/VStack';
 
 const BayanPage = () => {
-  const parsed = useBayanStore((s) => s.midi?.parsed);
+  const parsed = useBayanStore((s) => s.parsed);
   const midiInfo = useBayanStore((s) => s.midi?.info);
 
   const durationSec = parsed?.durationSec ?? 0;
@@ -15,8 +17,10 @@ const BayanPage = () => {
 
   return (
     <div className={styles.container}>
-      <MidiUploader disabled={player.isPlaying} />
-      <hr />
+      <VStack>
+        <MidiUploader disabled={player.isPlaying} />
+        <MidiInfo midiName={midiInfo?.name} parsed={parsed} disabled={player.isPlaying} />
+      </VStack>
 
       {parsed && (
         <NotesTimeline
@@ -39,7 +43,7 @@ const BayanPage = () => {
         currentTimeSec={player.currentTimeSec}
       />
 
-      {midiInfo && parsed && <MidIInfo midiInfo={midiInfo} parsed={parsed} onSeek={player.seek} />}
+      {midiInfo && parsed && <NotesTable parsed={parsed} onSeek={player.seek} />}
     </div>
   );
 };
