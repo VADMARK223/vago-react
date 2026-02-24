@@ -2,13 +2,15 @@ import styles from './TestPage.module.css';
 import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetQuestionById } from './test';
-import { Button, message, Space, Spin } from 'antd';
+import { Button, message, Spin } from 'antd';
 import { CodeBlock } from '@/shared/ui/codeBlock';
 import { api, type ApiMessageResponse } from '@/shared/api/ky-client';
 import { useMutation } from '@tanstack/react-query';
 import { URL } from '@/shared/constants';
 import { StepForwardOutlined, UndoOutlined } from '@ant-design/icons';
 import { ScrollableContainer } from '@/shared/ui';
+import { HStack } from '@/shared/ui/h-stack/HStack';
+import { VStack } from '@/shared/ui/v-stack/VStack';
 
 type CheckRequest = {
   questionId: number;
@@ -110,12 +112,12 @@ export const TestPage = () => {
           justifyContent: 'center',
         }}
       >
-        <Space orientation="vertical">
+        <VStack>
           <h3>Неверный id.</h3>
           <div>
             <Button onClick={() => navigate('/test')}>Случайный</Button>
           </div>
-        </Space>
+        </VStack>
       </div>
     );
   }
@@ -127,7 +129,7 @@ export const TestPage = () => {
   if (isError) {
     return (
       <div>
-        Ошибка загрузки. <button onClick={() => refetch()}>Повторить</button>
+        Ошибка загрузки. <Button onClick={() => refetch()}>Повторить</Button>
       </div>
     );
   }
@@ -182,10 +184,10 @@ export const TestPage = () => {
           );
         })}
 
-        <Space orientation="vertical" style={{ width: '100%' }}>
+        <VStack>
           <hr />
           <div className={styles.explanation}>{explanationText}</div>
-          <Space>
+          <HStack>
             <Button
               type="primary"
               onClick={handleNextRandom}
@@ -202,8 +204,8 @@ export const TestPage = () => {
             >
               Сбросить попытки
             </Button>
-          </Space>
-        </Space>
+          </HStack>
+        </VStack>
       </ScrollableContainer>
     </div>
   );

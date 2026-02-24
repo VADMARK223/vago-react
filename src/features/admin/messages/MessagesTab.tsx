@@ -2,6 +2,7 @@ import { ScrollableContainer } from '@/shared/ui';
 import { DeleteMessageButton } from '@/features/message/delete/DeleteMessageButton';
 import { useMessages } from '@/shared/api/messages/use-messages';
 import { DeleteAllMessagesButton } from '@/features/message/delete-all/DeleteAllMessagesButton';
+import { VStack } from '@/shared/ui/v-stack/VStack';
 
 export const MessagesTab = () => {
   const { data: messages } = useMessages();
@@ -21,7 +22,7 @@ export const MessagesTab = () => {
         <DeleteAllMessagesButton />
       </div>
       <ScrollableContainer>
-        <div className="stack">
+        <VStack>
           {messages.map((message) => (
             <div className="panel" key={message.id}>
               <div>
@@ -39,7 +40,7 @@ export const MessagesTab = () => {
               <DeleteMessageButton id={message.id} />
             </div>
           ))}
-        </div>
+        </VStack>
       </ScrollableContainer>
     </div>
   );

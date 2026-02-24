@@ -1,10 +1,11 @@
 import type { User } from '@/features/auth/auth';
-import { Space, Typography } from 'antd';
+import { Typography } from 'antd';
 import { SignOutButton } from '@/features/auth/user-menu/SignOutButton';
 import { SignUpButton } from '@/shared/ui/SignUpButton';
 import { SignInButton } from '@/shared/ui/SignInButton';
 import { useLocation } from 'react-router-dom';
 import { ROUTE } from '@/shared/constants';
+import { VStack } from '@/shared/ui/v-stack/VStack';
 
 type Props = {
   me: User | undefined;
@@ -21,7 +22,7 @@ export function UserPopoverContent({ me, isCompact, isMeLoading, onRequestClose 
 
   if (me) {
     return (
-      <Space orientation="vertical" size={8} style={{ minWidth: 220 }}>
+      <VStack>
         <div>
           Привет, <b>{me.username}</b>!
           {me.role && (
@@ -32,12 +33,12 @@ export function UserPopoverContent({ me, isCompact, isMeLoading, onRequestClose 
         </div>
 
         <SignOutButton isCompact={false} onDone={onRequestClose} />
-      </Space>
+      </VStack>
     );
   }
 
   return (
-    <Space orientation="vertical" size={10} style={{ minWidth: 220 }}>
+    <VStack>
       <div>
         Привет!
         <div>
@@ -45,12 +46,10 @@ export function UserPopoverContent({ me, isCompact, isMeLoading, onRequestClose 
         </div>
       </div>
 
-      <Space>
-        {!isOnSignInPage && (
-          <SignInButton isCompact={isCompact} isMeLoading={isMeLoading} onClick={onRequestClose} />
-        )}
-        {!isOnSignUpPage && <SignUpButton onClick={onRequestClose} />}
-      </Space>
-    </Space>
+      {!isOnSignInPage && (
+        <SignInButton isCompact={isCompact} isMeLoading={isMeLoading} onClick={onRequestClose} />
+      )}
+      {!isOnSignUpPage && <SignUpButton onClick={onRequestClose} />}
+    </VStack>
   );
 }

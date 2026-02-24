@@ -1,5 +1,5 @@
 import styles from './TaskPage.module.css';
-import { App, Button, Card, Checkbox, Empty, Form, Input, Space, Spin } from 'antd';
+import { App, Button, Card, Checkbox, Empty, Form, Input, Spin } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { type TaskRequest, useCreateTask, useTasks, useUpdateTaskMutation } from './tasks';
 import { ScrollableContainer } from '@/shared/ui';
@@ -8,6 +8,8 @@ import TextArea from 'antd/es/input/TextArea';
 import { getKyErrorMessage } from '@/shared/api/ky-client';
 import { DeleteTaskButton } from './DeleteTaskButton';
 import dayjs from 'dayjs';
+import { HStack } from '@/shared/ui/h-stack/HStack';
+import { VStack } from '@/shared/ui/v-stack/VStack';
 
 export function TasksPage() {
   const { message } = App.useApp();
@@ -70,7 +72,7 @@ export function TasksPage() {
             {tasks && tasks.length === 0 ? (
               <Empty description="Список задач пуст" />
             ) : (
-              <Space orientation="vertical" style={{ width: '100%' }}>
+              <VStack>
                 {tasks?.map((task) => (
                   <Card
                     key={task.id}
@@ -80,7 +82,7 @@ export function TasksPage() {
                       </span>
                     }
                     extra={
-                      <Space>
+                      <HStack>
                         <Checkbox
                           checked={task.completed}
                           style={{ color: task.completed ? 'green' : undefined }}
@@ -94,7 +96,7 @@ export function TasksPage() {
                           Выполнена
                         </Checkbox>
                         <DeleteTaskButton id={task.id} />
-                      </Space>
+                      </HStack>
                     }
                   >
                     <div className={styles.taskBody}>{task.description}</div>
@@ -104,10 +106,9 @@ export function TasksPage() {
                     </div>
                   </Card>
                 ))}
-              </Space>
+              </VStack>
             )}
           </ScrollableContainer>
-          {/*</div>*/}
         </Spin>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { GuestColor, type HexColor, type User } from '../auth';
-import { Avatar, Popover, Space, Tooltip } from 'antd';
+import { Avatar, Popover, Tooltip } from 'antd';
 import { useState } from 'react';
 import { UserPopoverContent } from '@/features/auth/user-menu/UserPopoverContent';
 
@@ -15,36 +15,31 @@ export function UserMenu({ me, isMeLoading, isCompact }: Props) {
   const avatarBg: HexColor = (me?.color ?? GuestColor) as HexColor;
 
   return (
-    <Space>
-      <Popover
-        content={
-          <UserPopoverContent
-            me={me}
-            isCompact={!!isCompact}
-            isMeLoading={isMeLoading}
-            onRequestClose={() => setIsPopoverOpen(false)}
-          />
-        }
-        trigger="click"
-        placement="bottomRight"
-        open={isPopoverOpen}
-        onOpenChange={setIsPopoverOpen}
-      >
-        <Tooltip
-          title="Открыть меню навигации пользователя"
-          open={isPopoverOpen ? false : undefined}
+    <Popover
+      content={
+        <UserPopoverContent
+          me={me}
+          isCompact={!!isCompact}
+          isMeLoading={isMeLoading}
+          onRequestClose={() => setIsPopoverOpen(false)}
+        />
+      }
+      trigger="click"
+      placement="bottomRight"
+      open={isPopoverOpen}
+      onOpenChange={setIsPopoverOpen}
+    >
+      <Tooltip title="Открыть меню навигации пользователя" open={isPopoverOpen ? false : undefined}>
+        <Avatar
+          style={{
+            background: avatarBg,
+            cursor: 'pointer',
+            userSelect: 'none',
+          }}
         >
-          <Avatar
-            style={{
-              background: avatarBg,
-              cursor: 'pointer',
-              userSelect: 'none',
-            }}
-          >
-            {avatarLetter}
-          </Avatar>
-        </Tooltip>
-      </Popover>
-    </Space>
+          {avatarLetter}
+        </Avatar>
+      </Tooltip>
+    </Popover>
   );
 }

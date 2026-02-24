@@ -2,6 +2,7 @@ import { Button, Card, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '@/shared/constants';
 import { ScrollableContainer } from '@/shared/ui';
+import { VStack } from '@/shared/ui/v-stack/VStack';
 
 export function HomePage() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export function HomePage() {
       </Typography.Paragraph>
 
       <ScrollableContainer>
-        <div className="stack">
+        <VStack>
           <Card title="🧠 Тест по языку Go">
             <p>Собранные в одном месте вопросы на разные темы по Go.</p>
             <Button
@@ -85,7 +86,7 @@ export function HomePage() {
               Открыть тренажёр
             </Button>
           </Card>
-        </div>
+        </VStack>
       </ScrollableContainer>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useUsers } from '../admin';
 import { DeleteUserButton } from './DeleteUserButton';
 import { ScrollableContainer } from '@/shared/ui';
+import { VStack } from '@/shared/ui/v-stack/VStack';
 
 export function UsersTab() {
   const { data, isLoading, isError } = useUsers();
@@ -23,7 +24,7 @@ export function UsersTab() {
         Кол-во пользователей: <b>{users.length}</b>
       </div>
       <ScrollableContainer>
-        <div className="stack">
+        <VStack>
           {users.map((user) => (
             <div className="panel" key={user.id}>
               <div>
@@ -38,7 +39,7 @@ export function UsersTab() {
               <DeleteUserButton id={user.id} />
             </div>
           ))}
-        </div>
+        </VStack>
       </ScrollableContainer>
     </div>
   );

@@ -1,5 +1,5 @@
 import styles from './Auth.module.css';
-import { App, Button, Form, Input, Select, Space, Typography } from 'antd';
+import { App, Button, Form, Input, Select, Typography } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { CODE, ROUTE } from '@/shared/constants';
 import { useState } from 'react';
@@ -7,6 +7,7 @@ import capitalize from 'antd/es/_util/capitalize';
 import { MAX_VALUE } from './constants';
 import { type SignUpFormValues, type SignUpRole, toSignUpRequest, useSignUpMutation } from './auth';
 import { getKyErrorMessage } from '@/shared/api/ky-client';
+import { HStack } from '@/shared/ui/h-stack/HStack';
 
 const DEFAULT_ROLE: SignUpRole = 'moderator';
 const ROLE_HINT: Record<SignUpRole, string> = {
@@ -103,12 +104,12 @@ export function SignUpPage() {
           />
         </Form.Item>
 
-        <Space orientation="vertical">
-          <Button type="primary" htmlType="submit" disabled={isDisabled} block>
+        <HStack>
+          <Button type="primary" htmlType="submit" disabled={isDisabled}>
             Создать аккаунт
           </Button>
           <Link to={ROUTE.SIGN_IN}>Вход</Link>
-        </Space>
+        </HStack>
       </Form>
     </div>
   );

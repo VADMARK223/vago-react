@@ -1,9 +1,10 @@
-import { App, Button, Form, Input, Space, Typography } from 'antd';
+import { App, Button, Form, Input, Typography } from 'antd';
 import { type AuthRedirectState, type SignInRequest, useSignInMutation } from './auth';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Auth.module.css';
 import { CODE, ROUTE } from '@/shared/constants';
 import { getKyErrorMessage } from '@/shared/api/ky-client';
+import { HStack } from '@/shared/ui/h-stack/HStack';
 
 export function SignInPage() {
   const { message } = App.useApp();
@@ -53,18 +54,17 @@ export function SignInPage() {
           <Input.Password placeholder="Введите пароль" allowClear autoComplete="current-password" />
         </Form.Item>
 
-        <Space orientation="vertical">
+        <HStack>
           <Button
             type="primary"
             htmlType="submit"
             disabled={isDisabled}
-            block
             loading={signInMutation.isPending}
           >
             Войти
           </Button>
           <Link to={ROUTE.SIGN_UP}>Регистрация</Link>
-        </Space>
+        </HStack>
       </Form>
     </div>
   );
