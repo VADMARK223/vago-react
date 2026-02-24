@@ -1,5 +1,5 @@
 import { Midi } from '@tonejs/midi';
-import type { MidiNote, ParsedMidi } from '@/features/bayan/midi.types';
+import type { MidiNote, ParsedMidi } from '@/features/bayan/bayan.store';
 
 export const parseMidi = (arrayBuffer: ArrayBuffer): ParsedMidi => {
   const midi = new Midi(arrayBuffer);
@@ -36,4 +36,36 @@ const midiToNote = (midi: number) => {
   const index = midi % 12;
   const octave = Math.floor(midi / 12) - 1;
   return `${NOTES[index]}${octave} (${SOLFEGE[index]})`;
+};
+
+const LOCAL_STORAGE_KEY = 'last-midi';
+
+export const loadFromStorage = (): ArrayBuffer | null => {
+  const base64 = localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (!base64) {
+    return null;
+  }
+
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+
+  return bytes.buffer;
+};
+
+export const saveToStorage = (arrayBuffer: ArrayBuffer) => {
+  const bytes = new Uint8Array(arrayBuffer);
+  const binary = Array.from(bytes)
+    .map((b) => String.fromCharCode(b))
+    .join('');
+
+  const base64 = btoa(binary);
+  localStorage.setItem(LOCAL_STORAGE_KEY, base64);
+};
+
+export const resetStore = () => {
+  localStorage.removeItem(LOCAL_STORAGE_KEY);
 };

@@ -1,50 +1,30 @@
 import styles from './Bayan.module.css';
-import { MidiUploader } from '@/features/bayan/MidiUploader';
-import type { MidiData, MidiInfo } from '@/features/bayan/bayan.types';
-import { useState } from 'react';
-import { parseMidi } from '@/features/bayan/parseMidi';
-import type { ParsedMidi } from '@/features/bayan/midi.types';
+import { MidiUploader } from '@/features/bayan/top/MidiUploader';
 import { Player } from '@/features/bayan/player/Player';
 import { useSimplePlayer } from '@/features/bayan/use-simple-player';
 import { MidIInfo } from '@/features/bayan/MidIInfo';
-import { NotesTimelineNew } from '@/features/bayan/notes-timeline/NotesTimelineNew';
+import { NotesTimeline } from '@/features/bayan/notes-timeline/NotesTimeline';
+import { useBayanStore } from '@/features/bayan/bayan.store';
 
 const BayanPage = () => {
-  const [midiInfo, setMidiInfo] = useState<MidiInfo | null>(null);
-  const [parsed, setParsed] = useState<ParsedMidi | null>(null);
+  const parsed = useBayanStore((s) => s.midi?.parsed);
+  const midiInfo = useBayanStore((s) => s.midi?.info);
 
   const durationSec = parsed?.durationSec ?? 0;
   const player = useSimplePlayer({ durationSec });
 
-  const onMidiLoaded = (data: MidiData) => {
-    player.stop();
-    setMidiInfo({ name: data.file.name, size: data.arrayBuffer.byteLength });
-    setParsed(parseMidi(data.arrayBuffer));
-  };
-
   return (
     <div className={styles.container}>
-      <MidiUploader disabled={player.isPlaying} onMidiLoaded={onMidiLoaded} parsed={parsed} />
+      <MidiUploader disabled={player.isPlaying} />
       <hr />
 
-      {/*{parsed && (
-        <div style={{ width: '100%', overflowX: 'auto' }}>
-          <NotesTimeline
-            notes={parsed.notes}
-            durationSec={parsed.durationSec}
-            currentTimeSec={player.currentTimeSec}
-            height={150}
-            pxPerSec={120}
-          />
-        </div>
-      )}*/}
-
       {parsed && (
-        <NotesTimelineNew
+        <NotesTimeline
+          width={500}
+          height={110}
           notes={parsed.notes}
           durationSec={parsed.durationSec}
           currentTimeSec={player.currentTimeSec}
-          height={120}
           pxPerSec={120}
         />
       )}

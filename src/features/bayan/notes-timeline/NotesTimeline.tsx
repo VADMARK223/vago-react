@@ -1,142 +1,79 @@
-import type { MidiNote } from '@/features/bayan/midi.types';
+import {
+  midiToTrebleStaffStep,
+  staffStepToY,
+} from '@/features/bayan/notes-timeline/notes-timeline';
 import { NoteGlyph } from '@/features/bayan/notes-timeline/NoteGlyph';
-import { NotesLines } from '@/features/bayan/notes-timeline/NotesLines';
-
-const notesLinesEnable = false; // ноты (палочки)
+import type { MidiNote } from '@/features/bayan/bayan.store';
 
 type Props = {
+  width: number;
   notes: MidiNote[];
   durationSec: number;
   currentTimeSec: number;
 
-  height?: number; // высота панели нот
+  height: number;
   pxPerSec?: number; // масштаб по времени (пикселей на секунду
 };
 
-export const NotesTimeline = ({
-  notes,
-  durationSec,
-  currentTimeSec,
-  height = 140,
-  pxPerSec = 120,
-}: Props) => {
-  const widthPx = Math.max(1, Math.ceil(durationSec * pxPerSec));
+export const NotesTimeline = ({ width, height, currentTimeSec, notes, pxPerSec = 120 }: Props) => {
+  const lineGap = 14;
+  const staffTop = 20;
 
-  // Находим диапазон pitch, чтобы разложить по вертикали
-  let minPitch = Infinity;
-  let maxPitch = -Infinity;
+  const staffBottomLineY = staffTop + 4 * lineGap; // 5 линий => 4 промежутка
 
-  for (let i = 0; i < notes.length; i++) {
-    const p = notes[i].pitch;
-    if (p < minPitch) {
-      minPitch = p;
-    }
-    if (p > maxPitch) {
-      maxPitch = p;
-    }
-  }
-
-  if (!Number.isFinite(minPitch) || !Number.isFinite(maxPitch)) {
-    minPitch = 60;
-    maxPitch = 60;
-  }
-
-  const playheadLeft = currentTimeSec * pxPerSec;
-
-  // вертикальная шкала: чем выше midi, тем меньше y
-  const minMidi = Math.min(...notes.map((n) => n.pitch));
-  const maxMidi = Math.max(...notes.map((n) => n.pitch));
-
-  const padding = 20;
-  const usableH = Math.max(1, height - padding * 2);
-
-  const yOfMidi = (midi: number) => {
-    const t = (midi - minMidi) / Math.max(1, maxMidi - minMidi);
-    // t=0 низ -> y внизу, t=1 верх -> y вверху
-    return padding + (1 - t) * usableH;
-  };
-
-  const width = Math.max(1, ...notes.map((n) => (n.startSec + n.durationSec) * pxPerSec));
+  const playheadX = currentTimeSec * pxPerSec;
 
   return (
-    <div
+    <svg
+      width={width}
+      height={height}
       style={{
-        width: '100%',
-        border: '1px solid #0002',
-        borderRadius: 12,
-        // overflowX: 'auto',
-        overflowY: 'hidden',
-        background: '#fff',
+        backgroundColor: 'white',
+        position: 'relative',
       }}
     >
-      <div
-        style={{
-          position: 'relative',
-          width: widthPx,
-          height,
-        }}
-      >
-        {/* 🔹 playhead */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            left: playheadLeft,
-            width: 2,
-            background: '#ff4d4f',
-            zIndex: 10,
-          }}
-        />
+      {/* 🔹 playhead (SVG) */}
+      <line x1={playheadX} y1={0} x2={playheadX} y2={height} stroke="#ff4d4f" strokeWidth={2} />
 
-        {/* горизонтальные сетка */}
-        {Array.from({ length: 8 }).map((_, i) => (
-          <div
+      {/* 5 линий нотоносца */}
+      {Array.from({ length: 5 }).map((_, i) => {
+        const y = staffTop + i * lineGap;
+        return (
+          <line
             key={i}
-            style={{
-              position: 'absolute',
-              left: 0,
-              right: 0,
-              top: Math.round((i * height) / 8),
-              height: 1,
-              background: '#0001',
-            }}
+            x1={0}
+            y1={y}
+            x2={width}
+            y2={y}
+            stroke="#000"
+            strokeOpacity={0.5}
+            strokeWidth={1}
           />
-        ))}
+        );
+      })}
 
-        {notesLinesEnable && (
-          <NotesLines
-            notes={notes}
-            minPitch={minPitch}
-            maxPitch={maxPitch}
-            pxPerSec={pxPerSec}
-            height={height}
+      {notes.map((n) => {
+        const x = n.startSec * pxPerSec;
+
+        const step = midiToTrebleStaffStep(n.pitch);
+        const y = staffStepToY(step, staffBottomLineY, lineGap);
+
+        const isFilled = n.durationSec < 1; // потом переделаем на настоящие длительности
+
+        return (
+          <NoteGlyph
+            key={`${n.trackIndex}-${n.startSec}-${n.pitch}`}
+            x={x}
+            y={y}
+            midi={n.pitch}
+            isFilled={isFilled}
+            staffStep={step}
+            staffTop={staffTop}
+            staffBottomLineY={staffBottomLineY}
+            lineGap={lineGap}
           />
-        )}
-
-        <svg
-          width={width}
-          height={height}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            overflow: 'visible',
-            zIndex: 20,
-            pointerEvents: 'none',
-          }}
-        >
-          {notes.map((n) => {
-            const x = n.startSec * pxPerSec;
-            const y = yOfMidi(n.pitch);
-
-            // если хочешь длительности: можно делать “хвостики/флаги” позже.
-            // пока просто filled/empty по длительности
-            const isFilled = n.durationSec < 1; // заглушка, подстроишь под свою шкалу
-
-            return <NoteGlyph key={n.startSec} x={x} y={y} midi={n.pitch} isFilled={isFilled} />;
-          })}
-        </svg>
-      </div>
-    </div>
+        );
+      })}
+    </svg>
   );
 };

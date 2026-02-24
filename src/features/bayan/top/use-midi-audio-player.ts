@@ -1,6 +1,6 @@
 import * as Tone from 'tone';
-import type { MidiNote } from './midi.types';
 import { useEffect, useRef } from 'react';
+import type { MidiNote } from '@/features/bayan/bayan.store';
 
 export const useMidiAudioPlayer = () => {
   const synthRef = useRef<Tone.PolySynth | null>(null);

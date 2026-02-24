@@ -1,8 +1,7 @@
 import styles from './Bayan.module.css';
-import type { MidiNote, ParsedMidi } from '@/features/bayan/midi.types';
-import type { MidiInfo } from '@/features/bayan/bayan.types';
 import { Table } from 'antd';
 import { useState } from 'react';
+import type { MidiInfo, MidiNote, ParsedMidi } from '@/features/bayan/bayan.store';
 
 interface MidIInfoProps {
   parsed: ParsedMidi;

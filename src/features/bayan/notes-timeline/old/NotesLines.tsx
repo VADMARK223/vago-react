@@ -1,4 +1,4 @@
-import type { MidiNote } from '@/features/bayan/midi.types';
+import type { MidiNote } from '@/features/bayan/bayan.store';
 
 const noteH = 8;
 interface NotesLinesProps {
