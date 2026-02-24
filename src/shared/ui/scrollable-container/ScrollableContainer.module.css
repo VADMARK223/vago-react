@@ -2,9 +2,11 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  min-height: 0;
+
   width: 100%;
-  height: 100%;
+
+  flex: 1; /* Занимает остаток в колонке*/
+  min-height: 0; /* Позволяет дочернему overflow работать */
 }
 
 .scrollableContent {

@@ -7,7 +7,7 @@ import type { ParsedMidi } from '@/features/bayan/midi.types';
 import { Player } from '@/features/bayan/player/Player';
 import { useSimplePlayer } from '@/features/bayan/use-simple-player';
 import { MidIInfo } from '@/features/bayan/MidIInfo';
-import { NotesTimeline } from '@/features/bayan/notes-timeline/NotesTimeline';
+import { NotesTimelineNew } from '@/features/bayan/notes-timeline/NotesTimelineNew';
 
 const BayanPage = () => {
   const [midiInfo, setMidiInfo] = useState<MidiInfo | null>(null);
@@ -27,7 +27,7 @@ const BayanPage = () => {
       <MidiUploader disabled={player.isPlaying} onMidiLoaded={onMidiLoaded} parsed={parsed} />
       <hr />
 
-      {parsed && (
+      {/*{parsed && (
         <div style={{ width: '100%', overflowX: 'auto' }}>
           <NotesTimeline
             notes={parsed.notes}
@@ -37,6 +37,16 @@ const BayanPage = () => {
             pxPerSec={120}
           />
         </div>
+      )}*/}
+
+      {parsed && (
+        <NotesTimelineNew
+          notes={parsed.notes}
+          durationSec={parsed.durationSec}
+          currentTimeSec={player.currentTimeSec}
+          height={120}
+          pxPerSec={120}
+        />
       )}
 
       <Player

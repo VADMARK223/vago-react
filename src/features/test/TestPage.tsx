@@ -8,6 +8,7 @@ import { api, type ApiMessageResponse } from '@/shared/api/ky-client';
 import { useMutation } from '@tanstack/react-query';
 import { URL } from '@/shared/constants';
 import { StepForwardOutlined, UndoOutlined } from '@ant-design/icons';
+import { ScrollableContainer } from '@/shared/ui';
 
 type CheckRequest = {
   questionId: number;
@@ -149,59 +150,61 @@ export const TestPage = () => {
   }
 
   return (
-    <>
+    <div className="pageWithScroll">
       <h3>
         {q.id}. {q.text}
       </h3>
       <p>Тема: {q.topicName}</p>
       {q.code && <CodeBlock code={q.code} />}
       <div>{resulText}</div>
-      {q.answers.map((a, index) => {
-        const mark = marks[a.id]; // "wrong" | "correct" | undefined
+      <ScrollableContainer>
+        {q.answers.map((a, index) => {
+          const mark = marks[a.id]; // "wrong" | "correct" | undefined
 
-        const className =
-          mark === 'correct'
-            ? `${styles.answer} ${styles.correct}`
-            : mark === 'wrong'
-              ? `${styles.answer} ${styles.wrong}`
-              : styles.answer;
+          const className =
+            mark === 'correct'
+              ? `${styles.answer} ${styles.correct}`
+              : mark === 'wrong'
+                ? `${styles.answer} ${styles.wrong}`
+                : styles.answer;
 
-        const disabled = checkMutation.isPending || solved || mark === 'wrong';
+          const disabled = checkMutation.isPending || solved || mark === 'wrong';
 
-        return (
-          <button
-            key={a.id}
-            className={className}
-            onClick={() => handleAnswerClick(a.id)}
-            disabled={disabled}
-          >
-            {index + 1}) {a.text}
-          </button>
-        );
-      })}
+          return (
+            <button
+              key={a.id}
+              className={className}
+              onClick={() => handleAnswerClick(a.id)}
+              disabled={disabled}
+            >
+              {index + 1}) {a.text}
+            </button>
+          );
+        })}
 
-      <Space orientation="vertical">
-        <hr />
-        <div className={styles.explanation}>{explanationText}</div>
-        <Space>
-          <Button
-            type="primary"
-            onClick={handleNextRandom}
-            icon={<StepForwardOutlined />}
-            iconPlacement="end"
-            disabled={!solved || checkMutation.isPending}
-          >
-            Следующий случайный вопрос
-          </Button>
-          <Button
-            onClick={handleResetTry}
-            icon={<UndoOutlined />}
-            disabled={checkMutation.isPending || result == null}
-          >
-            Сбросить попытки
-          </Button>
+        <Space orientation="vertical" style={{ width: '100%' }}>
+          <hr />
+          <div className={styles.explanation}>{explanationText}</div>
+          <Space>
+            <Button
+              type="primary"
+              onClick={handleNextRandom}
+              icon={<StepForwardOutlined />}
+              iconPlacement="end"
+              disabled={!solved || checkMutation.isPending}
+            >
+              Следующий случайный вопрос
+            </Button>
+            <Button
+              onClick={handleResetTry}
+              icon={<UndoOutlined />}
+              disabled={checkMutation.isPending || result == null}
+            >
+              Сбросить попытки
+            </Button>
+          </Space>
         </Space>
-      </Space>
-    </>
+      </ScrollableContainer>
+    </div>
   );
 };

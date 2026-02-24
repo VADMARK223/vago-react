@@ -1,8 +1,8 @@
+@import 'variables.css';
 @import 'typography.css';
 @import 'scrolls.css';
-@import 'variables.css';
+@import 'main.css';
 @import 'panels.css';
-@import './components/tabs.css';
 
 html {
   font-size: 16px;

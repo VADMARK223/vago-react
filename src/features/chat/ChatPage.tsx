@@ -59,8 +59,6 @@ export const ChatPage = () => {
     messages.map((m): UiMessage => ({ ...m, isMine: myId === m.authorId })),
   );
 
-  console.log('items', items);
-
   return (
     <>
       <div className={styles.container}>

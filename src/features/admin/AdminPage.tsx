@@ -31,7 +31,8 @@ export const AdminPage = () => {
   };
 
   return (
-    <div className="tabs-page">
+    // <div className="tabs-page">
+    <div className="pageWithScroll">
       <Tabs activeKey={adminKeyTab} items={items} onChange={handleTabChange} />
     </div>
   );

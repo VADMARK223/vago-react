@@ -18,23 +18,28 @@ export function UsersTab() {
   }
 
   return (
-    <ScrollableContainer>
-      <div className="stack">
-        {users.map((user) => (
-          <div className="panel" key={user.id}>
-            <div>
-              <h2>ID: {user.id}</h2>
-              <span>Username: {user.username}</span>
-              <br />
-              <span>Login: {user.login}</span>
-              <br />
-              <span>Role: {user.role}</span>
-            </div>
-
-            <DeleteUserButton id={user.id} />
-          </div>
-        ))}
+    <div className="pageWithScroll">
+      <div>
+        Кол-во пользователей: <b>{users.length}</b>
       </div>
-    </ScrollableContainer>
+      <ScrollableContainer>
+        <div className="stack">
+          {users.map((user) => (
+            <div className="panel" key={user.id}>
+              <div>
+                <h2>ID: {user.id}</h2>
+                <span>Username: {user.username}</span>
+                <br />
+                <span>Login: {user.login}</span>
+                <br />
+                <span>Role: {user.role}</span>
+              </div>
+
+              <DeleteUserButton id={user.id} />
+            </div>
+          ))}
+        </div>
+      </ScrollableContainer>
+    </div>
   );
 }

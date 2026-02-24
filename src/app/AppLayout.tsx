@@ -4,8 +4,8 @@ import { Content } from 'antd/es/layout/layout';
 import { Outlet } from 'react-router-dom';
 import { AppHeader } from './AppHeader';
 import { AppMenu } from './AppMenu';
-import { useAppUi } from '../shared/ui/useAppUi';
-import { useUiStore } from '../shared/state/ui-store';
+import { useAppUi } from '@/shared/ui/useAppUi';
+import { useUiStore } from '@/shared/state/ui-store';
 
 export function AppLayout() {
   const { isPhone } = useAppUi();
@@ -22,7 +22,7 @@ export function AppLayout() {
       <Layout>
         <AppHeader collapsed={!sidebarOpen} onToggleCollapse={toggleSidebar} />
         <Content>
-          <div className="content">
+          <div className="outlet">
             <Outlet />
           </div>
         </Content>
