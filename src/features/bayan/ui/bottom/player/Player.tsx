@@ -1,29 +1,16 @@
-import { StopButton } from '@/features/bayan/ui/bottom/player/StopButton';
+import { BackButton } from '@/features/bayan/ui/bottom/player/BackButton';
 import { PlayPauseButton } from '@/features/bayan/ui/bottom/player/PlayPauseButton';
+import type { SimplePlayer } from '@/features/bayan/model/hooks/useSimplePlayer';
+import { ReplayButton } from '@/features/bayan/ui/bottom/player/ReplayButton';
 
 type Props = {
-  isPlaying: boolean;
-  currentTimeSec: number;
-  durationSec: number;
-
-  onPlay: () => void;
-  onPause: () => void;
-  onStop: () => void;
-  onSeek: (sec: number) => void;
+  player: SimplePlayer;
 };
 
-export const Player = ({
-  isPlaying,
-  currentTimeSec,
-  durationSec,
-  onPlay,
-  onPause,
-  onStop,
-  onSeek,
-}: Props) => {
-  const max = durationSec > 0 ? durationSec : 0;
+export const Player = ({ player }: Props) => {
+  const max = player.durationSec > 0 ? player.durationSec : 0;
 
-  const isEnd = max !== 0 && currentTimeSec === max;
+  const isEnd = max !== 0 && player.currentTimeSec === max;
 
   return (
     <div
@@ -36,22 +23,26 @@ export const Player = ({
         borderRadius: 12,
       }}
     >
-      <PlayPauseButton
-        isPlaying={isPlaying}
-        onPlay={onPlay}
-        onPause={onPause}
-        disabled={max === 0 || isEnd}
-      />
+      {isEnd ? (
+        <ReplayButton onClick={player.replay} />
+      ) : (
+        <PlayPauseButton
+          isPlaying={player.isPlaying}
+          onPlay={player.play}
+          onPause={player.pause}
+          disabled={max === 0 || isEnd}
+        />
+      )}
 
-      <StopButton onClick={onStop} disabled={max === 0 || currentTimeSec === 0} />
+      <BackButton onClick={player.stop} disabled={max === 0 || player.currentTimeSec === 0} />
 
       <input
         type="range"
         min={0}
         max={max}
         step={0.01}
-        value={Math.min(currentTimeSec, max)}
-        onChange={(e) => onSeek(Number(e.currentTarget.value))}
+        value={Math.min(player.currentTimeSec, max)}
+        onChange={(e) => player.seek(Number(e.currentTarget.value))}
         style={{ flex: 1 }}
         disabled={max === 0}
       />
@@ -65,7 +56,7 @@ export const Player = ({
           textAlign: 'right',
         }}
       >
-        {currentTimeSec.toFixed(2)} / {durationSec.toFixed(2)} сек
+        {player.currentTimeSec.toFixed(2)} / {player.durationSec.toFixed(2)} сек
       </div>
     </div>
   );

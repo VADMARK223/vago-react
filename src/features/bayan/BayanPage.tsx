@@ -19,7 +19,11 @@ const BayanPage = () => {
     >
       <TopSection parsed={parsed} disabled={player.isPlaying} />
       <MiddleSection currentTimeSec={player.currentTimeSec} />
-      <BottomSection player={player} notes={parsed?.notes ?? []} />
+      <BottomSection
+        player={player}
+        notes={parsed?.notes ?? []}
+        currentTimeSec={player.currentTimeSec}
+      />
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { NotesTimeline } from '@/features/bayan/ui/middle/notes-timeline/NotesTi
 import { useBayanStore } from '@/features/bayan/model/store/bayan.store';
 
 interface MiddleSectionProps {
-  currentTimeSec?: number;
+  currentTimeSec: number;
 }
 
 export const MiddleSection = ({ currentTimeSec }: MiddleSectionProps) => {

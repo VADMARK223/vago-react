@@ -6,21 +6,14 @@ import type { SimplePlayer } from '@/features/bayan/model/hooks/useSimplePlayer'
 type Props = {
   notes: MidiNote[];
   player: SimplePlayer;
+  currentTimeSec: number;
 };
 
-export const BottomSection = ({ player, notes }: Props) => {
+export const BottomSection = ({ player, notes, currentTimeSec }: Props) => {
   return (
     <>
-      <Player
-        isPlaying={player.isPlaying}
-        onPlay={player.play}
-        onPause={player.pause}
-        onStop={player.stop}
-        onSeek={player.seek}
-        durationSec={player.durationSec}
-        currentTimeSec={player.currentTimeSec}
-      />
-      <NotesTable notes={notes} onSeek={player.seek} />
+      <Player player={player} />
+      <NotesTable notes={notes} onSeek={player.seek} currentTimeSec={currentTimeSec} />
     </>
   );
 };

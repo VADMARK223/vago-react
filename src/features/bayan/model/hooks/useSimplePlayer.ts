@@ -15,6 +15,7 @@ export type SimplePlayer = {
   play: VoidFn;
   pause: VoidFn;
   stop: VoidFn;
+  replay: VoidFn;
   seek: SeekFn;
   toggle: VoidFn;
 };
@@ -23,6 +24,12 @@ export const useSimplePlayer = (params: Params): SimplePlayer => {
   const durationSec = params.durationSec;
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTimeSec, setCurrentTimeSec] = useState(0);
+  const currentTimeRef = useRef(0);
+
+  const setTime = useCallback((sec: number) => {
+    currentTimeRef.current = sec;
+    setCurrentTimeSec(sec);
+  }, []);
 
   const rafIdRef = useRef<number | null>(null);
   const startPerfMsRef = useRef<number>(0); // Время старта (performance.now)
@@ -63,7 +70,8 @@ export const useSimplePlayer = (params: Params): SimplePlayer => {
       const passedSec = (nowPerfMs - startPerfMsRef.current) / 1000; // Время прошедшее со старта трека
       const next = clampTime(startOffsetSecRef.current + passedSec); // Вычисляем новую позицию трека
 
-      setCurrentTimeSec(next); // Обновляем состояние (UI перерисовывается)
+      // setCurrentTimeSec(next);
+      setTime(next);
 
       const d = durationRef.current;
 
@@ -95,14 +103,10 @@ export const useSimplePlayer = (params: Params): SimplePlayer => {
 
     setIsPlaying(true);
     startPerfMsRef.current = performance.now();
-    startOffsetSecRef.current = currentTimeSec;
+    startOffsetSecRef.current = currentTimeRef.current; // ✅ ref, не state
 
-    rafIdRef.current = requestAnimationFrame(() => {
-      if (tickRef.current) {
-        tickRef.current();
-      }
-    });
-  }, [isPlaying, currentTimeSec, stopRaf]);
+    rafIdRef.current = requestAnimationFrame(() => tickRef.current?.());
+  }, [isPlaying, stopRaf]);
 
   const pause = useCallback(() => {
     if (!isPlaying) {
@@ -111,25 +115,47 @@ export const useSimplePlayer = (params: Params): SimplePlayer => {
 
     setIsPlaying(false);
     stopRaf();
-    startOffsetSecRef.current = currentTimeSec;
-  }, [isPlaying, currentTimeSec, stopRaf]);
+
+    startOffsetSecRef.current = currentTimeRef.current;
+  }, [isPlaying, stopRaf]);
 
   const stop = useCallback(() => {
     setIsPlaying(false);
     stopRaf();
-    setCurrentTimeSec(0);
+
+    // setCurrentTimeSec(0);
+    setTime(0);
     startOffsetSecRef.current = 0;
-  }, [stopRaf]);
+    startPerfMsRef.current = 0;
+  }, [stopRaf, setTime]);
+
+  const replay = useCallback(() => {
+    const d = durationRef.current;
+    if (d <= 0) {
+      return;
+    }
+
+    stopRaf();
+
+    // мгновенно сбрасываем всё в 0 и стартуем
+    setTime(0);
+    startOffsetSecRef.current = 0;
+    startPerfMsRef.current = performance.now();
+
+    setIsPlaying(true);
+    rafIdRef.current = requestAnimationFrame(() => tickRef.current?.());
+  }, [stopRaf, setTime]);
 
   const seek = useCallback<SeekFn>(
     (sec) => {
       const next = clampTime(sec);
-      setCurrentTimeSec(next);
+      // setCurrentTimeSec(next);
+      setTime(next);
 
       startOffsetSecRef.current = next;
       startPerfMsRef.current = performance.now();
     },
-    [clampTime],
+    [clampTime, setTime],
   );
 
   useEffect(() => stopRaf, [stopRaf]);
@@ -143,6 +169,7 @@ export const useSimplePlayer = (params: Params): SimplePlayer => {
     play,
     pause,
     stop,
+    replay,
     seek,
     toggle,
   };
