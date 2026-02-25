@@ -2,6 +2,9 @@ import { App, Button } from 'antd';
 import { type ChangeEvent, useEffect, useRef } from 'react';
 import { loadFromStorage } from '@/features/bayan/parse-midi';
 import { useBayanStore } from '@/features/bayan/bayan.store';
+import { HStack } from '@/shared/ui/h-stack/HStack';
+import { LucideIcon } from '@/shared/ui/LucideIcon';
+import { Trash } from 'lucide-react';
 
 const ACCEPT = '.mid,.midi,audio/midi,audio/x-midi';
 
@@ -12,11 +15,11 @@ type Props = {
 export const MidiUploader = ({ disabled }: Props) => {
   const parsed = useBayanStore((s) => s.parsed);
   const setMidiLoaded = useBayanStore((s) => s.setMidiLoaded);
+  const midiInfo = useBayanStore((s) => s.midi?.info);
   const reset = useBayanStore((s) => s.reset);
 
   const { message } = App.useApp();
   const inputRef = useRef<HTMLInputElement | null>(null);
-  // const audio = useMidiAudioPlayer();
 
   useEffect(() => {
     const buffer = loadFromStorage();
@@ -57,25 +60,25 @@ export const MidiUploader = ({ disabled }: Props) => {
         onChange={handleChange}
         style={{ display: 'none' }}
       />
-      {parsed ? (
-        <Button
-          type="primary"
-          danger
-          onClick={() => {
-            //audio.stop()?.();
-            reset();
-          }}
-          disabled={disabled || !parsed}
-        >
-          Сбросить выбранный файл
-        </Button>
+      {midiInfo ? (
+        <HStack>
+          {midiInfo?.name}
+          <Button
+            type="primary"
+            danger
+            onClick={() => {
+              //audio.stop()?.();
+              reset();
+            }}
+            disabled={disabled || !parsed}
+            icon={<LucideIcon icon={Trash} />}
+          />
+        </HStack>
       ) : (
         <Button type="primary" onClick={handlePick} disabled={disabled || !!parsed}>
           Загрузить MIDI-файл
         </Button>
       )}
-
-      <span style={{ opacity: 0.7, fontSize: 12 }}>.mid / .midi</span>
     </div>
   );
 };

@@ -1,12 +1,10 @@
 import styles from './Bayan.module.css';
-import { MidiUploader } from '@/features/bayan/top/MidiUploader';
 import { Player } from '@/features/bayan/player/Player';
 import { useSimplePlayer } from '@/features/bayan/use-simple-player';
 import { NotesTable } from '@/features/bayan/NotesTable';
 import { NotesTimeline } from '@/features/bayan/notes-timeline/NotesTimeline';
 import { useBayanStore } from '@/features/bayan/bayan.store';
 import { MidiInfo } from '@/features/bayan/top/MidiInfo';
-import { VStack } from '@/shared/ui/v-stack/VStack';
 
 const BayanPage = () => {
   const parsed = useBayanStore((s) => s.parsed);
@@ -17,10 +15,7 @@ const BayanPage = () => {
 
   return (
     <div className={styles.container}>
-      <VStack>
-        <MidiUploader disabled={player.isPlaying} />
-        <MidiInfo midiName={midiInfo?.name} parsed={parsed} disabled={player.isPlaying} />
-      </VStack>
+      <MidiInfo parsed={parsed} disabled={player.isPlaying} />
 
       {parsed && (
         <NotesTimeline
