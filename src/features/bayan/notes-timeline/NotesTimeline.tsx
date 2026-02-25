@@ -3,11 +3,10 @@ import {
   staffStepToY,
 } from '@/features/bayan/notes-timeline/notes-timeline';
 import { NoteGlyph } from '@/features/bayan/notes-timeline/NoteGlyph';
-import type { MidiNote } from '@/features/bayan/bayan.store';
+import { useBayanStore } from '@/features/bayan/bayan.store';
 
 type Props = {
   width: number;
-  notes: MidiNote[];
   durationSec: number;
   currentTimeSec: number;
 
@@ -15,7 +14,8 @@ type Props = {
   pxPerSec?: number; // масштаб по времени (пикселей на секунду
 };
 
-export const NotesTimeline = ({ width, height, currentTimeSec, notes, pxPerSec = 120 }: Props) => {
+export const NotesTimeline = ({ width, height, currentTimeSec, pxPerSec = 120 }: Props) => {
+  const parsed = useBayanStore((s) => s.parsed);
   const lineGap = 14;
   const staffTop = 20;
 
@@ -52,9 +52,8 @@ export const NotesTimeline = ({ width, height, currentTimeSec, notes, pxPerSec =
         );
       })}
 
-      {notes.map((n) => {
+      {parsed?.notes.map((n) => {
         const x = n.startSec * pxPerSec;
-
         const step = midiToTrebleStaffStep(n.pitch);
         const y = staffStepToY(step, staffBottomLineY, lineGap);
 

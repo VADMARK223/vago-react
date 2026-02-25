@@ -8,7 +8,9 @@ import { MidiInfo } from '@/features/bayan/top/MidiInfo';
 
 const BayanPage = () => {
   const parsed = useBayanStore((s) => s.parsed);
+  console.log('BayanPage', parsed);
   const midiInfo = useBayanStore((s) => s.midi?.info);
+  console.log('BayanPage: midiInfo', midiInfo);
 
   const durationSec = parsed?.durationSec ?? 0;
   const player = useSimplePlayer({ durationSec });
@@ -21,7 +23,6 @@ const BayanPage = () => {
         <NotesTimeline
           width={500}
           height={110}
-          notes={parsed.notes}
           durationSec={parsed.durationSec}
           currentTimeSec={player.currentTimeSec}
           pxPerSec={120}

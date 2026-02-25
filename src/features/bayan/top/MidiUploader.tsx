@@ -1,6 +1,5 @@
 import { App, Button } from 'antd';
-import { type ChangeEvent, useEffect, useRef } from 'react';
-import { loadFromStorage } from '@/features/bayan/parse-midi';
+import { type ChangeEvent, useRef } from 'react';
 import { useBayanStore } from '@/features/bayan/bayan.store';
 import { HStack } from '@/shared/ui/h-stack/HStack';
 import { LucideIcon } from '@/shared/ui/LucideIcon';
@@ -21,12 +20,12 @@ export const MidiUploader = ({ disabled }: Props) => {
   const { message } = App.useApp();
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const buffer = loadFromStorage();
     if (buffer) {
       setMidiLoaded({ arrayBuffer: buffer });
     }
-  }, [setMidiLoaded]);
+  }, [setMidiLoaded]);*/
 
   const handlePick = () => {
     inputRef.current?.click();
@@ -82,3 +81,19 @@ export const MidiUploader = ({ disabled }: Props) => {
     </div>
   );
 };
+
+/*const loadFromStorage = (): ArrayBuffer | null => {
+  const base64 = localStorage.getItem('last-midi');
+  if (!base64) {
+    return null;
+  }
+
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+
+  return bytes.buffer;
+};*/

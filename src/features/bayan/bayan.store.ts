@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { parseMidi } from '@/features/bayan/parse-midi';
 import { persist } from 'zustand/middleware';
+import { parseMidi } from '@/features/bayan/midi-parse';
 
 export type MidiInfo = {
   name: string;
@@ -70,7 +70,11 @@ export const useBayanStore = create<BayanState>()(
       partialize: (state) => ({
         midi: state.midi, // parsed НЕ сохраняем
       }),
-      onRehydrateStorage: () => (state) => {
+      onRehydrateStorage: () => (state, error) => {
+        if (error) {
+          console.error('Rehydrate error', error);
+          return;
+        }
         if (state?.midi?.base64) {
           const binary = atob(state.midi.base64);
           const buffer = new Uint8Array([...binary].map((c) => c.charCodeAt(0))).buffer;
