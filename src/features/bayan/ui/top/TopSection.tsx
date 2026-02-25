@@ -1,16 +1,16 @@
-import styles from '../Bayan.module.css';
-import { type ParsedMidi } from '@/features/bayan/bayan.store';
+import styles from './TopSection.module.css';
+import { type ParsedMidi } from '@/features/bayan/model/store/bayan.store';
 import { Button } from 'antd';
 import { LucideIcon } from '@/shared/ui/LucideIcon';
 import { Ear } from 'lucide-react';
-import { useMidiAudioPlayer } from '@/features/bayan/top/use-midi-audio-player';
-import { MidiUploader } from '@/features/bayan/top/MidiUploader';
+import { useMidiAudioPlayer } from '@/features/bayan/ui/top/use-midi-audio-player';
+import { MidiUploader } from '@/features/bayan/ui/top/MidiUploader';
 
 type Props = {
   parsed: ParsedMidi | null;
   disabled: boolean;
 };
-export const MidiInfo = ({ parsed, disabled }: Props) => {
+export const TopSection = ({ parsed, disabled }: Props) => {
   const audio = useMidiAudioPlayer();
 
   const buttonDisabled = disabled || !parsed;

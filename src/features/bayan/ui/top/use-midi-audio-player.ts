@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import type { MidiNote } from '@/features/bayan/bayan.store';
+import type { MidiNote } from '@/features/bayan/model/store/bayan.store';
 
 type ToneModule = typeof import('tone');
 

@@ -4,7 +4,22 @@ type Params = {
   durationSec: number; // Длительность трека в секундах
 };
 
-export const useSimplePlayer = (params: Params) => {
+type VoidFn = () => void;
+type SeekFn = (sec: number) => void;
+
+export type SimplePlayer = {
+  isPlaying: boolean;
+  currentTimeSec: number;
+  durationSec: number;
+
+  play: VoidFn;
+  pause: VoidFn;
+  stop: VoidFn;
+  seek: SeekFn;
+  toggle: VoidFn;
+};
+
+export const useSimplePlayer = (params: Params): SimplePlayer => {
   const durationSec = params.durationSec;
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTimeSec, setCurrentTimeSec] = useState(0);
@@ -106,8 +121,8 @@ export const useSimplePlayer = (params: Params) => {
     startOffsetSecRef.current = 0;
   }, [stopRaf]);
 
-  const seek = useCallback(
-    (sec: number) => {
+  const seek = useCallback<SeekFn>(
+    (sec) => {
       const next = clampTime(sec);
       setCurrentTimeSec(next);
 
@@ -117,9 +132,9 @@ export const useSimplePlayer = (params: Params) => {
     [clampTime],
   );
 
-  useEffect(() => {
-    return () => stopRaf();
-  }, [stopRaf]);
+  useEffect(() => stopRaf, [stopRaf]);
+
+  const toggle: VoidFn = isPlaying ? pause : play;
 
   return {
     isPlaying,
@@ -129,6 +144,6 @@ export const useSimplePlayer = (params: Params) => {
     pause,
     stop,
     seek,
-    toggle: isPlaying ? pause : play,
+    toggle,
   };
 };

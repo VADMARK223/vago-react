@@ -1,5 +1,5 @@
-import { StopButton } from '@/features/bayan/player/StopButton';
-import { PlayPauseButton } from '@/features/bayan/player/PlayPauseButton';
+import { StopButton } from '@/features/bayan/ui/bottom/player/StopButton';
+import { PlayPauseButton } from '@/features/bayan/ui/bottom/player/PlayPauseButton';
 
 type Props = {
   isPlaying: boolean;
@@ -24,10 +24,6 @@ export const Player = ({
   const max = durationSec > 0 ? durationSec : 0;
 
   const isEnd = max !== 0 && currentTimeSec === max;
-
-  if (isEnd) {
-    console.log('IS END!');
-  }
 
   return (
     <div

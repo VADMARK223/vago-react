@@ -1,16 +1,16 @@
 import {
   midiToTrebleStaffStep,
   staffStepToY,
-} from '@/features/bayan/notes-timeline/notes-timeline';
-import { NoteGlyph } from '@/features/bayan/notes-timeline/NoteGlyph';
-import { useBayanStore } from '@/features/bayan/bayan.store';
+} from '@/features/bayan/ui/middle/notes-timeline/notesTimeline.utils';
+import { NoteGlyph } from '@/features/bayan/ui/middle/notes-timeline/NoteGlyph';
+import { useBayanStore } from '@/features/bayan/model/store/bayan.store';
 
 type Props = {
   width: number;
+  height: number;
+
   durationSec: number;
   currentTimeSec: number;
-
-  height: number;
   pxPerSec?: number; // масштаб по времени (пикселей на секунду
 };
 

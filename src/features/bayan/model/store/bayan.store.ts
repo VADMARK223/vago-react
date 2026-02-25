@@ -1,6 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { parseMidi } from '@/features/bayan/midi-parse';
+import { Midi } from '@tonejs/midi';
+
+const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const SOLFEGE = ['До', 'До#', 'Ре', 'Ре#', 'Ми', 'Фа', 'Фа#', 'Соль', 'Соль#', 'Ля', 'Ля#', 'Си'];
 
 export type MidiInfo = {
   name: string;
@@ -85,3 +88,36 @@ export const useBayanStore = create<BayanState>()(
     },
   ),
 );
+
+function midiToNote(midi: number) {
+  const index = midi % 12;
+  const octave = Math.floor(midi / 12) - 1;
+  return `${NOTES[index]}${octave} (${SOLFEGE[index]})`;
+}
+
+function parseMidi(arrayBuffer: ArrayBuffer): ParsedMidi {
+  const midi = new Midi(arrayBuffer);
+
+  const notes = midi.tracks.flatMap((t, trackIndex) =>
+    t.notes.map(
+      (n): MidiNote => ({
+        startSec: n.time,
+        durationSec: n.duration,
+        endSec: n.time + n.duration,
+        pitch: n.midi,
+        note: midiToNote(n.midi),
+        velocity: n.velocity,
+        trackIndex,
+        channel: t.channel,
+      }),
+    ),
+  );
+
+  notes.sort((a, b) => a.startSec - b.startSec || a.pitch - b.pitch);
+
+  return {
+    notes,
+    durationSec: midi.duration,
+    tracksCount: midi.tracks.length,
+  };
+}

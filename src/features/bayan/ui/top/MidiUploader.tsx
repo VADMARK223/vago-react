@@ -1,6 +1,6 @@
 import { App, Button } from 'antd';
 import { type ChangeEvent, useRef } from 'react';
-import { useBayanStore } from '@/features/bayan/bayan.store';
+import { useBayanStore } from '@/features/bayan/model/store/bayan.store';
 import { HStack } from '@/shared/ui/h-stack/HStack';
 import { LucideIcon } from '@/shared/ui/LucideIcon';
 import { Trash } from 'lucide-react';
