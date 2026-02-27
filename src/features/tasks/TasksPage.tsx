@@ -1,5 +1,16 @@
 import styles from './TaskPage.module.css';
-import { App, Button, Card, Checkbox, Empty, Form, Input, Spin } from 'antd';
+import {
+  App,
+  Button,
+  Card,
+  Checkbox,
+  Empty,
+  Form,
+  Input,
+  type InputRef,
+  Spin,
+  Tooltip,
+} from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { type TaskRequest, useCreateTask, useTasks, useUpdateTaskMutation } from './tasks';
 import { ScrollableContainer } from '@/shared/ui';
@@ -10,15 +21,25 @@ import { DeleteTaskButton } from './DeleteTaskButton';
 import dayjs from 'dayjs';
 import { HStack } from '@/shared/ui/h-stack/HStack';
 import { VStack } from '@/shared/ui/v-stack/VStack';
+import { type KeyboardEventHandler, useEffect, useRef } from 'react';
+import { LucideIcon } from '@/shared/ui/LucideIcon';
+import { Info } from 'lucide-react';
 
 export function TasksPage() {
   const { message } = App.useApp();
+  const inputRef = useRef<InputRef>(null);
   const { data: tasks, isLoading, isError } = useTasks();
   const createTask = useCreateTask();
   const updateTaskMutation = useUpdateTaskMutation();
   const [form] = Form.useForm();
-  const name: string = Form.useWatch(CODE.NAME, form);
-  const isDisabled: boolean = !name;
+  const name: string | undefined = Form.useWatch(CODE.NAME, form);
+  const isDisabled: boolean = !name?.trim();
+
+  useEffect(() => {
+    if (!createTask.isPending) {
+      inputRef.current?.focus();
+    }
+  }, [createTask.isPending]);
 
   if (isError) {
     return <div>Error</div>;
@@ -26,11 +47,37 @@ export function TasksPage() {
 
   const onFinish = (req: TaskRequest) => {
     createTask.mutate(req, {
+      onSuccess: async () => {
+        form.resetFields();
+      },
       onError: async (err) => {
         const serverMsg = await getKyErrorMessage(err);
         message.error(serverMsg ?? 'Ошибка создания задачи');
       },
     });
+  };
+
+  const submitIfPossible = async () => {
+    await form.validateFields([CODE.NAME]);
+    form.submit();
+  };
+
+  const handleShiftEnterSubmit: KeyboardEventHandler<HTMLInputElement | HTMLTextAreaElement> = (
+    e,
+  ) => {
+    if (e.key !== 'Enter') {
+      return;
+    }
+
+    if (e.shiftKey) {
+      e.preventDefault();
+      void submitIfPossible();
+      return;
+    }
+
+    if (e.currentTarget instanceof HTMLInputElement) {
+      e.preventDefault();
+    }
   };
 
   return (
@@ -40,11 +87,36 @@ export function TasksPage() {
           name={CODE.NAME}
           rules={[{ required: true, message: 'Введите наименование задачи' }]}
         >
-          <Input placeholder="Наименование задачи" maxLength={255} allowClear />
+          <Input
+            placeholder="Наименование задачи"
+            ref={inputRef}
+            maxLength={255}
+            disabled={createTask.isPending}
+            allowClear
+            onKeyDown={handleShiftEnterSubmit}
+            suffix={
+              <Tooltip
+                title={
+                  <span>
+                    Создание задачи: <b>Shift+Enter</b>
+                  </span>
+                }
+              >
+                <span style={{ display: 'inline-flex', alignItems: 'center' }}>
+                  <LucideIcon icon={Info} color="white" />
+                </span>
+              </Tooltip>
+            }
+          />
         </Form.Item>
 
         <Form.Item name={CODE.DESCRIPTION} help={null} style={{ marginBottom: 8 }}>
-          <TextArea placeholder="Описание задачи" allowClear />
+          <TextArea
+            placeholder="Описание задачи"
+            disabled={createTask.isPending}
+            allowClear
+            onKeyDown={handleShiftEnterSubmit}
+          />
         </Form.Item>
 
         <Form.Item
@@ -53,19 +125,21 @@ export function TasksPage() {
           initialValue={false}
           style={{ marginBottom: 8 }}
         >
-          <Checkbox>Выполнена</Checkbox>
+          <Checkbox disabled={createTask.isPending}>Выполнена</Checkbox>
         </Form.Item>
 
         <Button
           type="primary"
           htmlType="submit"
           disabled={isDisabled}
+          loading={createTask.isPending}
           icon={<PlusCircleOutlined />}
           block
         >
           Создать задачу
         </Button>
       </Form>
+
       <div className={styles.listArea}>
         <Spin spinning={isLoading} tip="Загрузка..." size="large">
           <ScrollableContainer>

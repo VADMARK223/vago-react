@@ -30,10 +30,10 @@ export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Pro
         ref={virtuosoRef}
         data={messages}
         initialTopMostItemIndex={Math.max(messages.length - 1, 0)}
-        atBottomThreshold={40}
+        atBottomThreshold={20}
         alignToBottom
         atBottomStateChange={handleBottomChange}
-        followOutput={(isAtBottom) => (isAtBottom ? 'smooth' : false)}
+        followOutput={(isAtBottom) => (isAtBottom ? 'auto' : false)}
         itemContent={(index, item) => {
           if (item.kind === 'date') {
             return <DateItem label={item.label} />;
