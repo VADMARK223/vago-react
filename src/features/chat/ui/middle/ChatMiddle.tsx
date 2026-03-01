@@ -2,9 +2,9 @@ import styles from '@/features/chat/ui/middle/ChatMiddle.module.css';
 import { Virtuoso, type VirtuosoHandle } from 'react-virtuoso';
 import { MessageItem } from '@/features/chat/ui/middle/MessageItem';
 import { useRef } from 'react';
-import { AtBottomButton } from '@/features/chat/ui/middle/AtBottomButton';
 import type { ChatListItem } from '@/features/chat/chat-page';
 import { DateItem } from '@/features/chat/ui/middle/DateItem';
+import { AtBottomButton } from '@/features/chat/ui/middle/AtBottomButton';
 
 type Props = {
   messages: ChatListItem[];
@@ -30,7 +30,7 @@ export const ChatMiddle = ({ messages, atBottom, unread, onAtBottomChange }: Pro
         ref={virtuosoRef}
         data={messages}
         initialTopMostItemIndex={Math.max(messages.length - 1, 0)}
-        atBottomThreshold={20}
+        atBottomThreshold={40}
         alignToBottom
         atBottomStateChange={handleBottomChange}
         followOutput={(isAtBottom) => (isAtBottom ? 'auto' : false)}

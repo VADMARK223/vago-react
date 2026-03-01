@@ -2,7 +2,6 @@ import { useCallback, useRef, useState } from 'react';
 import styles from './ChatPage.module.css';
 import { useMessages } from '@/shared/api/messages/use-messages';
 import { ChatBottom } from '@/features/chat/ui/bottom/ChatBottom';
-import { ChatTop } from '@/features/chat/ui/top/ChatTop';
 
 import { ChatMiddle } from '@/features/chat/ui/middle/ChatMiddle';
 import { getCookie, getWsUrl } from '@/features/chat/model/chat.ws.protocol';
@@ -12,6 +11,7 @@ import { App } from 'antd';
 import { useChatStore } from '@/features/chat/model/chat.store';
 import { useChatWs } from '@/features/chat/use-chat-ws';
 import { buildChatListItems, type UiMessage } from '@/features/chat/chat-page';
+import { ChatTop } from '@/features/chat/ui/top/ChatTop';
 
 export const ChatPage = () => {
   const { message } = App.useApp();
@@ -62,8 +62,8 @@ export const ChatPage = () => {
   return (
     <>
       <div className={styles.container}>
+        <ChatTop wsUrl={wsUrl} onlineUsers={onlineUsers} isConnected={isConnected} />
         <div className={styles.chat}>
-          <ChatTop wsUrl={wsUrl} onlineUsers={onlineUsers} isConnected={isConnected} />
           <ChatMiddle
             messages={items}
             atBottom={atBottom}
